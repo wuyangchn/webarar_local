@@ -356,6 +356,7 @@
 #### 示例 1-1：打开 arr、age、xls 文件
 
 *注意：此处 xls 文件特指 ArArCALC 导出的文件，通常文件名类似 xxxx.full.xls*
+下载示例文件：[arr](22WHA0433.arr)、[age](22WHA0433.age)、[full.xls](22WHA0433.full.xls)。
 
 arr 文件
 

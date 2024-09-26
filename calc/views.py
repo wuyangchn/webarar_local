@@ -1010,6 +1010,7 @@ class ThermoView(http_funcs.ArArView):
         else:
             file_path = os.path.join(loc, f"{file_name}.arr")
             sample = ap.from_arr(file_path=file_path)
+            sample.name(file_name)
 
             arr = ap.smp.diffusion_funcs.DiffDraw(smp=sample, loc=loc)
             arr.ni = len(data)
