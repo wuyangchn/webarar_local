@@ -1,3 +1,1 @@
-class Myecharts {
-
-}
+class Myecharts{}
