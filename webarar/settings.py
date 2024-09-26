@@ -123,7 +123,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': 3306,
         'USER': 'root',
-        'PASSWORD': 'x7BtfR6Vm0AlVPRk'  # ubuntu server password
+        'PASSWORD': 'your password'  # ubuntu server password
     }
 }
 
