@@ -1,0 +1,23 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    {% load static %}
+
+    <div class="doc-left-sidebar">
+
+    </div>
+
+    <div class="doc-container">
+
+        <div class="container-fluid article-container">
+            <div class="article-content-container">
+                {% include "update_log_md.html" %}
+            </div>
+            <div class="article-right-sidebar">
+                <a title="返回顶部" href="#__top__" type="button" class="btn btn-default glyphicon glyphicon-menu-up" aria-hidden="true"></a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

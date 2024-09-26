@@ -1,0 +1,457 @@
+<div class="div-params" style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: auto; float: left">
+    <form id="input_filter_form" method="post">
+        <!-- Extension  -->
+        <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+            <label style="width: 400px; text-align: left; font-weight: bold">Extension</label>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Extension</label>
+                <label><input type="text" class="input-filter-params" style="width: 70px;" value="ahd"></label>
+                <label style="width: 84px; text-align: right">File Type</label>
+                <label><select class="input-filter-params" style="width: 150px;">
+                    <option value="0">Text</option>
+                    <option value="1">Excel</option>
+                    <option value="2">Qtegra Exported XLS</option>
+                    <option value="3">Seq</option>
+                </select></label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Delimiter</label>
+                <label><select class="input-filter-params" style="width: 120px;">
+                    <option value="0">Tab</option>
+                    <option value="1">Semicolon</option>
+                    <option value="2">Space</option>
+                    <option value="3">Comma</option>
+                    <option value="4">Other</option>
+                </select></label>
+                <label style="width: 6px; text-align: right"></label>
+                <label><input type="text" class="input-filter-params" style="width: 50px;" value=""></label>
+            </div><br>
+
+            <label style="width: 400px; text-align: left; font-weight: bold">Isotopic Data</label>
+
+            <div class="form-inline">
+                <label style="width: 154px; text-align: left">Data Excel Sheet Index</label>
+                <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1"></label>
+                <label style="width: 100px; text-align: right">Header Rows</label>
+                <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Data Direction</label>
+                <label><select class="input-filter-params" style="width: 105px; padding-right: 0px">
+                    <option value="0">Vertical</option>
+                    <option value="1">Horizontal</option>
+                </select></label>
+                <label style="width: 100px; text-align: right">Cycle Num</label>
+                <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
+            </div>
+
+            <div>
+                <div class="form-inline">
+                    <label style="width: 100px; text-align: left">Ar40 Intensity</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                    </label>
+                    <label style="width: 100px; text-align: right">and Inlet Time</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                    </label>
+                </div>
+                <div class="form-inline">
+                    <label style="width: 100px; text-align: left">Ar39 Intensity</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                    </label>
+                    <label style="width: 100px; text-align: right">and Inlet Time</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                    </label>
+                </div>
+                <div class="form-inline">
+                    <label style="width: 100px; text-align: left">Ar38 Intensity</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="3">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                    </label>
+                    <label style="width: 100px; text-align: right">and Inlet Time</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="3">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                    </label>
+                </div>
+                <div class="form-inline">
+                    <label style="width: 100px; text-align: left">Ar37 Intensity</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="4">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                    </label>
+                    <label style="width: 100px; text-align: right">and Inlet Time</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="4">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                    </label>
+                </div>
+                <div class="form-inline">
+                    <label style="width: 100px; text-align: left">Ar36 Intensity</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="5">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
+                    </label>
+                    <label style="width: 100px; text-align: right">and Inlet Time</label>
+                    <label>
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="5">
+                        <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
+                    </label>
+                </div>
+                <div class="form-inline">
+                    <label style="width: 154px; text-align: left">Lines of Each Cycle</label>
+                    <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="5"></label>
+                    <label style="width: 100px; text-align: right">Break Lines</label>
+                    <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
+                </div>
+
+            </div>
+
+            <div class="form-inline">
+                <label title="age of the standard" style="width: 100px; text-align: left">Intensity Unit</label>
+                <label><input type="text" class="input-filter-params" style="width: 50px;" value="mV"></label>
+                <label style="width: 154px; text-align: right">Intensity Scale Factor</label>
+                <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 100px;" value="1"></label>
+            </div>
+
+
+            <div class="checkbox" style="margin-top: 10px; margin-bottom: 0">
+                <label style="margin-top: -10px; width: 200px"><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                    Multiple Experimental Steps</label>
+            </div>
+            <label style="width: 154px; text-align: left">Lines of Each Step</label>
+            <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
+
+        </div>
+
+        <!--  Important Sample Information  -->
+        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
+            <label style="width: 400px; text-align: left; font-weight: bold">Sample Information</label>
+            <p>Three input are Sheet Index, Row Index, and Position Index. Only integer or zero will be allowed.</p>
+
+            <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
+                <label><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                    Read Information from File Name</label></div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Filename Format</label>
+                <label>
+                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., {en}-{sn}"
+                           title="{en} refers experiment name, {sn} refers step name, {st} refers sample type, {} other phrases are considered as separators. Keywords should be enclosed in angle brackets.">
+                </label>
+            </div>
+
+            <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
+                <label style="margin-top: -10px"><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                    Zero Date in one String</label></div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Date Format</label>
+                <label>
+                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., %d %m %Y %H:%M:%S.%f"
+                           title="Define the format of date string format. Note the whitespace should not be ignored. If leaving it empty, a default format will be used.">
+                </label>
+                <a class="text-muted" target="_blank" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" style="display:inline-block">
+                    <span title="What format codes are available for use in parsing datetime string?" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+            <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
+                <label style="margin-top: -10px"><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                    Zero Time in one String</label></div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Time Format</label>
+                <label>
+                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., %d %m %Y %H:%M:%S.%f"
+                           title="Define the format of time string format. Note the whitespace should not be ignored. If leaving it empty, a default format will be used." >
+                </label>
+                <a class="text-muted" target="_blank" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" style="display:inline-block">
+                    <span title="What format codes are available for use in parsing datetime string?" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Experiment Name</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right">Step Name</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Sample Type</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right">Step Label</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Zero time (Date)</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right">Zero time (Time)</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Zero time (Month)</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right">Zero time (Minute)</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left">Zero time (Day)</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right">Zero time (Second)</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+        </div>
+
+        <!--  Optional information  -->
+        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
+            <label style="width: 400px; text-align: left; font-weight: bold">Optional Information</label>
+            <p>Optional information of the given sample, which will be recorded into the final sample instance.</p>
+
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Sample material">
+                    Sample Name</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Sample location">
+                    Sample Location</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Sampel weight">
+                    Sample Material</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Experiment type, like Crushing, Laser, Heating">
+                    Experiment Type</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Step name">
+                    Sample Weight</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Step Unit">
+                    Step Unit</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Heating Time">
+                    Heating Time</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+{#                <label style="width: 120px; text-align: right" title="Step Unit">#}
+{#                    Step Unit</label>#}
+{#                <label>#}
+{#                    <input type="number" min=0" step=1" class="input-filter-params" style="width: 30px;" value="5">#}
+{#                    <input type="number" min=0" step=1" class="input-filter-params" style="width: 30px;" value="2">#}
+{#                    <input type="number" min=0" step=1" class="input-filter-params" style="width: 30px;" value="2">#}
+{#                </label>#}
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Instrument Name">
+                    Instrument Name</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Researcher name">
+                    Researcher</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Analyst name of the laboratory">
+                    Analyst</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Laboratory name, one string">
+                    Laboratory</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="J value">
+                    J-value</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="J value error in one sigma, note that checking if it is percentage or absolute error">
+                    J-value Error</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Calculation parameters name, e.g., Ar-Ar">
+                    Calc Params</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Irradiation name, e.g., WH01">
+                    Irradiation Name</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Irradiation label, like the label of a glass tube, or of a aluminum tray">
+                    Irradiation Label</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Height of the sample in the glass tube, or in a tray">
+                    Irradiation H</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="X position of the sample in a tray">
+                    Irradiation X</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Y position of the sample in a tray">
+                    Irradiation Y</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Standard name">
+                    Standard name</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 120px; text-align: left" title="Standard age">
+                    Standard Age</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+                <label style="width: 120px; text-align: right" title="Standard age error">
+                    Std Age Error</label>
+                <label>
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                    <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
+                </label>
+            </div>
+
+            <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
+                <label><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                    J value error in percentage</label></div>
+            <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
+                <label style="margin-top: -10px"><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                    Standard age error in percentage</label></div>
+
+        </div>
+
+
+    </form>
+</div>

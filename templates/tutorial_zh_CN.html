@@ -1,0 +1,80 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    {% load static %}
+
+    <style>
+
+        .p_content {
+            -webkit-margin-before:0;
+            -webkit-margin-after:0;
+        }
+
+    </style>
+
+    <div class="doc-left-sidebar">
+
+        <p><a href="/doc/tutorial">English</a></p>
+        <h2 id="-">目录</h2>
+
+            <ol>
+            <li><a href="#基本流程">基本流程</a></li>
+            <li><a href="#导入原始文件">导入原始文件</a></li>
+            <li><a href="#arr文件">arr文件</a></li>
+            <li><a href="#创建空白对象">创建空白对象</a></li>
+            <li><a href="#设置原始文件过滤器">设置原始文件过滤器</a></li>
+            <li><a href="#计算本底">计算本底</a></li>
+            <li><a href="#图表内容">图表内容</a></li>
+            <li><a href="#参数设置">参数设置</a></li>
+            <li><a href="#重新计算">重新计算</a></li>
+            <li><a href="#等时线选点">等时线选点</a></li>
+            <li><a href="#修改图件样式">修改图件样式</a></li>
+            <li><a href="#用等时线初始值扣空气氩">用等时线初始值扣空气氩</a></li>
+            <li><a href="#年龄分布图">年龄分布图</a></li>
+            <li><a href="#保存及导出">保存及导出</a></li>
+            <li><p class="p_content"><a href="#-1-">示例1：打开文件</a></p>
+            <p class="p_content"><a href="#-1-1-arr-age-xls-">示例1-1：打开arr、age、xls文件</a></p>
+            <p class="p_content"><a href="#-1-2-">示例1-2：打开原始文件</a></p>
+            </li>
+            <li><p class="p_content"><a href="#-2-">示例2：手动输入数据计算或绘图</a></p>
+            <p class="p_content"><a href="#-2-1-">示例2-1：绘制年龄谱</a></p>
+            <p class="p_content"><a href="#-2-2-">示例2-2：绘制等时线</a></p>
+            </li>
+            <li><p class="p_content"><a href="#-3-">示例3：等时线选点</a></p>
+            </li>
+            <li><p class="p_content"><a href="#-4-">示例4：修改图谱样式</a></p>
+            <p class="p_content"><a href="#-4-1-">示例4-1：修改等时线样式</a></p>
+            <p class="p_content"><a href="#-4-2-">示例4-2：修改图中文字</a></p>
+            <p class="p_content"><a href="#-4-3-">示例4-3：修改坐标范围</a></p>
+            </li>
+            <li><p class="p_content"><a href="#-5-">示例5：导出和保存</a></p>
+            <p class="p_content"><a href="#-5-1-arr">示例5-1：保存arr</a></p>
+            <p class="p_content"><a href="#-5-2-dpf">示例5-2：导出到dpf</a></p>
+            <p class="p_content"><a href="#-5-3-excel">示例5-3：导出到excel</a></p>
+            </li>
+            <li><p class="p_content"><a href="#-6-">示例6：修改参数集</a></p>
+            <p class="p_content"><a href="#-6-1-">示例6-1：创建新的参数集</a></p>
+            <p class="p_content"><a href="#-6-2-">示例6-2：修改参数集</a></p>
+            <p class="p_content"><a href="#-6-3-">示例6-3：删除参数集</a></p>
+            </li>
+            </ol>
+
+        <h2><a href="/doc/zh-cn">概述</a></h2>
+        <h2><a href="/doc/deploy/zh-cn">本地部署</a></h2>
+
+    </div>
+
+    <div class="doc-container">
+
+        <div class="container-fluid article-container">
+            <div class="article-content-container">
+                {% include "tutorial_zh_CN_md.html" %}
+            </div>
+            <div class="article-right-sidebar">
+                <a title="返回顶部" href="#__top__" type="button" class="btn btn-default glyphicon glyphicon-menu-up" aria-hidden="true"></a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

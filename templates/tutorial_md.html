@@ -1,0 +1,368 @@
+{% load static %}
+<h3 id="webarar-tutorial">WebArAr Tutorial</h3>
+<p><em>Last updated: <strong>Feb 25, 2024</strong></em></p>
+<p><a href="/doc/tutorial/zh-cn">简体中文</a></p>
+
+<h3 id="general-procedure">General procedure</h3>
+<ol>
+<li><p><strong>Input data</strong></p>
+</li>
+<ul>
+<li><p>Support to read the original mass spectrometer output file: See <a href="#import-raw-data">Import raw data</a>.</p>
+</li>
+<li><p>Open arr files: arr is the format with which WebArAr saves Sample objects. See <a href="#arr-files">Arr files</a>.</p>
+</li>
+<li><p>Open files of ArArCALC software, including age and xls files.</p>
+</li>
+<li><p>Create a new object: See <a href="#create-new-sample">Create new sample</a>. </p>
+</li>
+</ul>
+<li><p><strong>View, modify, and calculate for a open sample object</strong></p>
+<p> After the Sample object is successfully created and opened, the object page will display some tables and figures. </p>
+<p> <img src="{%  static 'readme/image-15.png' %}" alt="alt text" data-action="zoom"></p>
+<p> Any files that have been opened will no longer be associated with the user&#39;s local file, the Sample object is passed between the server and the client in the form of data streams, and will be not automatically saved, so unless the user downloads the arr file, all operations will be lost when the page is closed.</p>
+<p> The actions that can be performed on the object page include:: </p>
+<ul>
+<li><p><strong>Edit tables: </strong></p>
+<p>  All tables are editable. After editing, click Save changes below the table to save your changes. See <a href="#tables-and-figures">Tables and figures</a> for content in each table or figure.</p>
+</li>
+<li><p><strong>Edit parameters: </strong></p>
+<p>  <em>Note: The calculation will not be automatically called after the parameter is modified. See <a href="#recalculation">Recalculation</a>.</em></p>
+<ul>
+<li><p><strong>Total Param</strong> include all parameters, editing this table and saving to set new parameters for the Sample.</p>
+</li>
+<li><p>Set parameters by three parameter sets, namely Irra Params, Calc Params, and Smp Params. This will change parameters of all <strong>sequences</strong>. See <a href="#set-parameters">Setting parameters</a></p>
+</li>
+</ul>
+</li>
+<li><p><strong>Interaction with figures:</strong></p>
+<p>  All figures are rendered by Echarts and therefore have Echarts features and attributes. Some commonly used properties are editable. See <a href="#change-figure-styles">Change figure styles</a>.</p>
+</li>
+<li><p><strong>Select points used for regression in isochron plots</strong></p>
+<p>  See <a href="#isochron-scatter-points-selection">Isochron scatter points selection</a>.</p>
+<p>  WebArAr provides five isochrons, including normal and inverse isochrons and three chlorine related isochrons. All isochrons and age spectra will use the same <strong>sequence</strong> selection combination, supporting two combinations, namely Set1 and Set2.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="import-raw-data">Import raw data</h3>
+<ul>
+<li><p>The raw files usually include at least the following information: the zero-time, analysis time, and intensities of five isotopes of each <strong>cycle</strong>.</p>
+</li>
+<li><p>The raw files will be read based on given filters. <a href="#set-raw-file-filter">Set raw-file filter</a> provides instructions and examples for creating filters.</p>
+<ol>
+<li><p>Mass Spec Raw Files </p>
+<p> <img src="{%  static 'readme/image-24.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Multiple raw files can be opened together and filters need to be selected for each file</p>
+<p> <img src="{%  static 'readme/image-22.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ol>
+</li>
+<li><p>Extrapolating the intercepts at zero-time.</p>
+<p>  You can click to deselect some outliers, decide whether to cancel this scatter point for all isotopes of the current <strong>sequence</strong>, select the fitting method to be adopted, check whether to apply this fitting method to all isotopes, and set the current <strong>sequence</strong> as the background. It is possible to export the sequence for later use.</p>
+<p>  <img src="{%  static 'readme/image-25.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Assign blanks for each sample sequence.</p>
+<p>  In the case of example below, three sequences of 1-7-13 are defined as blank sequences. There are four strategies to couple sample and blank sequences. It is also possible to select blanks for each sample sequence in drop-down boxes. The blank sequences can be calculated in the right interface. See <a href="#calculate-blank">Calculate blank</a>.</p>
+<p>  <img src="{%  static 'readme/image-26.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  Four strategies:</p>
+<ol>
+<li><strong>Pre-run</strong>: Each blank is used to correct the sample sequence performed after it until the next blank conducted, and if the first sequence is not blank, the first blank will also be used to deduct several sample sequence before it;</li>
+<li><strong>Post-run</strong>: Each blank will be used to correct the sample stage performed before it, and if the last sequence is not the blank, the last blank will also be used to deduct the last several sample sequences;</li>
+<li><strong>Adjacent</strong>: Each blank sequence will be used to correct the nearest several sample sequences.</li>
+<li><strong>Interpolation</strong>: The fitting line between the time and blank intensities can be defined from the given several blank sequences, and blanks of sample sequences can be obtained by interpolation.</li>
+</ol>
+</li>
+</ul>
+<h3 id="arr-files">arr files</h3>
+<ul>
+<li>The arr files are saved in binary format and in principle are JSON-serialized Sample object.</li>
+</ul>
+<h3 id="create-new-sample">Create new sample</h3>
+<ul>
+<li><p>Creating an empty object supports manually entering data by users.</p>
+</li>
+<li><p>It is often convenient when only some parts of WebArAr&#39;s functionality is required, such as plotting age spectra.</p>
+</li>
+</ul>
+<h3 id="set-raw-file-filter">Set raw-file filter</h3>
+<ol>
+<li><p>The entry of editing raw-file filters on the <em>Run</em> page.</p>
+<p> <img src="{%  static 'readme/image-17.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Edit an existing filter (requires Pin-verification), or create a new one.</p>
+<p> <img src="{%  static 'readme/image-3.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>The filter is used to read isotope intensities and information correctly from the files. Text format files and Excel Multitable files (xls) are supported. For xls files, table, row, and column indexes are three-digit integers used to locate data. For text files, rows and columns are needed. </p>
+<p> <em>Note: all indexes are 1 based</em></p>
+</li>
+<li><p>Example 1: AHD files.</p>
+<p> AHD files might have following contents. Download the <a href="{% static 'readme/AHD.ahd' %}">AHD file</a>.</p>
+<pre><code> Sample    sample_name
+ Experiment    experiment_name
+ Project
+ Irradiation
+ Standard
+ Instrument    Argus    <span class="hljs-number">1</span>E-<span class="hljs-number">13</span>
+ Time Stamp    <span class="hljs-number">21/06/2023</span>    <span class="hljs-number">0</span>:<span class="hljs-number">08</span>:<span class="hljs-number">53</span>
+ Analyst
+ Temperature    <span class="hljs-number">0</span>    Laser
+ J-Value
+ Fractionation
+ Volume Correction    <span class="hljs-number">1</span>
+ Counters    <span class="hljs-number">1</span>    <span class="hljs-number">15</span>    <span class="hljs-number">1</span>    <span class="hljs-number">0</span>
+
+ Time    Intensity    <span class="hljs-number">37</span>    <span class="hljs-number">38</span>    <span class="hljs-number">39</span>    <span class="hljs-number">40</span>        Cycle #    Peakreading #
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">039713085</span>
+ <span class="hljs-number">139.839784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">017819889</span>
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">095037932</span>
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">8.217368387</span>
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">52.50271246</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">039292885</span>
+ <span class="hljs-number">227.343784</span>    <span class="hljs-number">0.01599587</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">0.088180873</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">7</span>.<span class="hljs-number">980598974</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">53.55335785</span>
+</code></pre><p> According to the contents above, we can find: head information count for 15 rows, sample name (0, 1, 2), experiment name (0, 2, 2), date of zero-time (0, 7, 2), time of zero-time (0, 7, 3), isotopic values are presented vertically in groups of five, so 36Ar is located at (1, 2), 37Ar (2, 2), 38Ar (3, 2), 39Ar (4, 2), 40Ar (5, 2), analysis time is 36Ar (1, 1), 37Ar (2, 1), 38Ar (3, 1), 39Ar (4, 1), 40Ar (5, 1). And note that date and time are in one string respectively.</p>
+<p> <img src="{%  static 'readme/image-16.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Example 2: xls files exported from NGX software. </p>
+<p> Contents of the file are partly shown as the following figure. Download <a href="{% static 'readme/NGX_Exported_XLS.xls' %}">NGX_Exported_XLS</a> for reference.</p>
+<p> <img src="{%  static 'readme/image-18.png' %}" alt="alt text" data-action="zoom"></p>
+<p> <img src="{%  static 'readme/image-19.png' %}" alt="alt text" data-action="zoom"></p>
+<p> For this file, the filter Settings are as follows:</p>
+<p> <img src="{%  static 'readme/image-20.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ol>
+<h3 id="calculate-blank">Calculate blank</h3>
+<ol>
+<li><p>Click the blank name to add the blank into Input input-box. Click again to delete the blank.</p>
+<p> <img src="{%  static 'readme/image-27.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Choose to calculating average or fitting the interpolation.</p>
+<p> As shown in the figure below, three blank sequences give a regression constraining blanks of ten sample sequences.</p>
+<p> <img src="{%  static 'readme/image-28.png' %}" alt="alt text" data-action="zoom"></p>
+<p> After calculating the average or interpolation, a new blank name will appear in the Output text-box, click the <em>Add</em> button to add it as a blank, after which you can select it in the drop-down boxes on the left.</p>
+<p> <img src="{%  static 'readme/image-29.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ol>
+<h3 id="tables-and-figures">Tables and figures</h3>
+<p><strong>Tables</strong></p>
+<ol>
+<li>Information: Sample information, such as number, mineral material, laboratory, etc</li>
+<li>Unknown: Isotopic values for each sample sequence. Errors are in 1σ.</li>
+<li>Blank: Used blank values of each sample sequence.</li>
+<li>Corrected: The isotopic values of each sample sequence after necessary corrections, including blank correction, mass discrimination correction, and decay correction.</li>
+<li>Degas Pattern: The value of each isotope after distinguishing their sources.</li>
+<li>Publish: In most cases, it is used to publish Ar-Ar data in a paper, including stage name, stage conditions, 36Ara, 37ArCa, 38ArCl, 39ArK, 40Arr, apparent age, age error, proportion of 40Arr in each sequence, ratio of 39ArK released in each sequence to the total amount, and Ca/K value.</li>
+<li>Age Spectra: 40Arr/39ArK and apparent ages.</li>
+<li>Isochrons: Data of normal, inverse, and Cl-related isochrons and the 3D plot.</li>
+<li>Total Params: All parameters involved in calculation.</li>
+</ol>
+<p><strong>Figures</strong></p>
+<ol>
+<li>Age Spectra: Age spectra.</li>
+<li>Nor. Isochron: Normal isochron plot. </li>
+<li>Inv. Isochron: Inverse isochron plot.</li>
+<li>K-Cl-Ar 1: Cl correlation plot 1 in two dimensions. Note the difference in axes between three Cl plots.</li>
+<li>K-Cl-Ar 2: Cl correlation plot 2 in two dimensions.</li>
+<li>K-Cl-Ar 3: Cl correlation plot 3 in two dimensions.</li>
+<li>3D Correlation: Correction plot in three dimensions. </li>
+<li>Degas Pattern: Shows the proportion of different isotope contributions released at each sequence. </li>
+<li>Ages Distribution: Shows the distribution of apparent ages, including bar charts and KDE curves.</li>
+</ol>
+<h3 id="set-parameters">Set parameters</h3>
+<ul>
+<li><p>The parameter setting is divided into three categories: Irradiation Params, Calculation Params (calculation constants), and Sample Params.</p>
+</li>
+<li><p>Add or edit parameter sets in <em>Run</em> page for later use.</p>
+<p>  <img src="{%  static 'readme/image-32.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>It is also possible to modify parameters arbitrarily in the Total Params table, which allows you to set different parameters for each sequence.</p>
+</li>
+<li><p>Irradiation Params</p>
+<p>  <img src="{%  static 'readme/image-30.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Calculation Params</p>
+<p>  <img src="{%  static 'readme/image-33.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Sample Params</p>
+<p>  <img src="{%  static 'readme/image-34.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="recalculation">Recalculation</h3>
+<ul>
+<li><p>Recalculation will be not called after setting new parameters.</p>
+</li>
+<li><p>The options that can be used: </p>
+<ul>
+<li>Reset Arr Attributes: Check the structure of Arr files, which can be used to fix old files that are missing some attributes due to program updates.</li>
+<li><p>Recalculate Correction and Degas:</p>
+<p>  For correct recalculation, specific procedures and subsequent calculations need to be selected. For example, if you modify some blank values, you need to select all the options from blank correction to age calculation, otherwise the new parameters will not really affect the final result; If you just modify the J-value, you only need to select recalculation of apparent age, the previous stage is not affected by the J-value, and you should also Reset Plot Data to recalculate plateau and isochron ages wiht the new J value</p>
+</li>
+<li><p>Reset Plot Style: reset styles of figures</p>
+<p><img src="{%  static 'readme/image-35.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="isochron-scatter-points-selection">Isochron scatter points selection</h3>
+<ul>
+<li><p>The isochron supports two sets of point selection (Set1 and Set2), and the corresponding age plateau will be drawn in the age spectrum (the age plateau will be deducted for the air argon by the specified initial value according to the setting). The normal and inverse isochrons and plateau ages of the two point groups are displayed on the right.</p>
+<p>  <img src="{%  static 'readme/image-36.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Clicking a scatter allows you to select or deselect a point for regression. Regression and age are automatically recalculated with each click, and response speed is related to network speed and number of stages.</p>
+</li>
+<li><p>In order to improve the operation, you can hold down the Ctrl and then click on multiple data points. It will not automatically recalculate, and then need to trigger recalculation, or release the Ctrl and click a scatter point. In this case only one recalcualtion is conducted.</p>
+</li>
+</ul>
+<h3 id="change-figure-styles">Change figure styles</h3>
+<ul>
+<li><p>Click the Style button at the bottom to set styles of the currently displayed figure, such as axes range, line width, color, size, etc.</p>
+</li>
+<li><p>When the Style dialog is open, click on elements, such as lines, points, or texts, to set styles of the corresponding elements.</p>
+<p>  For example, after opening Style, click a Scatter to open scatter style Settings, as shown in the following figure.</p>
+<p>  <img src="{%  static 'readme/image-37.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  Set the point size to 20:</p>
+<p>  <img src="{%  static 'readme/image-38.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="air-corrected-plateaus">Air-corrected plateaus</h3>
+<ul>
+<li><p>Set initial values for Set1 and Set2 in the Sample Parameter.</p>
+</li>
+<li><p>Air-corrected using the initial value of inverse isochron lines: </p>
+<p>  <img src="{%  static 'readme/image-40.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  <img src="{%  static 'readme/image-39.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>Air-corrected using the specific initial values. In the following case a value same to the blank age spectra was used, so the red/blue lines and black lines overlap: </p>
+<p>  <img src="{%  static 'readme/image-42.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  <img src="{%  static 'readme/image-41.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="age-distribution-figure">Age distribution figure</h3>
+<ul>
+<li><p>Age profiles are often used for single-grain Ar-Ar age analysis. Data are derived from apparent ages in the Age Spectra table. The figure includes KDE curves, bar charts, and age boxes.</p>
+<p>  <img src="{%  static 'readme/image-43.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>After opening Style, click on the red KDE curve to set the properties and KDE parameters:
+  Normal probability density function is often used. Scott and Silverman are two methods to calculate bandwidth automatically. Or setting Auto Width to <em>none</em> and entering bandwidth. </p>
+<p>  <img src="{%  static 'readme/image-44.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="save-and-export">Save and export</h3>
+<ul>
+<li><p>Click Export to open the Export dialog. </p>
+<p>  <img src="{%  static 'readme/image-45.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>To download the arr file, click <em>sample_name.arr</em> or right-click to save it.</p>
+</li>
+<li><p>Choose another format to export::</p>
+<ol>
+<li>Excel: Contains all data and charts (except 3D plot); </li>
+<li>PDF: Export 2D figures to PDF, which can be opened and edited with Illustrator and CorelDRAW.</li>
+<li>SVG: Export 2D figures to SVG.</li>
+</ol>
+</li>
+</ul>
+
+<h3 id="-1-">Example 1: Open files</h3>
+<h4 id="-1-1-arr-age-xls-">Example 1-1: Open arr、age、xls files</h4>
+<p><em>Nonte: herein xls files refer to files exported from ArArCALC, usually with similar file names such as  xxxx.full.xls</em></p>
+<p>arr files</p>
+<p><img src="{% static 'readme/gif.02.gif' %}" alt="alt text" data-action="zoom"></p>
+<p>age files</p>
+<p><img src="{% static 'readme/gif.04.gif' %}" alt="alt text" data-action="zoom"></p>
+<p>xls files</p>
+<p><img src="{% static 'readme/gif.12.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-1-2-">Example 1-2: Open raw data files</h4>
+<p><img src="{% static 'readme/gif.13.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-2-">Example 2: Enter data manually for calculation and making figures</h3>
+<h4 id="-2-1-">Example 2-1: Make age spectra</h4>
+<p>For the following data, including a series of apparent ages, corresponding errors, and released 39ArK at each sequence, an age spectrum would be made.</p>
+<pre><code>ages        sages                   <span class="hljs-number">39</span>ArK
+---------------------------------------------
+<span class="hljs-number">310.2176</span>    <span class="hljs-number">6.751487</span>                <span class="hljs-number">0.609066</span>
+<span class="hljs-number">247.3470</span>    <span class="hljs-number">5.148231</span>                <span class="hljs-number">0.827120</span>
+<span class="hljs-number">181.8897</span>    <span class="hljs-number">3.651214</span>                <span class="hljs-number">1.114444</span>
+<span class="hljs-number">78.62951</span>    <span class="hljs-number">1.499786</span>                <span class="hljs-number">1.164400</span>
+<span class="hljs-number">46.35105</span>    <span class="hljs-number">0.777316</span>                <span class="hljs-number">2.393310</span>
+<span class="hljs-number">25.54040</span>    <span class="hljs-number">0.332920</span>                <span class="hljs-number">4.833698</span>
+<span class="hljs-number">17.78667</span>    <span class="hljs-number">0.158893</span>                <span class="hljs-number">8.091584</span>
+<span class="hljs-number">14.99925</span>    <span class="hljs-number">0.096756</span>                <span class="hljs-number">11.02284</span>
+<span class="hljs-number">13.37219</span>    <span class="hljs-number">0.062124</span>                <span class="hljs-number">12.43698</span>
+<span class="hljs-number">12.88552</span>    <span class="hljs-number">0.052385</span>                <span class="hljs-number">12.25010</span>
+<span class="hljs-number">12.82013</span>    <span class="hljs-number">0.052100</span>                <span class="hljs-number">10.68799</span>
+<span class="hljs-number">12.92644</span>    <span class="hljs-number">0.057349</span>                <span class="hljs-number">8.552752</span>
+<span class="hljs-number">13.14080</span>    <span class="hljs-number">0.066860</span>                <span class="hljs-number">6.502910</span>
+<span class="hljs-number">13.50955</span>    <span class="hljs-number">0.094057</span>                <span class="hljs-number">4.772416</span>
+<span class="hljs-number">13.86147</span>    <span class="hljs-number">0.108181</span>                <span class="hljs-number">3.397764</span>
+<span class="hljs-number">14.32179</span>    <span class="hljs-number">0.136590</span>                <span class="hljs-number">2.627816</span>
+<span class="hljs-number">15.01300</span>    <span class="hljs-number">0.191949</span>                <span class="hljs-number">2.019118</span>
+<span class="hljs-number">15.84402</span>    <span class="hljs-number">0.240927</span>                <span class="hljs-number">1.453867</span>
+<span class="hljs-number">15.86743</span>    <span class="hljs-number">0.272241</span>                <span class="hljs-number">1.095365</span>
+<span class="hljs-number">16.73648</span>    <span class="hljs-number">0.286714</span>                <span class="hljs-number">0.879736</span>
+<span class="hljs-number">17.61575</span>    <span class="hljs-number">0.396227</span>                <span class="hljs-number">0.709635</span>
+<span class="hljs-number">17.85348</span>    <span class="hljs-number">0.394215</span>                <span class="hljs-number">0.579252</span>
+<span class="hljs-number">18.15503</span>    <span class="hljs-number">0.400108</span>                <span class="hljs-number">0.491160</span>
+<span class="hljs-number">18.06496</span>    <span class="hljs-number">0.418386</span>                <span class="hljs-number">0.423491</span>
+<span class="hljs-number">17.94611</span>    <span class="hljs-number">0.449840</span>                <span class="hljs-number">0.397428</span>
+<span class="hljs-number">18.49410</span>    <span class="hljs-number">0.547799</span>                <span class="hljs-number">0.351599</span>
+<span class="hljs-number">18.04896</span>    <span class="hljs-number">0.498315</span>                <span class="hljs-number">0.314126</span>
+</code></pre><p><img src="{% static 'readme/gif.01.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-2-2-">Example 2-2: Make isochron diagrams</h4>
+<p>Here is an example of the normal isochron, the following data is required: </p>
+<pre><code><span class="hljs-number">39</span>ArK/<span class="hljs-number">36</span>Ara     s               <span class="hljs-number">40</span>Ar*/<span class="hljs-number">36</span>Ara     s               r
+----------------------------------------------------------------------------
+<span class="hljs-number">2.2751877337</span>    <span class="hljs-number">0.0048052876</span>    <span class="hljs-number">1025.80432325</span>    <span class="hljs-number">2.0780870475</span>    <span class="hljs-number">0.9583594665</span>
+<span class="hljs-number">3.2975019175</span>    <span class="hljs-number">0.0069230743</span>    <span class="hljs-number">1106.38664780</span>    <span class="hljs-number">2.2460834483</span>    <span class="hljs-number">0.9652901189</span>
+<span class="hljs-number">6.0105856008</span>    <span class="hljs-number">0.0125928899</span>    <span class="hljs-number">1129.37582601</span>    <span class="hljs-number">2.2957337825</span>    <span class="hljs-number">0.9681744730</span>
+<span class="hljs-number">11.011886341</span>    <span class="hljs-number">0.0230813208</span>    <span class="hljs-number">1031.99720845</span>    <span class="hljs-number">2.1002662774</span>    <span class="hljs-number">0.9691720209</span>
+<span class="hljs-number">21.166235256</span>    <span class="hljs-number">0.0445848717</span>    <span class="hljs-number">1032.99035293</span>    <span class="hljs-number">2.1147591021</span>    <span class="hljs-number">0.9694927363</span>
+<span class="hljs-number">38.319930905</span>    <span class="hljs-number">0.0802844606</span>    <span class="hljs-number">1161.70364073</span>    <span class="hljs-number">2.3634476617</span>    <span class="hljs-number">0.9683575059</span>
+<span class="hljs-number">73.534352138</span>    <span class="hljs-number">0.1541520678</span>    <span class="hljs-number">1424.54372436</span>    <span class="hljs-number">2.9001681727</span>    <span class="hljs-number">0.9680880478</span>
+<span class="hljs-number">123.79413109</span>    <span class="hljs-number">0.2600566737</span>    <span class="hljs-number">1853.22212767</span>    <span class="hljs-number">3.7827521310</span>    <span class="hljs-number">0.9679013050</span>
+<span class="hljs-number">153.88009163</span>    <span class="hljs-number">0.3267535355</span>    <span class="hljs-number">2014.19098315</span>    <span class="hljs-number">4.1574887414</span>    <span class="hljs-number">0.9680163127</span>
+<span class="hljs-number">169.26290975</span>    <span class="hljs-number">0.3585793106</span>    <span class="hljs-number">2082.32698095</span>    <span class="hljs-number">4.2899067708</span>    <span class="hljs-number">0.9675027883</span>
+<span class="hljs-number">176.63909925</span>    <span class="hljs-number">0.3841523273</span>    <span class="hljs-number">2118.74942736</span>    <span class="hljs-number">4.4886093793</span>    <span class="hljs-number">0.9702703124</span>
+<span class="hljs-number">173.34246119</span>    <span class="hljs-number">0.3715170066</span>    <span class="hljs-number">2053.75380022</span>    <span class="hljs-number">4.2846436868</span>    <span class="hljs-number">0.9697460420</span>
+<span class="hljs-number">155.86396720</span>    <span class="hljs-number">0.3301618618</span>    <span class="hljs-number">1890.74520283</span>    <span class="hljs-number">3.8947628293</span>    <span class="hljs-number">0.9694010629</span>
+<span class="hljs-number">140.36930466</span>    <span class="hljs-number">0.3062175333</span>    <span class="hljs-number">1764.29506449</span>    <span class="hljs-number">3.7505862656</span>    <span class="hljs-number">0.9717015933</span>
+<span class="hljs-number">111.89720737</span>    <span class="hljs-number">0.2417092178</span>    <span class="hljs-number">1485.86613648</span>    <span class="hljs-number">3.1244156563</span>    <span class="hljs-number">0.9716471684</span>
+<span class="hljs-number">89.596934208</span>    <span class="hljs-number">0.1943473730</span>    <span class="hljs-number">1289.37540024</span>    <span class="hljs-number">2.7214060085</span>    <span class="hljs-number">0.9709019830</span>
+<span class="hljs-number">74.759825437</span>    <span class="hljs-number">0.1629035766</span>    <span class="hljs-number">1176.13040758</span>    <span class="hljs-number">2.4954842282</span>    <span class="hljs-number">0.9700300082</span>
+<span class="hljs-number">54.783766008</span>    <span class="hljs-number">0.1209899702</span>    <span class="hljs-number">992.623614989</span>    <span class="hljs-number">2.1345085268</span>    <span class="hljs-number">0.9711071450</span>
+<span class="hljs-number">49.944918143</span>    <span class="hljs-number">0.1124668310</span>    <span class="hljs-number">958.882771121</span>    <span class="hljs-number">2.1001119929</span>    <span class="hljs-number">0.9688506856</span>
+<span class="hljs-number">41.885267737</span>    <span class="hljs-number">0.0966704784</span>    <span class="hljs-number">878.915538075</span>    <span class="hljs-number">1.9638220829</span>    <span class="hljs-number">0.9645186720</span>
+<span class="hljs-number">36.117315422</span>    <span class="hljs-number">0.0846212613</span>    <span class="hljs-number">817.979157915</span>    <span class="hljs-number">1.7920764969</span>    <span class="hljs-number">0.9317125525</span>
+<span class="hljs-number">35.339155787</span>    <span class="hljs-number">0.0910717060</span>    <span class="hljs-number">829.231298578</span>    <span class="hljs-number">2.1075521253</span>    <span class="hljs-number">0.9643027965</span>
+<span class="hljs-number">33.032540877</span>    <span class="hljs-number">0.0827595535</span>    <span class="hljs-number">797.007327462</span>    <span class="hljs-number">1.9386916525</span>    <span class="hljs-number">0.9667530193</span>
+<span class="hljs-number">33.887955355</span>    <span class="hljs-number">0.1034956784</span>    <span class="hljs-number">822.155008652</span>    <span class="hljs-number">2.4563990293</span>    <span class="hljs-number">0.9746915090</span>
+<span class="hljs-number">31.516055387</span>    <span class="hljs-number">0.0875097358</span>    <span class="hljs-number">782.986056641</span>    <span class="hljs-number">2.1059773490</span>    <span class="hljs-number">0.9647646486</span>
+<span class="hljs-number">30.867564655</span>    <span class="hljs-number">0.1875046762</span>    <span class="hljs-number">767.179621092</span>    <span class="hljs-number">4.1062809401</span>    <span class="hljs-number">0.8801480023</span>
+<span class="hljs-number">31.690337436</span>    <span class="hljs-number">0.1828130406</span>    <span class="hljs-number">786.765990745</span>    <span class="hljs-number">4.0486556249</span>    <span class="hljs-number">0.8198342732</span>
+</code></pre><p><img src="{% static 'readme/gif.03.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-3-">Example 3: Datapoint selection in isochron figures</h3>
+<p><img src="{% static 'readme/gif.05.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-4-">Example 4: Change styles of figures</h3>
+<h4 id="-4-1-">Example 4-1: Change styles of isochrons</h4>
+<p><img src="{% static 'readme/gif.08.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-4-2-">Example 4-2: Change styles of text elements</h4>
+<p><img src="{% static 'readme/gif.09.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-4-3-">Example 4-3: Change scale of axes</h4>
+<p><img src="{% static 'readme/gif.10.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-5-">Example 5: Export and save</h3>
+<h4 id="-5-1-arr">Example 5-1: Save arr</h4>
+<p><img src="{% static 'readme/gif.11.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-5-2-dpf">Example 5-2: Export to DPF</h4>
+<p><img src="{% static 'readme/gif.06.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-5-3-excel">Example 5-3: Export to EXCEL</h4>
+<p><img src="{% static 'readme/gif.07.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-6-">Example 6: Edit parameter sets</h3>
+<h4 id="-6-1-">Example 6-1: Create a parameter set</h4>
+<p><img src="{% static 'readme/gif.14.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-6-2-">Example 6-2: Update a parameter set</h4>
+<p><img src="{% static 'readme/gif.15.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-6-3-">Example 6-3: Delete a parameter set</h4>
+<p><img src="{% static 'readme/gif.16.gif' %}" alt="alt text" data-action="zoom"></p>

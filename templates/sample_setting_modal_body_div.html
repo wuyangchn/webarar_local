@@ -1,0 +1,229 @@
+<div class="div-params" style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: auto; float: left">
+    <form id="smpParamsInputForm" method="post">
+        <!-- J & MDF & standard  -->
+        <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+            <label style="width: 400px; text-align: left; font-weight: bold">Specific settings</label>
+            <label style="width: 200px; text-align: left;">J value and MDF factor</label>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">J value</label>
+                <label>
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">MDF</label>
+                <label>
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
+                </label>
+            </div>
+
+            <label style="width: 200px; text-align: left">Standard</label>
+            <div class="form-inline">
+                <label title="standard name" style="width: 100px; text-align: left">Name</label>
+                <label>
+                    <input type="text" class="smp-params" style="width: 140px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="age of the standard" style="width: 100px; text-align: left">Age</label>
+                <label>
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> s&nbsp;[Ma]
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="concentrate" style="width: 100px; text-align: left"><sup>40</sup>Ar Conc.</label>
+                <label>
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="concentrate" style="width: 100px; text-align: left">K Conc.</label>
+                <label>
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left"><sup>40</sup>Ar*/K</label>
+                <label>
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
+                    <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
+                </label>
+            </div>
+        </div>
+        <!--  Regression and correction  -->
+        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
+            <label style="width: 400px; text-align: left; font-weight: bold">Regression and correction settings</label>
+            <label style="width: 400px; text-align: left">Isochron Fitting Method :</label>
+            <div class="form-inline">
+                <label>
+                    <select class="smp-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>York-2</option>
+{#                        <option>OLST</option>#}
+{#                        <option>other</option>#}
+                    </select>
+                    <label style="width: 60px; text-align: right">tolerance</label>
+                    <input type="number" step="any" class="smp-params" style="width: 80px;"> %
+                    <label style="width: 70px; text-align: right">iterations</label>
+                    <input type="number" min="1" step="1" class="smp-params" style="width: 80px;">
+                </label>
+            </div>
+            <label style="width: 400px; text-align: left; margin-bottom: 0; margin-top: 5px">Mass Discrimination Law :</label>
+            <div class="form-inline">
+                <label class="radio-inline">
+                    <input type="radio" name="mdfRadioOptions" id="mdfRadio1" value="option1" class="smp-check-box" style="margin-top: 10px" checked> Linear
+                </label>
+                <label class="radio-inline" style="vertical-align: -2px">
+                    <input type="radio" name="mdfRadioOptions" id="mdfRadio2" value="option2" class="smp-check-box" style="margin-top: 10px"> Exponential
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="mdfRadioOptions" id="mdfRadio3" value="option3" class="smp-check-box" style="margin-top: 10px"> Power
+                </label>
+            </div>
+            <label style="width: 200px; text-align: left; margin-bottom: 0; margin-top: 5px">Correction Settings :</label>
+            <div class="checkbox" style="margin-top: 0">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Force Negative Intensities to be Zero in Calculation
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply Blank Corrections
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply Mass Discrimination
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply <sup>37</sup>Ar Decay Correction
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply <sup>39</sup>Ar Decay Correction
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply Ca Degassing
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply K Degassing
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply Cl Degassing
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Apply Trap Degassing
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    Using Min (2000) Equation
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    not working
+{#                    Recalibration to Primary Standard#}
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    not working
+{#                    Recalibration using Primary Standard Age#}
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="smp-check-box" style="margin-top: 10px">
+                    not working
+{#                    Recalibration using Primary Standard Ratio#}
+                </label>
+            </div>
+        </div>
+        <!--  Initial ratio corrected plateaus  -->
+        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
+            <label style="width: 400px; text-align: left; font-weight: bold">Initial ratio correction</label>
+            <p>The black lines in the age spectrum are corrected using modern atmospheric composition (or other given parameters).Age plateaus in blue/red colors are corrected using initial ratios determined here.</p>
+
+            <div class="form-inline">
+                <label> Using initial ratio from
+                    <select id="initialRatioSelect" class="smp-params" style="margin-right: 15px; height: 30px; width: 200px"
+                            onchange="initialRatioSelectChanged()">
+                        <option value="0">Inverse isochron</option>
+                        <option value="1">Normal isochron</option>
+                        <option value="2">Input ratio</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label> Input ratio for Set 1
+                <input type="number" step="any" class="smp-params input-initial-ratio" name="inputInitialRatio" style="width: 80px;" autocomplete="off"> ±
+                <input type="number" step="any" class="smp-params input-initial-ratio" name="inputInitialRatio" style="width: 80px;"> [1σ abs]<br>
+                </label>
+                <label> Input ratio for Set 2
+                <input type="number" step="any" class="smp-params input-initial-ratio" name="inputInitialRatio" style="width: 80px;"> ±
+                <input type="number" step="any" class="smp-params input-initial-ratio" name="inputInitialRatio" style="width: 80px;"> [1σ abs]
+                </label>
+            </div>
+        </div>
+
+        <!--  output  -->
+        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc" hidden>
+            <label style="width: 400px; text-align: left; font-weight: bold">Output and display settings</label>
+            <label style="width: 400px; text-align: left">Errors in:</label>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Isotopic tables</label>
+                <label>
+                    <select name="err_in_tables" class="form-control smp-params">
+                        <option value="1">1se (abs)</option>
+                        <option value="2">2se (abs)</option>
+                    </select>
+                </label>
+                <label style="width: 100px; text-align: left">Parameters</label>
+                <label>
+                    <select name="err_in_plots"  class="form-control smp-params">
+                        <option value="1">1se (%)</option>
+                        <option value="2">2se (%)</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Plots</label>
+                <label>
+                    <select name="err_in_plots"  class="form-control smp-params">
+                        <option value="1">1se (abs)</option>
+                        <option value="2">2se (abs)</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+    </form>
+</div>

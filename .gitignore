@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+/webarar/local_settings.py
+.idea
+git
+/calc/calc_test.py
+Code Standards.md
+/programs/conf.txt

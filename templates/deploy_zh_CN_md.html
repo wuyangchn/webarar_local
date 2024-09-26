@@ -1,0 +1,39 @@
+<h1 id="-">部署</h1>
+<p><a href="/doc/deploy">English</a></p>
+<p>以下说明仅供本地部署使用。如果你打算在服务器上运行 WebArAr，你可以做下面提到的相同的事情，
+但是需要一些额外的步骤来获得一个更稳定的应用程序，比如替换性能更强大的 web 服务器。</p>
+<p>For Windows system:</p>
+<h4 id="1-python3">1. 安装 Python3</h4>
+<p>Following instructions on <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>.</p>
+<h4 id="2-install-and-configure-mysql">2. Install and configure MySql</h4>
+<p>Following instructions on <a href="https://dev.mysql.com/doc/refman/8.3/en/windows-choosing-package.html">https://dev.mysql.com/doc/refman/8.3/en/windows-choosing-package.html</a></p>
+<p>Remember the MySql server port (default 3306) and root password.</p>
+<p>Create WebArAr databases: start MySql command line client -&gt; using the command following to create database.</p>
+<pre><code>create database webarar<span class="hljs-comment">;</span>
+<span class="hljs-comment"># webarar can be other name as you want</span>
+<span class="hljs-comment"># Note that each MySql command ends with a semicolon</span>
+
+<span class="hljs-comment"># basic commands for reference:</span>
+<span class="hljs-keyword">show </span>databases<span class="hljs-comment">;</span>
+</code></pre><h4 id="3-redis">3. Redis</h4>
+<p>Redis on Windows <a href="https://github.com/microsoftarchive/redis">https://github.com/microsoftarchive/redis</a></p>
+<h4 id="4-download-source-code">4. Download source code</h4>
+<pre><code># <span class="hljs-keyword">open</span> CMD <span class="hljs-built_in">and</span> <span class="hljs-keyword">cd</span> <span class="hljs-keyword">to</span> your location, clone webarar repository
+git clone http<span class="hljs-variable">s:</span>//github.<span class="hljs-keyword">com</span>/wuyangchn/webarar.git
+</code></pre><h4 id="5-install-requirements">5. Install requirements</h4>
+<pre><code>pip <span class="hljs-keyword">install</span> -r requirements
+</code></pre><h4 id="6-change-settings-py">6. Change settings.py</h4>
+<pre><code><span class="hljs-comment"># in settings.py, find and replace</span>
+DATABASES = {
+    <span class="hljs-string">'default'</span>: {
+        <span class="hljs-string">'ENGINE'</span>: <span class="hljs-string">'django.db.backends.mysql'</span>,
+        <span class="hljs-string">'NAME'</span>: <span class="hljs-string">'webarar'</span>,  <span class="hljs-comment"># MySql database name</span>
+        <span class="hljs-string">'HOST'</span>: <span class="hljs-string">'127.0.0.1'</span>,
+        <span class="hljs-string">'PORT'</span>: <span class="hljs-number">3306</span>,  <span class="hljs-comment"># port</span>
+        <span class="hljs-string">'USER'</span>: <span class="hljs-string">'root'</span>,
+        <span class="hljs-string">'PASSWORD'</span>: <span class="hljs-string">'password'</span>  <span class="hljs-comment"># your password</span>
+    }
+}
+</code></pre><h4 id="7-run-server">7. Run server</h4>
+<pre><code>python manage<span class="hljs-selector-class">.py</span> runserver
+</code></pre><p>### </p>

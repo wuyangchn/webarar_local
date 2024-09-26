@@ -1,0 +1,78 @@
+<h1 id="webarar">WebArAr</h1>
+<p><a href="/doc/zh-cn">简体中文</a></p>
+<h2 id="introduciton">Introduciton</h2>
+<p>WebArAr is a web-based application based on <a href="https://www.djangoproject.com/">Django</a>
+designed to reduce <sup>40</sup>Ar/<sup>39</sup>Ar geochronologic data.</p>
+<ul>
+<li>The backend functionalities are packaged into a module called <a href="https://github.com/wuyangchn/ararpy.git">ArArPy</a>.
+Access through <a href="https://pypi.org/project/ararpy/">PyPi</a>.</li>
+<li>Django framework, Bootstrap, Echarts, Bootstrap-table, etc. provide an intuitive and interactive interface.</li>
+</ul>
+<p>Visit <a href="https://www.webarar.net">WebArAr</a></p>
+<h2 id="background">Background</h2>
+<p>This project originated from the necessity to update and enhance existing software tools for <sup>40</sup>Ar/<sup>39</sup>Ar dating. In general, ArArCALC and Isoplot/Isoplot R have been widely utilized within this field. However, several factors have rendered these tools inadequate for meeting the evolving requirements: (1) ArArCALC and Isoplot were developed as macro tools for outdated Excel versions, such as Excel 2003. Isoplot is no longer maintained, and ArArCALC is closed-source. (2) The increasing importance of chlorine correction in crushing experiments requires software with new features. (3) IsoplotR is great for plotting but lacks support for correction and newer calcultions in <sup>40</sup>Ar/<sup>39</sup>Ar community such as age calibration. Additionally, its regression methods differ from commonly used York regression.</p>
+<p>Therefore, the main purpose of WebArAr is to balance the functionality of ArArCALC and IsoplotR and it will be continuously updated with more research needs in order to serve the community.</p>
+<h2 id="usage">Usage</h2>
+<ul>
+<li>Access the application at <a href="http://www.webarar.net">http://www.webarar.net</a>.
+See <a href="/doc/tutorial">Tutorial</a> for step-by-step instructions</li>
+<li>(Optional) Deploy and launch WebArAr on your computer for offline usage. See <a href="/doc/deploy">Deploy on your own caomputer</a>.</li>
+<li>(Optional) Use ArArPy with a Python terminal. See <a href="#ararpy">ArArPy</a>.<!-- * [Vedio examples]() -->
+</li>
+</ul>
+<h2 id="features">Features</h2>
+<ul>
+<li>[x] Import<ul>
+<li>[x] Raw files from mass spec</li>
+<li>[x] Age files from ArArCALC</li>
+<li>[x] Xls files from ArArCALC</li>
+<li>[x] Munally enter</li>
+</ul>
+</li>
+<li>[x] Raw Data Reduction<ul>
+<li>[x] Blank correction</li>
+<li>[x] Mass discrimination correction</li>
+<li>[x] Decay correlation</li>
+<li>[x] Degas argon isotopes</li>
+</ul>
+</li>
+<li>[ ] Calculation<ul>
+<li>[x] Age Calculation<ul>
+<li>[x] Regular equation</li>
+<li>[x] Min equation</li>
+<li>[x] Renne calibration</li>
+</ul>
+</li>
+<li>[ ] Isochron regression<ul>
+<li>[x] Normal and inverse isochron</li>
+<li>[x] Chlorine related isochrons</li>
+<li>[x] York error weighted regression</li>
+<li>[ ] Robust regression</li>
+<li>[ ] Other regression methods</li>
+</ul>
+</li>
+<li>[x] Three-dimensional regression</li>
+<li>[x] Age spectra<ul>
+<li>[x] Re-correction with initial ratio derived from isochrons</li>
+<li>[x] Plateau ages</li>
+</ul>
+</li>
+<li>[x] Chi-squared and P values</li>
+<li>[x] MSWD </li>
+</ul>
+</li>
+<li>[x] Interfaces, tables and plots<ul>
+<li>[x] Interacitve multi tables and plots </li>
+</ul>
+</li>
+<li>[x] Export<ul>
+<li>[x] Xls</li>
+<li>[x] PDF</li>
+<li>[x] SVG</li>
+</ul>
+</li>
+</ul>
+<h2 id="update-log">Update Log</h2>
+<p>The log is <a href="/doc/update_log">here</a></p>
+<h2 id="citing-webarar-or-ararpy">Citing WebArAr or ArArPy</h2>
+<h2 id="reference">Reference</h2>

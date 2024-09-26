@@ -1,0 +1,675 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<script>
+
+</script>
+
+<div class="jumbotron" style="height: 860px">
+    <div style="width: 1000px; margin-left: 100px; float: left">
+        <div class="upload-drop-zone" style="margin-left: 40px; height: 100px;" id="drop-zone">
+            <h4 style="padding-top: 30px">Drag a log file <i>here</i>.</h4>
+        </div>
+        <div id="oven_log_container" style="width: 100%; height: 700px;"></div>
+
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+    </div>
+    {% load static %}
+    <audio class="hidden" id="audio" src="{% static 'media/mixkit-cowbell-sharp-hit-1743.wav' %}"></audio>
+    <div style="float: left; margin-left: 50px">
+{#            <label for="text_area"></label><textarea class="container" style="height: 500px; width: 500px; float: left" id="text_area"></textarea>#}
+        <div style="height: 800px; width: 400px; float: right; padding-left: 20px">
+            <div style="height: 30px">
+                <span id="time" style="font-size: 20px; font-weight: bold"></span>
+            </div>
+            <label><input id="input_timer" type="number" class="button" style="width: 200px" value="300">
+                <span id="last_timer">last timer</span>
+            </label>
+            <button class="btn-info" onclick="startTimer()" style="float: right">Start</button>
+            <button class="btn-danger" onclick="stopTimer()" style="float: right">Stop</button>
+            <label><input id="input_datetime" type="datetime-local" class="button" style="width: 200px"></label>
+            <button onclick="getCurrentDatetime()">Get Current Datetime</button>
+            <label><input id="input_temperature" type="number" class="button" style="width: 200px">Inside Temperature</label>
+            <label><input id="input_vacuum" type="number" class="button" style="width: 200px">Vacuum</label>
+            <label><input id="filename" type="text" class="button" style="width: 200px">Filename</label>
+            <button value="send" style="float: right" onclick="sendInputData()">Send</button>
+            <label><input id="check_remove_data" type="checkbox" class="button" style="margin-right: 10px">Relative heating time</label>
+            <label><input id="check_update_charts" type="checkbox" class="button" style="margin-right: 10px">Update Charts</label>
+            <label for="input_text_area"></label>
+            <textarea id="input_text_area" class="container" style="height: 545px" onchange="inputDataChanged()"></textarea>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // 初始化文件选择框
+    $('#file-input-text').val('');
+
+    setInterval("time()");
+
+    let timer_interval_id = null;
+
+    function time() {
+        let d = new Date();
+        document.getElementById("time").innerHTML=d.toUTCString();
+    }
+    
+    function getCurrentDatetime() {
+        let currentdate = new Date();
+        let month = ("0" + (currentdate.getUTCMonth() + 1)).slice(-2);
+        let day = ("0" + currentdate.getUTCDate()).slice(-2);
+        let hours = ("0" + currentdate.getUTCHours()).slice(-2);
+        let minutes = ("0" + currentdate.getUTCMinutes()).slice(-2);
+        let second = ("0" + currentdate.getUTCSeconds()).slice(-2);
+        let datetime = "" + currentdate.getUTCFullYear() + "-"
+            + month + "-"
+            + day + "T"
+            + hours + ":"
+            + minutes + ":"
+            + second;
+        $("#input_datetime").val(datetime);
+    }
+    
+    function sendInputData() {
+        let currenttext = $("#input_text_area").val();
+        let inputtemperature = $("#input_temperature").val();
+        let inputvacuum = $("#input_vacuum").val();
+        currenttext = currenttext + $("#input_datetime").val() + "Z;" + inputtemperature + ";" + inputvacuum + "\n";
+        $("#input_text_area").val(currenttext);
+        inputDataChanged();
+    }
+    
+    function startTimer() {
+        stopTimer();
+        getCurrentDatetime();
+        let timer = Math.ceil($('#input_timer').val());
+        let start = new Date().getTime();
+        timer_interval_id = setInterval(function last_time() {
+            let current = timer - Math.round((Date.now() - start)/ 1000);
+            document.getElementById("last_timer").innerHTML=current.toString();
+            if (current <= 0) {
+                $('#last_timer').addClass("btn-danger");
+                let sound = document.getElementById('audio');
+                sound.play();
+            } else {
+                $('#last_timer').removeClass("btn-danger");
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timer_interval_id);
+    }
+
+    function minusDataTime(s, d) {
+
+    }
+
+    function parseDate(str_date) {
+        const breakpoint = /[TZ\-:]/;
+        let splitted = str_date.split(breakpoint);
+        for (let i=1; i<splitted.length; i++){
+            if (splitted[i].length === 1) {
+                splitted[i] = "0" + splitted[i]
+            }
+        }
+        if (splitted.length === 5) {splitted.push('00')}
+        return new Date(Date.parse(
+            `${splitted[0]}-${splitted[1]}-${splitted[2]}T${splitted[3]}:${splitted[4]}:${splitted[5]}`));
+    }
+
+    function normalizeDataTime(data) {
+        if (data[0].length === 0) {return [[]]}
+        return data.map((str_data, index) => {
+            if (str_data[0] === undefined) {
+                return []
+            }
+            if ($('#check_remove_data').is(':checked')) {
+                let start = parseDate(data[0][0]);
+                let ms = Number(parseDate('2023-01-01T00:00:00') - parseDate('1970-01-01T00:00:00')) +
+                    Number(parseDate(str_data[0]) - start);
+                let current = new Date(ms);
+                return [current.toISOString().split('Z')[0], str_data[1]]
+            } else {
+                return str_data
+            }
+            //return ['2023-01-01T00:09:02', str_data[1]]
+        });
+    }
+
+    function regressHeatingLog(row_data, lower_limit = 0.5) {
+        let checked_data = [];
+        forEach(row_data, val => {
+            if (val.length > 0) {checked_data.push(val)}
+        })
+        if (checked_data.length === 0) { return false }
+        const start_timestamp = Number(parseDate(checked_data[0][0]));
+        const end_timestamp = Number(parseDate(checked_data[checked_data.length - 1][0]));
+        let data = checked_data.map(val => [(Number(parseDate(val[0])) - start_timestamp) / 1000, val[1]]);
+        data = numeric.transpose(data);
+
+        const max_x = Math.max(...data[0]);
+
+        const x = [data[0],  // x
+            data[0].map(val => val ** 2), data[0].map(val => val ** 3),  // x^2, x^3
+            data[0].map(val => val ** 4), data[0].map(val => val ** 5),  // x^2, x^3
+            data[0].map(val => val ** 6)
+        ]
+
+        let res;
+        try {
+            res = linest(data[1], ...x);
+        } catch (e) {
+            return false
+        }
+        const regression = [];
+        const df = [];  // 导数
+        const lb = [];
+        for (let j=0;j<=500;j++ ){
+            let adjusted_x = j * (end_timestamp - start_timestamp) / 500 / 1000;  // seconds
+            let dt_i = new Date(start_timestamp + (adjusted_x + 60 * 60) * 1000).toISOString().split('Z')[0];
+            df.push([dt_i, 60 * (res[5][1] + 2 * res[5][2] * adjusted_x + 3 * res[5][3] * adjusted_x ** 2 +
+                4 * res[5][4] * adjusted_x ** 3 + 5 * res[5][5] * adjusted_x ** 4 + 6 * res[5][6] * adjusted_x ** 5), adjusted_x]);
+            regression.push([dt_i, res[5][0] + res[5][1] * adjusted_x + res[5][2] * adjusted_x ** 2 + res[5][3] * adjusted_x ** 3 +
+                res[5][4] * adjusted_x ** 4 + res[5][5] * adjusted_x ** 5 + res[5][6] * adjusted_x ** 6]);
+            lb.push([dt_i, lower_limit]);
+        }
+
+        {#const df = row_data.map((val, idx) => [val[0], 60 * (res[5][1] + 2 * res[5][2] * x[0][idx] + 3 * res[5][3] * x[1][idx] + 4 * res[5][4] * x[2][idx] + 5 * res[5][5] * x[3][idx] + 6 * res[5][6] * x[4][idx])]);#}
+        console.log(`多项式拟合方程：y = [${res[5]}] * [0, x, x^2, x^3, x^4, x^5, x^6]`);
+        let equilibrium_time = "";
+        let et_index = 0;
+        for (let i=0;i<df.length;i++) {
+            if (i === 0) { continue }
+            if (df[i][1] <= lower_limit && df[i][1] < df[i-1][1]) {
+                et_index = i;
+                equilibrium_time = df[i][2] / 60;
+                break;
+            }
+        }
+
+        let keys;
+        if (et_index !== 0) {
+            const before_et = numeric.transpose(regression.slice(0, et_index));
+            const after_et = numeric.transpose(regression.slice(et_index));
+            keys =
+                [
+                    Math.min(...before_et[1]), Math.max(...before_et[1]),  // min_before, max_before,
+                    arr_mean(before_et[1]),  // average_before
+                    Math.sqrt(before_et[1].map(x => Math.pow(x - arr_mean(before_et[1]), 2)).reduce((a, b) => a + b) / before_et[1].length),  // standard deviation before,
+                    Math.min(...after_et[1]), Math.max(...after_et[1]),  // min_after, max_after,
+                    arr_mean(after_et[1]),  // average_after
+                    Math.sqrt(after_et[1].map(x => Math.pow(x - arr_mean(after_et[1]), 2)).reduce((a, b) => a + b) / after_et[1].length),  // standard deviation after,
+                ]
+        } else {
+            keys = [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN]
+        }
+
+
+        // console.log(df);
+        return [
+            regression, df, lb,  // regression data, df data, lower boundary data
+            checked_data[0][0], equilibrium_time, lower_limit,  // start_time, equilibrium time, lb
+            keys, res[5], res[3],  // factors, coefficients, r2
+            max_x  // maximum of x
+        ];
+    }
+
+    function inputDataChanged() {
+        let inputtext = $("#input_text_area").val();
+        let inputdata = inputtext.split("\n\n").map((mystring, _) => {
+            return mystring.split("\n").map((item, index) => {
+                if (item.length === 0) {
+                    return []
+                } else {
+                    return [item.split("Z;")[0], item.split(";")[1], item]
+                }
+            })
+        });
+        let doChart = $('#check_update_charts').is(':checked');
+        if (doChart) {
+            oven_log_chart.setOption({
+                series: inputdata.map((data, index) => {
+                    return {
+                        id: `Inside-${index}`, name: `Inside-${index}`,
+                        type: 'line', symbolSize: 6, z: 2, silent: true,
+                        data: normalizeDataTime(data),
+                        lineStyle: {width: 1, type: 'solid'},
+                        itemStyle: {borderWidth: 2, opacity: 0.8},  // borderColor: '#222',
+                        label: {show: false, formatter: '{@[1]}'},
+                    }
+                })
+            });
+        }
+        const regression_results = [];
+        let last_sp = 0;
+        inputdata.forEach((data, index) => {
+            const regression_data = regressHeatingLog(normalizeDataTime(data));
+            if (regression_data === false) {
+                //
+            } else {
+                const sp = data[0][2].split("***")[1];
+                const increment = sp - last_sp;
+                const isIncrease = increment > 0;
+                last_sp = sp;
+                const start_time = data[0][0];
+                const equilibrium_time = regression_data[4];
+                const lower_boundary = regression_data[5];
+                const keys = regression_data[6];
+                const coeffs = regression_data[7];
+                const r2 = regression_data[8];
+                const max_x = regression_data[9];
+                const title = `Time = ${start_time}, SP = ${sp}, Eq_time = ${parseFloat(equilibrium_time).toFixed(2)} mins, Strategy = ${lower_boundary} ℃/min
+                Before ET: ${parseFloat(keys[2]).toFixed(2)} ± ${parseFloat(2 * keys[3]).toFixed(2)}
+                After ET: ${parseFloat(keys[6]).toFixed(2)} ± ${parseFloat(2 * keys[7]).toFixed(2)}`;
+                regression_results.push({
+                    SP: sp, ST: start_time, ET: equilibrium_time, LB: lower_boundary,
+                    LMin: keys[0], LMax: keys[1], LMean: keys[2], LSD: keys[3],
+                    UMin: keys[4], UMax: keys[5], UMean: keys[6], USD: keys[7],
+                    x0: coeffs[0], x1: coeffs[1], x2: coeffs[2], x3: coeffs[3],
+                    x4: coeffs[4], x5: coeffs[5], x6: coeffs[6], r2: r2, Rise: isIncrease,
+                    Increment: increment, MaxTime: max_x
+                });
+                if (doChart) {
+                    charts[index + 1].setOption({
+                        series: {
+                            id: `Data-${index}`, name: `Data-${index}`,
+                            type: 'line', symbolSize: 0, z: 2, silent: true,
+                            data: normalizeDataTime(data),
+                            lineStyle: {width: 1, type: 'solid'},
+                            itemStyle: {borderWidth: 2, opacity: 0.8},  // borderColor: '#222',
+                            label: {show: false, formatter: '{@[1]}'},
+                        }
+                    });
+                    charts[index + 1].setOption({
+                        series: {
+                            id: `Regression-${index}`, name: `Regression-${index}`,
+                            type: 'line', symbolSize: 0, z: 2, silent: true,
+                            data: regression_data[0],
+                            lineStyle: {width: 1, type: 'solid'},
+                            itemStyle: {borderWidth: 2, opacity: 0.8},  // borderColor: '#222',
+                            label: {show: false, formatter: 'Regression Line'},
+                        }
+                    });
+                    charts[index + 1].setOption({
+                        series: {
+                            id: `Rate-${index}`, name: `Rate-${index}`,
+                            type: 'line', symbolSize: 0, z: 2, silent: true,
+                            data: regression_data[1],
+                            yAxisIndex: 1,
+                            lineStyle: {width: 1, type: 'solid'},
+                            itemStyle: {borderWidth: 2, opacity: 0.8},  // borderColor: '#222',
+                            label: {show: false, formatter: 'Regression Line'},
+                        }
+                    });
+                    charts[index + 1].setOption({
+                        series: {
+                            id: `Baseline-${index}`, name: `Baseline-${index}`,
+                            type: 'line', symbolSize: 0, z: 2, silent: true,
+                            data: regression_data[2],
+                            yAxisIndex: 1,
+                            lineStyle: {width: 1, type: 'solid', color: '#ff0000'},
+                            itemStyle: {borderWidth: 2, opacity: 0.8},  // borderColor: '#222',
+                            label: {show: false, formatter: 'Regression Line'},
+                        },
+                        title: {
+                            show: true, text: title
+                        }
+                    });
+                    charts[index + 1].resize();
+                }
+            }
+        });
+        console.log(regression_results);
+        $.ajax({
+            url: url_update_oven_log_results,
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                'data': regression_results,
+            }),
+            contentType:'application/json',
+            success: function(res){
+                //
+            }
+        })
+        {#oven_log_chart.setOption({#}
+        {#    series: inputdata.map((data, index) => {#}
+        {#        return {#}
+        {#            id: `Regression-${index}`, name: `Regression-${index}`,#}
+        {#            type: 'line', symbolSize: 1, z: 2, silent: true,#}
+        {#            data: regressHeatingLog(normalizeDataTime(data)),#}
+        {#            lineStyle: {width: 1, type: 'solid'},#}
+        {#            itemStyle: {borderWidth: 2, opacity: 0.8},  // borderColor: '#222',#}
+        {#            label: {show: false, formatter: 'Regression Line'},#}
+        {#        }#}
+        {#    })#}
+//        });
+        if (doChart) {
+            oven_log_chart.resize();
+        } else {
+            showPopupMessage('Information', 'Completed!', false);
+        }
+
+        // send to save inputted data
+        // $.ajax({
+        //     url: url_reference_update_log,
+        //     type: 'POST',
+        //     async: false,
+        //     data: JSON.stringify({
+        //         'text': inputtext,
+        //         'filename': $('#filename').val(),
+        //     }),
+        //     contentType:'application/json',
+        //     success: function(res){
+        //         //
+        //     }
+        // })
+
+    }
+
+    function _dropHandler(ev) {
+        // Prevent default behavior (Prevent file from being opened)
+        // Handle drag and drop events
+        ev.preventDefault();
+        let files = [];
+        let directory_entry = [];
+        if (ev.dataTransfer.items) {
+            // Use DataTransferItemList interface to access the file(s)
+            for (let item of [...ev.dataTransfer.items]){
+                if (item.kind === "file") {
+                    let file = item.getAsFile();
+                    let entry = item.webkitGetAsEntry();
+                    if (entry.isDirectory) {
+                        directory_entry.push(entry);
+                    } else {files.push(file);}
+                }
+            }
+        }
+        let formData = new FormData();
+        let num_file = 0;
+        let getFileFormdata = (_) => {
+            if (_.constructor === Array) {
+                _.forEach((__, i) => (getFileFormdata(__)));
+            } else {
+                formData.append(`${num_file}`, _);
+                num_file += 1;
+            }
+        }
+        getFileFormdata(files);
+        let send_erquest = () => {
+            $.ajax({
+                url: url_reference_log,
+                type: 'POST',
+                data: formData,
+                processData : false,
+                contentType : false,
+                mimeType: "multipart/form-data",
+                success: function(res){
+                    res = JSON.parse(res);
+                    {#console.log("Multi files have been uploaded");#}
+                    {#document.getElementById('text_area').textContent = res.text;#}
+                    {#document.getElementById('text_area').textContent = res.data;#}
+                    let sp;
+                    for (let i=0; i < res.data[0].length; i++) {
+                        if (sp !== res.data[0][i][1]) {
+                            sp = res.data[0][i][1]
+                            console.log(res.data[0][i]);
+                        }
+                    }
+                    oven_log_chart.setOption({
+                        series: res.data.map((item, index) => {
+                            return {
+                                id: ['SP', 'AP'][index],
+                                name: ['SP', 'AP'][index],
+                                data: item,
+                            };
+                        }),
+                    });
+                    oven_log_chart.resize();
+                }
+            })
+        }
+        if (directory_entry.length === 0) {
+            send_erquest();
+        } else {
+            if (directory_entry.length > 1) {
+                alert("Only one directory on the top level is supported.");
+            }
+            traverseDirectory(directory_entry[0]).then((files_promise)=> {
+                // AT THIS POINT THE DIRECTORY SHOULD BE FULLY TRAVERSED.
+                Promise.all(files_promise[0]).then((res) => {
+                    files.push(...res);
+                    send_erquest();
+                });
+            });
+        }
+    }
+
+    let drop_zone = document.getElementById('drop-zone');
+    drop_zone.ondrop = function(e) {
+        this.className = 'upload-drop-zone';
+        _dropHandler(e);
+    }
+    drop_zone.ondragover = function(e) {
+        this.className = 'upload-drop-zone drop';
+        dragOverHandler(e);
+        return false;
+    }
+    drop_zone.ondragleave = function() {
+        this.className = 'upload-drop-zone';
+        return false;
+    }
+
+    const oven_log_chart = echarts.init(document.getElementById('oven_log_container'), null, {renderer: 'svg'}); // svg渲染适合小数据，更清晰
+    const charts = [oven_log_chart];
+    const step_chart_containers = document.querySelectorAll("[class*=oven_step_chart_container]");
+    step_chart_containers.forEach(val => {
+        charts.push(echarts.init(val, null, {renderer: 'svg'}));
+    })
+
+    window.onresize = function() {
+        forEach(charts, chart => chart.resize());
+    };
+
+    forEach(charts, (chart, index) => {
+        const interval = index === 0 ? 200 : 50
+        chart.setOption({
+            title: {
+                show: true, text: 'Time-Temperature Log', left: 'center', top: '6%',
+                textStyle: {
+                    color: '#333', fontWeight: 'bolder', fontFamily: 'Microsoft Sans Serif',
+                    fontSize: 18
+                },
+                triggerEvent: true, z: 0,
+            },
+            grid: {show: true, borderWidth: 1, borderColor: '#222', z: 100,
+                top: '5%', left: '8%', bottom: '15%', right: '4%'},
+            legend: {top: 0},
+            toolbox: {
+                id: 'toolbox', show: true,
+                feature: {
+                    dataZoom: {},
+                    myTool1: {
+                        show: true,
+                        title: 'Show/Hide inside Temperature labels',
+                        icon: 'path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891',
+                        onclick: function (){
+                            // let show_label = oven_log_chart.getOption().series[2].label.show;
+                            oven_log_chart.getOption().series.map((series, index) => {
+                                if (series.id.includes('Inside')) {
+                                    oven_log_chart.setOption({
+                                        series: {
+                                            id: series.id, name: series.name,
+                                            //label: {show: !show_label},
+                                            label: {show: !series.label.show},
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    },
+                }
+            },
+            xAxis: [
+                {
+                    name: 'Time', type: 'time', nameLocation: 'middle', nameGap: 25,
+                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                    axisLabel: {showMaxLabel: true, color: '#222'},
+                    axisTick: {inside: false},
+                    nameTextStyle: {
+                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                    },
+                },
+            ],
+            yAxis: [
+                {
+                    name: 'Temperature (℃)', type: 'value', nameLocation: 'middle', nameGap: 50,
+                    min: function (value) {
+                        let n = Math.ceil(value.min / interval)
+                        // n = n === value.max / 200? (n + 1) : n
+                        return (n - 1) * interval;
+                    },
+                    max: function (value) {
+                        let n = Math.ceil(value.max / interval)
+                        n = n === value.max / interval? (n + 1) : n
+                        return n * interval;
+                    },
+                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                    axisLabel: {showMaxLabel: true, color: '#222',},
+                    axisTick: {inside: false},
+                    nameTextStyle: {
+                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                    },
+                },
+                {
+                    name: 'Rate (℃/Min)', type: 'value', nameLocation: 'middle', nameGap: 20,
+                    min: function (value) {
+                        let n = Math.ceil(value.min / 2)
+                        return (n - 1) * 2;
+                    },
+                    max: function (value) {
+                        let n = Math.ceil(value.max / 2)
+                        n = n === value.max / 2 ? (n + 1) : n
+                        return n * 2;
+                    },
+                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                    axisLabel: {showMaxLabel: true, color: '#222',},
+                    axisTick: {inside: false},
+                    nameTextStyle: {
+                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                    },
+                },
+            ],
+            dataZoom: [
+                {
+                    type: 'inside',
+                    start: 0,
+                    end: 100,
+                    zoomOnMouseWheel: 'ctrl',
+                    moveOnMouseWheel: 'shift',
+                },
+                {
+                    start: 0,
+                    end: 100,
+                    zoomOnMouseWheel: 'ctrl',
+                    moveOnMouseWheel: 'shift',
+                }
+            ],
+            series: [
+                {
+                    id: 'SP', name: 'SP', color: '#a4d38f',
+                    type: 'line', symbolSize: 6, z: 2,  silent: true,
+                    lineStyle: {width: 1, type: 'solid'},
+                    itemStyle: {borderColor: '#a4d38f', borderWidth: 2, opacity: 0.8},
+                },
+                {
+                    id: 'AP', name: 'AP', color: '#f5d68e',
+                    type: 'line', symbolSize: 6, z: 2,  silent: true,
+                    lineStyle: {width: 1, type: 'solid'},
+                    itemStyle: {borderColor: '#f5d68e', borderWidth: 2, opacity: 0.8},
+                },
+                //{
+                //    id: 'Inside', name: 'Inside', color: '#6176b7',
+                //    type: 'line', symbolSize: 6, z: 2,  silent: true,
+                //   label: {show: false, formatter: '{@[1]}'},
+                //    lineStyle: {width: 1, type: 'solid'},
+                //    itemStyle: {borderColor: '#6176b7', borderWidth: 2, opacity: 0.8},
+                //},
+            ],
+            animation: true,
+            animationDuration: 500,
+        });
+        chart.resize();
+    });
+
+    document.addEventListener("wheel", function(event){
+        if(document.activeElement.type === "number"){
+            document.activeElement.blur();
+        }
+    });
+
+</script>
+
+{% endblock %}

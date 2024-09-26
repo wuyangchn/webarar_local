@@ -1,0 +1,941 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<script>
+    // load initialization functions
+    $(document).ready(function(){
+        // show confirmation dialog when clicking other navigators
+        for (let id of ['a-nav-main', 'a-nav-calc', 'a-nav-doc', 'a-nav-ref']) {
+            document.getElementById(id).onclick = async (event) => {
+                event.preventDefault();
+                await showPopupMessage("Please confirm ...", "Are you sure you want to leave this page?", true).then((res) => {
+                    if (res) {window.location.href = document.getElementById(id).getAttribute('href');}
+                });
+
+            }
+        }
+        // show information page
+        showPage("0");
+    });
+</script>
+<div class="container-fluid" style="height: 800px">
+    <div class="row" style="height: 100%; overflow: auto">
+        <div class="col-xs-1 col-md-1-5" style="padding-left: 10px">
+            <div class="list-group">
+                <button id="0" name="table_name" value="Information" class="list-group-item active" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Information
+                </button>
+                <button id="1" name="table_name" value="Unknown" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Unknown
+                </button>
+                <button id="2" name="table_name" value="Blank" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Blank
+                </button>
+                <button id="3" name="table_name" value="Corrected" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Corrected
+                </button>
+                <button id="4" name="table_name" value="Degas_pattern" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Degas Pattern
+                </button>
+                <button id="5" name="table_name" value="Publish" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Publish
+                </button>
+                <button id="6" name="table_name" value="Age_spectra" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Age Spectra
+                </button>
+                <button id="7" name="table_name" value="Isochrons" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Isochrons
+                </button>
+                <button id="8" name="table_name" value="Total_params" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-list-alt"></span>  Total Params
+                </button>
+                <button id="figure_1" name="table_name" value="Age Spectra" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  Age Spectra
+                </button>
+                <button id="figure_2" name="table_name" value="Nor. Isochron" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  Nor. Isochron
+                </button>
+                <button id="figure_3" name="table_name" value="Inv. Ioschron" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  Inv. Ioschron
+                </button>
+                <button id="figure_4" name="table_name" value="K-Cl-Ar 1" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  K-Cl-Ar 1
+                </button>
+                <button id="figure_5" name="table_name" value="K-Cl-Ar 2" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  K-Cl-Ar 2
+                </button>
+                <button id="figure_6" name="table_name" value="K-Cl-Ar 3" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  K-Cl-Ar 3
+                </button>
+                <button id="figure_7" name="table_name" value="3D Correlation" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  3D Correlation
+                </button>
+                <button id="figure_8" name="table_name" value="Degas Pattern" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  Degas Pattern
+                </button>
+                <button id="figure_9" name="table_name" value="Degas Pattern" class="list-group-item" onclick=showPage(id)>
+                    <span class="glyphicon glyphicon-picture"></span>  Ages Distribution
+                </button>
+            </div>
+        </div>
+        <div id="sample_info_container" class="col-xs-11 col-md-10 thumbnail" style="float:left;overflow: hidden">
+            <div class="col-xs-6 text-left">
+                <h2 class="h2 align-top" id="sample_name_title">Sample Name</h2>
+                <br>
+
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                    <label class="sr-only" for="inputFingerprint">Fingerprint
+                        <input type="text" style="display: none" id="inputFingerprint" name="fingerprint" value="fingerprint">
+                    </label>
+
+                    <div class="form-group">
+                        <label for="inputName" class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputName" name="Name" value="Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputType" class="col-sm-2 control-label">Type</label>
+                        <div class="col-sm-10">
+                            <label><select id="inputType" class="form-control" style="font-weight: normal">
+                                <option value="Unknown">Unknown</option>
+                                <option value="Standard">Standard</option>
+                                <option value="Air">Air</option>
+                            </select></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMaterial" class="col-sm-2 control-label">Material</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputMaterial" name="Material" value="Material">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLocation" class="col-sm-2 control-label">Location</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLocation" name="Location" value="Location">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputResearcher" class="col-sm-2 control-label">Researcher</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputResearcher" name="Researcher" value="Researcher">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLaboratory" class="col-sm-2 control-label">Laboratory</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLaboratory" name="Laboratory" value="Laboratory">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputLaboratoryMore" class="col-sm-2 control-label">More</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="3" id="inputLaboratoryMore" name="Laboratory"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAnalyst" class="col-sm-2 control-label">Analyst</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputAnalyst" name="Analyst" value="Analyst">
+                        </div>
+                    </div>
+                    </form>
+                <br>
+            </div>
+            <div class="col-xs-6" style="display: flex; flex-direction: column;justify-content: center;height:600px;text-align: center;">
+                <div id="upload_picture_btn" style="height: 50px; line-height: 50px; text-align: center; position: absolute; left: 35%;right: 35%" hidden>
+                    <button class="btn btn-primary" style="display: inline-block; vertical-align: middle;" onclick="clickUploadPicture()">Upload picture</button>
+                    <label class="sr-only">Sample Picture
+                        <input id="sample_photo_input" class="sr-only" type="file" style="display: none" name="sample_photo" accept="image/*">
+                    </label>
+                </div>
+                <img id="sample_picture" src="" alt="Sample Photo" class="img-rounded" onclick="showUploadPictureBtn()">
+            </div>
+
+        </div>
+        <div id="table_container" class="col-xs-11 col-md-10" style="height: 100%;overflow: hidden; margin-bottom: 10px"></div>
+        <div id="figure_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;"></div>
+        <div id="figure_3D_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;" hidden></div>
+        <div id="figure_right_container" class="col-xs-1 col-md-2" style="float: right; border: #ddd 1px solid;height: 720px; margin-top: 40px; margin-right: 20px">
+            <div class="text-left" style="height: 100%">
+                <div class="radio-div-red" style="height: 46%;">
+                    <label class="radio-inline" style="display:inline-block; vertical-align:top; line-height:22px">
+                        <input type="radio" name="inlineRadioOptions" id="isochronSetRadio1" value="Set 1" checked="checked"><p><span></span></p><span style="font-weight: bolder; font-size: 1.5em"> Set 1</span>
+                    </label>
+                    <div style="overflow: visible">
+                        <h4 class="right-info">Normal Isochron</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">Inverse Isochron</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">Weighted Age</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">Initial Ratio Corrected</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">York Regress Line</h4>
+                        <h4 class="right-info" id="line_equation_1">...</h4>
+                    </div>
+                </div>
+
+                <div class="radio-div-blue" style="height: 46%;">
+                    <label class="radio-inline" style="display:inline-block; vertical-align:top; line-height:22px">
+                        <input type="radio" name="inlineRadioOptions" id="isochronSetRadio2" value="Set 2"><p><span></span></p><span style="font-weight: bolder; font-size: 1.5em"> Set 2</span>
+                    </label>
+                    <div style="overflow: visible">
+                        <h4 class="right-info">Normal Isochron</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">Inverse Isochron</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">Weighted Age</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">Initial Ratio Corrected</h4>
+                        <h4 class="right-info">...</h4>
+                        <h4 class="right-info">York Regress Line</h4>
+                        <h4 class="right-info" id="line_equation_2">...</h4>
+                    </div>
+                </div>
+                <h4 class="right-info">Total Age</h4>
+                <h4 class="right-info">...</h4>
+                <h4 class="right-info"></h4>
+                <h4 class="right-info"></h4>
+                <h4 class="right-info"></h4>
+
+            </div>
+            <dialog id="figurePropertiesDialog" class="setting-attr-dialog">
+                <h3>Properties Dialog</h3>
+                <h5>To change styles of scatters, lines, and texts, please click components in the plot while this dialog is open</h5>
+                <div id="axis-setting-in-dialog" class="setting-dialog" style="height: 500px">
+                    <h5>X Axis</h5>
+                    <label>Scale from <input type="number" name="xMin">
+                        to <input type="number" name="xMax"></label>
+                    <label class="checkbox">Show split line:
+                        <input type="checkbox" style="width: 70px;" name="showXSplitLine"></label>
+                    <h5>Y Axis</h5>
+                    <label>Scale from <input type="number" name="yMin">
+                        to <input type="number" name="yMax"></label>
+                    <label class="checkbox">Show split line:
+                        <input type="checkbox" style="width: 70px;" name="showYSplitLine"></label>
+                    <button title="To set scale to default, then click apply" onclick="autoChartScale()">Autoscale</button><br>
+                    <label class="checkbox">Ticks Inside:
+                        <input type="checkbox" style="width: 70px;" name="ticksInside"></label>
+                    <label class="checkbox">Show Set1 Text:
+                        <input type="checkbox" style="width: 70px;" name="showText1" checked></label>
+                    <label class="checkbox">Show set2 Text:
+                        <input type="checkbox" style="width: 70px;" name="showText2" checked></label>
+                    <label class="checkbox">Show Title:
+                        <input type="checkbox" style="width: 70px;" name="showTitle" checked></label>
+                    <label class="checkbox">Show Data Labels:
+                        <input type="checkbox" style="width: 70px;" name="showLabel" checked></label>
+                </div>
+                <div id="scatters-setting-in-dialog" class="setting-dialog" style="height: 500px" hidden>
+                    <h4 id="scatter-series-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+                    <label>Size <input type="number" name="symbolSize" min="1"></label><br>
+                    <label>Color <input type="color" name="fillingColor"></label>
+                    <label>Border Color <input type="color" name="borderColor"></label>
+                    <label>Border Width <input type="number" name="borderWidth"></label>
+                    <label>Opacity <input type="number" name="opacity" min="0" max="1" step="0.1"></label>
+                    <label class="checkbox">Show Error Bar:
+                        <input type="checkbox" style="width: 70px;" name="showErrBar" checked></label>
+                    <label class="checkbox">Show Error Ellipse:
+                        <input type="checkbox" style="width: 70px;" name="showEllipse" checked></label>
+                </div>
+                <div id="lines-setting-in-dialog" class="setting-dialog"  style="height: 500px" hidden>
+                    <h4 id="line-series-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+                    <label>Width <input type="number" name="lineWidth" min="1"></label>
+                    <label>Color <input type="color" name="lineColor"></label>
+                    <label>Type <select name="lineType">
+                        <option value="solid">solid</option>
+                        <option value="dashed">dashed</option>
+                        <option value="dotted">dotted</option>
+                    </select></label>
+                </div>
+                <div id="texts-setting-in-dialog" class="setting-dialog"  style="height: 500px" hidden>
+                    <h4 id="text-element-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+                    <label>Bold <select name="textWeight">
+                        <option value="bold">bold</option>
+                        <option value="normal">normal</option>
+                        <option value="bolder">bolder</option>
+                        <option value="lighter">lighter</option>
+                    </select></label>
+                    <label>Size <input type="number" name="textSize" min="1"></label>
+                    <label>Font <input type="text" name="textFamily"></label>
+                    <label>Color <input type="color" name="textColor"></label>
+                    <label>Content <textarea name="textContent" rows="6"></textarea></label>
+                </div>
+                <div id="custom-setting-in-dialog" class="setting-dialog"  style="height: 500px" hidden>
+                    <h4 id="custom-series-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+{#                    <label>Width <input type="number" name="errLineWidth" min="1"></label>#}
+                    <label>Color <input type="color" name="errLineColor"></label>
+
+                </div>
+{#                <div style="height: 50px"></div>#}
+{#                <div style="position:fixed; top: 760px">#}
+                    <button class="btn btn-primary" value="confirm" onclick="applySettingDialog()">Apply</button>
+                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+{#                </div>#}
+            </dialog>
+            <dialog id="3DfigurePropertiesDialog" class="setting-attr-dialog">
+                <h3>Properties Dialog</h3>
+                <div id="3Daxis-setting-in-dialog" class="setting-dialog" style="height: 500px">
+                    <h5>X Axis [36/40]</h5>
+                    <label>Scale from <input type="number" name="3d_xMin">
+                        to <input type="number" name="3d_xMax"></label>
+                    <h5>Y Axis [38/40]</h5>
+                    <label>Scale from <input type="number" name="3d_yMin">
+                        to <input type="number" name="3d_yMax"></label>
+                    <h5>Z Axis [39/40]</h5>
+                    <label>Scale from <input type="number" name="3d_zMin">
+                        to <input type="number" name="3d_zMax"></label>
+                </div>
+                <div style="height: 50px"></div>
+                <div style="position:fixed; top: 760px">
+                    <button class="btn btn-primary" value="confirm" onclick="apply3DSetting()">Apply</button>
+                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+                </div>
+            </dialog>
+            <dialog id="degasPatternPropertiesDialog" class="setting-attr-dialog">
+                <h3>Properties Dialog</h3>
+                <label for="ar36a"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar36a" value="Ar36a"><span> Ar36a</span><br>
+                <label for="ar37ca"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar37ca" value="Ar37Ca"><span> Ar37Ca</span><br>
+                <label for="ar38cl"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar38cl" value="Ar38Cl"><span> Ar38Cl</span><br>
+                <label for="ar39k"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar39k" value="Ar39K"><span> Ar39K</span><br>
+                <label for="ar40r"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar40r" value="Ar36a"><span> Ar40r</span><br>
+                <label for="ar36"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar36a" value="Ar36a"><span> Ar36</span><br>
+                <label for="ar37"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar37ca" value="Ar37Ca"><span> Ar37</span><br>
+                <label for="ar38"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar38cl" value="Ar38Cl"><span> Ar38</span><br>
+                <label for="ar39"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar39k" value="Ar39K"><span> Ar39</span><br>
+                <label for="ar40"></label><input class="degas" onchange="changeDegasPlot()" type="checkbox" id="ar40r" value="Ar36a"><span> Ar40</span><br>
+
+                <div style="height: 50px"></div>
+                <div style="position:fixed; top: 760px">
+                    <button class="btn btn-primary" value="confirm" onclick="">Apply</button>
+                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+                </div>
+            </dialog>
+            <dialog id="ageDistributionPropertiesDialog" class="setting-attr-dialog">
+                <h3>Properties Dialog</h3>
+                <div id="figure-9-axis-setting" class="setting-dialog" style="height: 500px">
+                    <h5>X Axis</h5>
+                    <label>Scale from <input type="number" name="xMin">
+                        to <input type="number" name="xMax"></label>
+                    <label class="checkbox">Show split line:
+                        <input type="checkbox" style="width: 70px;" name="showXSplitLine"></label>
+                    <h5>Y Axis</h5>
+                    <label>Scale from <input type="number" name="yMin">
+                        to <input type="number" name="yMax"></label>
+                    <label class="checkbox">Show split line:
+                        <input type="checkbox" style="width: 70px;" name="showYSplitLine"></label>
+                    <button onclick="autoChartScale()">Autoscale</button><br>
+                    <label class="checkbox">Ticks Inside:
+                        <input type="checkbox" style="width: 70px;" name="ticksInside"></label>
+                    <label class="checkbox">Show Title:
+                        <input type="checkbox" style="width: 70px;" name="showTitle" checked></label>
+                    <label class="checkbox">Show Text:
+                        <input type="checkbox" style="width: 70px;" name="showText1" checked></label>
+{#                    <label class="checkbox">Show set2 Text:#}
+{#                        <input type="checkbox" style="width: 70px;" name="showText2" checked></label>#}
+                </div>
+                <div id="agebar-setting-in-dialog" class="setting-dialog" style="height: 500px">
+                    <h4 id="agebar-element-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+                    <label>Vertical Align <select name="verticalAlign"><br>
+{#                        <option value="middle">middle</option>#}
+{#                        <option value="top">top</option>#}
+                        <option value="bottom">bottom</option>
+                        <option value="spread">spread</option>
+                    </select></label>
+                    <label>Bar Interval <input type="number" name="barInterval"></label><br>
+                    <label>Bar Height <input type="number" name="barHeight"></label><br>
+                    <br>
+                    <label>Color <input type="color" name="fillingColor"></label><br>
+                    <label>Border Color <input type="color" name="borderColor"></label><br>
+                    <label>Border Width <input type="number" name="borderWidth"></label><br>
+                    <label>Border Type <select name="borderType"><br>
+                        <option value="solid">solid</option>
+                        <option value="dashed">dashed</option>
+                        <option value="dotted">dotted</option>
+                    </select></label>
+                    <label>Opacity <input type="number" name="opacity" min="0" max="1" step="0.1"></label><br>
+                </div>
+                <div id="histogram-setting-in-dialog" class="setting-dialog" style="height: 500px">
+                    <h4 id="histogram-element-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+                    <label>Bin Starting Point <input type="number" name="binStart"></label>
+                    <label>Rule <select name="binRule">
+                        <option value="square-root">square-root</option>
+                        <option value="sturges">sturges</option>
+                        <option value="rice">rice</option>
+                        <option value="scott">scott</option>
+                        <option value="none">none</option>
+                    </select></label>
+                    <label>Number of Bins <input type="number" name="binCount"></label>
+                    <label>Width of Bins <input type="number" name="binWidth"></label><br><br>
+                    <label>Color <input type="color" name="fillingColor"></label><br>
+                    <label>Border Color <input type="color" name="borderColor"></label>
+                    <label>Border Width <input type="number" name="borderWidth"></label>
+                    <label>Border Type <select name="borderType">
+                        <option value="solid">solid</option>
+                        <option value="dashed">dashed</option>
+                        <option value="dotted">dotted</option>
+                    </select></label>
+                    <label>Opacity <input type="number" name="opacity" min="0" max="1" step="0.1"></label>
+                    <label class="checkbox">Show Labels:
+                        <input type="checkbox" style="width: 70px;" name="showLabel" checked></label>
+                    <label>Label Color <input type="color" name="labelColor"></label>
+                    <br>
+                </div>
+                <div id="kde-setting-in-dialog" class="setting-dialog" style="height: 500px">
+                    <h4 id="kde-element-name">Series Name</h4><label style="color:gray;"><small>(series name)</small></label><br>
+                    <label>Kernel <select name="bandKernel">
+                        <option value="normal">normal</option>
+                        <option value="epanechnikov">epanechnikov</option>
+                        <option value="uniform">uniform</option>
+                        <option value="triangular">triangular</option>
+                    </select></label>
+                    <label>Auto Width <select name="bandAutoWidth">
+                        <option value="Scott">Scott</option>
+                        <option value="Silverman">Silverman</option>
+                        <option value="none">none</option>
+                    </select></label>
+                    <label>Width of Bands <input type="number" name="bandWidth" min="0"></label><br>
+                    <label>Number of density points <input type="number" name="bandPoints" min="50"></label>
+                    <label class="checkbox">Extend to Xaxis:
+                        <input type="checkbox" style="width: 70px;" name="bandExtend"></label>
+                    <label class="checkbox">Scale to Maximum:
+                        <input type="checkbox" style="width: 70px;" name="bandMaximize"></label><br>
+                    <label>Color <input type="color" name="lineColor"></label>
+                    <label>Line Width <input type="number" name="lineWidth" min="1"></label>
+                    <label>Line Type <select name="lineType">
+                        <option value="solid">solid</option>
+                        <option value="dashed">dashed</option>
+                        <option value="dotted">dotted</option>
+                    </select></label>
+                    <label>Opacity <input type="number" name="opacity" min="0" max="1" step="0.1"></label>
+                </div>
+
+                <div style="height: 50px"></div>
+                <div style="position:fixed; top: 760px">
+                    <button class="btn btn-primary" value="confirm" onclick="applySettingDialog()">Apply</button>
+                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+                </div>
+            </dialog>
+        </div>
+    </div>
+
+    <br>
+    <div>
+        <a id="export_path_link" href="/user/SAMPLE%20NAME.arr" class="sr-only" download></a>
+        <pre id="example_console" class="pre" style="float: left; width: 30%">console log</pre>
+        <div id="table_btn_div" style="float: left; position: relative; left: 8%;">
+            <button title="Save changes you made on the table, will not recalculate automatically" type="button" class="btn btn-default" onclick="clickSaveTable()">Save changes</button>
+            <button title="Change irradiation params" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
+            <button title="Change calculation params" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
+            <button title="Change other calculation settings" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
+            <button title="Open recalculation modal" type="button" class="btn btn-default" data-toggle="modal" data-target="#recalculationModal">Recalculate</button>
+            <button title="Open exporting modal dialog" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
+        </div>
+        <div id="figure_btn_div" style="float: left; position: relative; left: 5%;" hidden>
+            <button title="Change irradiation params" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
+            <button title="Change calculation params" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
+            <button title="Change other calculation settings" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
+            <button title="Open recalculation modal" type="button" class="btn btn-default" data-toggle="modal" data-target="#recalculationModal">Recalculate</button>
+            <button title="Change styles of plots" type="button" class="btn btn-default" onclick="clickEditFigureStyle()">Styles</button>
+            <button title="Copy current figure to clipboard" type="button" class="btn btn-default" onclick="saveChart(false)">Copy</button>
+{#            <button title="Export current figure as a Vector Graphics file" type="button" class="btn btn-default" onclick="saveChart(true)">SVG</button>#}
+{#            <button title="Export current figure as a PDF file" type="button" class="btn btn-default" onclick="exportSmp(url_export_pdf)">PDF</button>#}
+            <button title="Open exporting modal dialog" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
+        </div>
+        <pre id="sample_name_console" class="pre" style="float: right; width: 15%">Sample Name</pre>
+    </div>
+
+    <div class="modal fade" id="editIrraParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- /.modal 辐照参数设置 -->
+        <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-irradiation-params">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Irradiation Parameters</h4>
+                </div>
+                <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                    <div style="padding-right: 15px; padding-left: 30px;">
+                        <div class="radio form-inline">
+                            <label>
+                                <input type="radio" name="irraParamsRadio" id="irraParamsRadio1" value="option1" onchange="paramsRadioChanged('irra')" checked>
+                                Use an Irradiation Project
+                            </label>
+                            <select class="form-control" id="irraProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                                {% for each in allIrraNames %}
+                                    <option>{{ each }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="irraParamsRadio" id="irraParamsRadio2" value="option2" onchange="paramsRadioChanged('irra')">
+                                Use Input Params
+                            </label>
+                        </div>
+                        {% include "irradiation_setting_modal_body_div.html" %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <br>
+                    <div style="text-align: center">
+                        <label>
+                            <input type="checkbox" value="" checked hidden>
+                            Attention: Recalculation will not be applied automatically, please click recalculate after parameter changes
+                        </label>
+                        <button type="button" class="btn btn-primary" value="Apply" data-dismiss="modal" onclick="readParams('irra')">Apply</button>
+                        <button type="button" class="btn btn-primary" value="Close" data-dismiss="modal" onclick="">Close</button>
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+    <div class="modal fade" id="editCalcParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- /.modal 计算参数设置 -->
+        <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-calc-params">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Calculation Parameters</h4>
+                    </div>
+                    <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                        <div style="padding-right: 15px; padding-left: 30px;">
+                            <div class="radio form-inline">
+                                <label>
+                                    <input type="radio" name="calcParamsRadio" id="calcParamsRadio1" value="option1" onchange="paramsRadioChanged('calc')" checked>
+                                    Use an Calculation Project
+                                </label>
+                                <select class="form-control" id="calcProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                                    {% for each in allCalcNames %}
+                                        <option>{{ each }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="calcParamsRadio" id="calcParamsRadio2" value="option2" onchange="paramsRadioChanged('calc')">
+                                    Use Input Params
+                                </label>
+                            </div>
+                            {% include "calculation_setting_modal_body_div.html" %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <br>
+                        <div style="text-align: center">
+                            <label>
+                                <input type="checkbox" value="" checked hidden>
+                                Attention: Recalculation will not be applied automatically, please click recalculate after params changes
+                            </label>
+                            <button type="button" class="btn btn-primary" value="Apply" data-dismiss="modal" onclick="readParams('calc')">Apply</button>
+                            <button type="button" class="btn btn-primary" value="Close" data-dismiss="modal" onclick="">Close</button>
+                        </div>
+
+                    </div>
+                </div><!-- /.modal-content -->
+        </div>
+    </div>
+    <div class="modal fade" id="editSmpParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-smp-params">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sample Specific Settings</h4>
+                </div>
+
+                <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                    <div style="padding-right: 15px; padding-left: 30px;">
+                        <div class="radio form-inline">
+                            <label>
+                                <input type="radio" name="smpParamsRadio" id="smpParamsRadio1" value="option1" onchange="paramsRadioChanged('smp')" checked>
+                                Use an Calculation Project
+                            </label>
+                            <label for="smpProjectName"></label>
+                            <select class="form-control" id="smpProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                                {% for each in allSmpNames %}
+                                    <option>{{ each }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="smpParamsRadio" id="smpParamsRadio2" value="option2" onchange="paramsRadioChanged('smp')">
+                                Use Input Params
+                            </label>
+                        </div>
+                        {% include "sample_setting_modal_body_div.html" %}
+                </div>
+            </div>
+
+                <div class="modal-footer">
+                    <br>
+                    <div style="text-align: center">
+                        <label>
+                            <input type="checkbox" value="" checked hidden>
+                            Attention: Recalculation will not be applied automatically, please click recalculate after params changes
+                        </label>
+                        <button type="button" class="btn btn-primary" value="Apply" data-dismiss="modal" onclick="readParams('smp')">Apply</button>
+                        <button type="button" class="btn btn-primary" value="Close" data-dismiss="modal" onclick="">Close</button>
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+    <div class="modal fade" id="inputExportChoiceModal" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Export</h4>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="modal-body modal-div">
+                        <p><span style="font-weight: bold">Download .Arr </span>
+                            (with a single click, or right click and
+                            <span style="font-weight: bold">Save Link As...</span>)</p>
+                        <a id="download-arr" href="" download>Link</a><br><br>
+                        <p><span style="font-weight: bold">Other formats:</span></p>
+                        <label>
+                            <select class="form-control" id="exportChoicesLabel">
+                                <option selected>Excel (.xls)</option>
+{#                                <option>OriginPro (.opju)</option>#}
+                                <option>Single PDF (.pdf)</option>
+{#                                <option>Merged PDF (.pdf)</option>#}
+                                <option>Single SVG (.svg)</option>
+                        </select></label>
+                        <button type="button" class="btn btn-default" value="Download" onclick="clickExportBtn()">Download</button>
+                        <p>Notes:</p>
+                        <ul><li><strong>Excel (.xls)</strong>: A Excel workbook with many worksheets, containing all values of this Sample Object, as well as 2D figures.</li></ul>
+                            <p>Exporting the current plot to:</p>
+                        <ul>
+                            <li><strong>SVG (.svg)</strong>: get what you see. Svg files can be open and edited with CorelDRAW and Adobe Illustrator.</li>
+                            <li><strong>PDF (.pdf)</strong>: get a publication-quality figure with built-in configurations,
+                            PDF files are editable with Adobe Acrobat and Illustrator.</li>
+                        </ul>
+                        <p><em>Exporting 3D plot is not available.</em></p>
+
+
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" value="Reset">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <div class="modal fade" id="recalculationModal" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Recalculation Options</h4>
+                </div>
+                <div class="modal-body modal-page-size">
+                    <p>Selecting recalculation procedures based on the modification you made.</p>
+                    <p>Important Information: an inappropriate choice will make unintended errors.</p>
+
+                    <form id="recalculationForm" method="post" enctype="multipart/form-data">
+                        <p>------------------------------------------</p>
+                        <div class="checkbox">
+                            <label title="Used to check for missing attributes in the current Arr file, will not modify any data that aready defined">
+                                <input type="checkbox" class="calc-check-box">
+                                Reset Arr Attributes
+                            </label>
+                        </div>
+                        <p>------------------------------------------</p>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Correction Blank
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Correction Mass Discrimination
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Correction Decay
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Degas Ca
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Degas K
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Degas Cl
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Degas atm
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Degas r
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Ratio
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Recalculate Apparent Ages
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Using Monte Carlo simulation for calculating errors of 40Arr/39Ark
+                            </label>
+                        </div>
+                        <p>------------------------------------------</p>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Reset Plot Data
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Reset Figure Style
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Reset Table Data
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="calc-check-box">
+                                Reset Table Style
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" value="Apply" onclick="clickRecalc()">Apply</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+</div>
+<script>
+    let sampleComponents = {{ sampleComponents | safe }};
+    let sampleComponentsBackup = JSON.parse(JSON.stringify(sampleComponents));
+    console.log(sampleComponents);
+    let cache_key = {{ cache_key | safe }};
+    let isochronLine1Btn = document.getElementById('isochronSetRadio1');
+    let isochronLine2Btn = document.getElementById('isochronSetRadio2');
+
+    let tableContainer = $('#table_container');
+    let figureContainer = $('#figure_container');
+    let figure3DContainer = $('#figure_3D_container');
+    let figureRightContainer = $('#figure_right_container');
+    let sampleInfoContainer = $('#sample_info_container');
+    let tableBtnDiv = $('#table_btn_div');
+    let figureBtnDiv = $('#figure_btn_div');
+    let exampleConsole = document.getElementById('example_console');
+
+    let ctrlIsPressed = false
+    let isochron_marks_changed = false
+    let rowHeaders = [];
+    let default_row_count = 32;
+    let colHeaders = [];
+    let data = [];
+    // create handsontableW
+    let rows_to_delete = [];
+    let hot = new Handsontable(document.getElementById('table_container'), {
+        data: data,  // 内容
+        rowHeaders: rowHeaders,  // 行标题
+        colHeaders: colHeaders,  // 列标题
+        // contextMenu: true,  // 右键菜单
+        contextMenu: {
+            items: {
+                "remove_row" : {
+                    name: "Remove row",
+                    callback: handsontableRemoveRow,
+                }
+            }
+        },
+        licenseKey: 'non-commercial-and-evaluation',
+        className: 'htLeft htMiddle',
+        renderAllRows: true,
+        viewportColumnRenderingOffset: 120,  // 渲染视图之外的列，解决滑动时的卡顿
+        afterChange: (changes) => {
+            changes?.forEach(([row, prop, oldValue, newValue]) => {
+                if (getCurrentTableId() !== '7' || oldValue === newValue || prop !== 2) {return}
+                isochron_marks_changed = true;  // Mark isochron table changs
+            });
+        }
+    });
+
+    let tooltipText = '';
+    let text_set1_ondragging = false;
+    let text_set2_ondragging = false;
+    let offset = [0, 0];
+    let current_figure = () => (sampleComponents[getCurrentTableId()]);
+    let chart = echarts.init(document.getElementById('figure_container'), null, {renderer: 'svg'}); // svg渲染适合小数据，更清晰
+    // 2023.7.24: svg渲染不支持3D图形
+    let chart_3D = echarts.init(document.getElementById('figure_3D_container'));
+    // 响应浏览器尺寸变化
+    window.onresize = function() {
+        chart.resize();
+        chart_3D.resize();
+    };
+    // 鼠标响应事件
+    let chart_on_clicked = function (params) {
+        {#let dialog = document.getElementById('figurePropertiesDialog');#}
+        {#let figure_9_dialog = document.getElementById('ageDistributionPropertiesDialog');#}
+        let has_dialog_opened = false;
+        for (let ele of document.getElementsByClassName('setting-attr-dialog')) {
+            ele.open?has_dialog_opened=true:null;
+        }
+        if (has_dialog_opened) {
+            switch (params.componentType) {
+                case "series":
+                    params.seriesName.includes('Text') ? dispatchClickComponents(params, 'text') : dispatchClickComponents(params, params.seriesType)
+                    break
+                case "title":
+                    {#console.log(params);#}
+                    dispatchClickComponents(params, 'text', 'title')
+                    break
+            }
+        } else {
+            if (params.seriesName === 'Points Set 1' || params.seriesName === 'Points Set 2' || params.seriesName === 'Unselected Points'){
+                clickPoints(params)
+            } else {}
+        }
+    }
+    chart.on('click', chart_on_clicked);
+    chart.on('mouseover', 'series.line', function (params) {
+        if (['figure_1'].includes(getCurrentTableId())) {
+            //pass
+        } else {
+            let data = params.seriesName === 'Line for Set 1'?current_figure().line1.data:params.seriesName === 'Line for Set 2'?current_figure().line2.data:[];
+            if (data.length !== 0) {
+                let slope = (data[1][1]-data[0][1])/(data[1][0]-data[0][0]);
+                let intercept = data[0][1] - data[0][0] * slope;
+                tooltipText = `${params.seriesName}<br />y = ${slope} * x ${intercept>0?'+ '+intercept:intercept<0?'- '+(-intercept):''}`
+            }
+        }
+    });
+    chart.on('mouseover', 'series.scatter', function (params) {
+        if (params.seriesName.includes('Text')) {return}
+        tooltipText = `${params.seriesName}<br />x = ${params.data[0]}<br />y = ${params.data[2]}`;
+    });
+    chart.on('mouseover', {seriesName: 'Error Lines'}, function (params) {
+        let p_1 = params.data[1] / params.data[0] * 100;
+        let p_2 = params.data[3] / params.data[2] * 100;
+        tooltipText = `${params.seriesName}<br />x: ± ${params.data[1]}, ${p_1.toFixed(2)}%<br />y: ± ${params.data[3]}, ${p_2.toFixed(2)}%`;
+    });
+    chart.on('mouseout', function (params) {
+        tooltipText = '';
+    });
+    chart.on('mousedown', {seriesId: 'Text for Set 1'}, function (params) {
+        chart_on_clicked(params);
+        let pos = chart.convertToPixel({xAxisIndex: 2, yAxisIndex: 2}, getSeriesById('Text for Set 1', chart.getOption().series).data[0]);
+        let offsetX = params.event.offsetX - pos?.[0];
+        let offsetY = params.event.offsetY - pos?.[1];
+        offset = [offsetX, offsetY];
+        text_set1_ondragging = true;
+    });
+    chart.on('mousedown', {seriesId: 'Text for Set 2'}, function (params) {
+        chart_on_clicked(params);
+        let pos = chart.convertToPixel({xAxisIndex: 2, yAxisIndex: 2}, getSeriesById('Text for Set 2', chart.getOption().series).data[0]);
+        let offsetX = params.event.offsetX - pos?.[0];
+        let offsetY = params.event.offsetY - pos?.[1];
+        offset = [offsetX, offsetY];
+        text_set2_ondragging = true;
+    });
+    chart.getZr().on('mousemove', function (params) {
+        if (text_set1_ondragging) {
+            let pos = chart.convertFromPixel({xAxisIndex: 2, yAxisIndex: 2}, [params.event.zrX - offset[0], params.event.zrY - offset[1]]);
+            chart.setOption({series: [{id: 'Text for Set 1', data: [pos], animation: false}]});
+        }
+        if (text_set2_ondragging) {
+            let pos = chart.convertFromPixel({xAxisIndex: 2, yAxisIndex: 2}, [params.event.zrX - offset[0], params.event.zrY - offset[1]]);
+            chart.setOption({series: [{id: 'Text for Set 2', data: [pos], animation: false}]});
+        }
+    });
+    chart.getZr().on('mouseup', function (params) {
+        if (text_set1_ondragging) {
+            let pos = chart.convertFromPixel({xAxisIndex: 2, yAxisIndex: 2}, [params.event.zrX - offset[0], params.event.zrY - offset[1]]);
+            let diff = {};
+            diff[getCurrentTableId()] = {'text1': {'pos': pos}};
+            sendDiff(diff);
+            text_set1_ondragging = false;
+        }
+        if (text_set2_ondragging) {
+            let pos = chart.convertFromPixel({xAxisIndex: 2, yAxisIndex: 2}, [params.event.zrX - offset[0], params.event.zrY - offset[1]]);
+            let diff = {};
+            diff[getCurrentTableId()] = {'text2': {'pos': pos}};
+            sendDiff(diff);
+            text_set2_ondragging = false;
+        }
+    });
+
+    // Check whether control button is pressed
+    document.onkeydown = function (event) {
+        if (event.code === 'ControlLeft' && ! ctrlIsPressed){
+            ctrlIsPressed = true;
+        }
+    }
+    document.onkeyup = function (event) {
+        if (event.code === 'ControlLeft' && ctrlIsPressed){
+            ctrlIsPressed = false;
+        }
+    }
+
+    // Export modal listener
+    $("#inputExportChoiceModal").on("shown.bs.modal", async function () {
+        exportSmp(url_export_arr, false);
+    });
+
+    // 生成浏览器指纹
+    if (window.requestIdleCallback) {
+        requestIdleCallback(function () {
+            Fingerprint2.get(function (components) {
+                let values = components.map(components => components.value);
+                let fingerprint = Fingerprint2.x64hash128(values.join(''), 31);  // 生成指纹
+                $('#inputFingerprint').val(fingerprint)
+                localStorage.setItem('fingerprint', fingerprint)
+            })
+        })
+    } else {
+        setTimeout(function () {
+            Fingerprint2.get(function (components) {
+                let values = components.map(components => components.value);
+                let fingerprint = Fingerprint2.x64hash128(values.join(''), 31);  // 生成指纹
+                $('#inputFingerprint').val(fingerprint)
+                localStorage.setItem('fingerprint', fingerprint)
+            })
+        }, 500)
+    }
+</script>
+
+{% endblock %}

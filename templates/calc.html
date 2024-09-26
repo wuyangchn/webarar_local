@@ -1,0 +1,221 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<script>
+    function show_loading(id) {
+        // http://www.htmleaf.com/jQuery/Buttons-Icons/201506232089.html
+        let l = Ladda.create(document.querySelector(id));
+        l.start();
+    }
+
+    function set_form_trigger(flag){
+        document.getElementById('button_index').value = flag.toString()
+    }
+
+    $(document).ready(function(){
+       $('#file-btn-1').click(function(){$('#file-submit').click()});
+       $('#file-btn-2').click(function(){$('#file-input-2').click()});
+       $('#file-btn-3').click(function(){$('#file-input-3').click()});
+       $('#file-btn-4').click(function(){$('#file-input-4').click()});
+    });
+    $(document).ready(function(){
+       $('#file-input-2').change(function(){show_loading("#file-btn-2");$('#file-submit').click()});
+       $('#file-input-3').change(function(){show_loading("#file-btn-3");$('#file-submit').click()});
+       $('#file-input-4').change(function(){show_loading("#file-btn-4");$('#file-submit').click()});
+    });
+    $(document).ready(function(){
+       $('#file-btn-5').click(function(){show_loading("#file-btn-5");$('#file-submit').click()});
+       $('#file-btn-6').click(function(){show_loading("#file-btn-6");$('#file-submit').click()});
+    });
+</script>
+
+<div class="jumbotron" style="height: 830px">
+    <div class="container">
+{#        <h2 class="text-center" style="color: #c0c0c0">Start from...</h2>#}
+        <div class="upload-drop-zone" id="drop-zone">
+            <h4 style="padding-top: 60px">Drag one or more files <i>here</i>.</h4>
+            <h4>.arr .xls and .age are supported, and size should not exceed 5 MB</h4>
+        </div>
+        <div class="text-center">
+            {% csrf_token %}
+            <form id="obj_choice_form" class="form-inline" method="post" enctype="multipart/form-data">
+                <br><div class="row">
+                    <div class="form-group">
+                        <label for="text-input-1" class="sr-only"></label><input type="hidden" id="text-input-1" name="fingerprint" value="fingerprint">
+                        <label for="button_index" class="sr-only"></label><input type="text" style="display: none" id="button_index" name="flag" value="">
+                        <button id="file-btn-1" type="button" class="btn btn-primary btn-lg ladda-button" data-style="zoom-out" onclick="set_form_trigger('open_raw_file')">
+                            <span class="ladda-label">Mass Spec Raw Files</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <button id="file-btn-2" type="button" class="btn btn-primary btn-lg ladda-button" data-style="zoom-out" onclick="set_form_trigger('open_arr_file')">
+                            <span class="ladda-label">Open WebArAr<span style="color: red; font-weight: bolder">.arr</span></span>
+                        </button>
+                        <input type="file" style="display: none" id="file-input-2" name="arr_file" accept=".arr">
+                    </div>
+                    <div class="form-group">
+                        <button id="file-btn-3" type="button" class="btn btn-primary btn-lg ladda-button" data-style="zoom-out" onclick="set_form_trigger('open_full_xls_file')">
+                            <span class="ladda-label">Open ArArCALC<span style="color: red; font-weight: bolder">.full.xls</span></span>
+                        </button>
+                        <input type="file" style="display: none" id="file-input-3" name="full_xls_file" accept=".xls">
+                    </div>
+                    <div class="form-group">
+                        <button id="file-btn-4" type="button" class="btn btn-primary btn-lg ladda-button" data-style="zoom-out" onclick="set_form_trigger('open_age_file')">
+                            <span class="ladda-label">Open ArArCALC<span style="color: red; font-weight: bolder">.age</span></span>
+                        </button>
+                        <input type="file" style="display: none" id="file-input-4" name="age_file" accept=".age">
+                    </div>
+                </div>
+                <br><div class="row">
+                    <div class="form-group">
+                        <button id="file-btn-5" type="button" class="btn btn-primary btn-lg ladda-button" data-style="zoom-out" onclick="set_form_trigger('open_current_file')">
+                            <span class="ladda-label">The <span style="color: red; font-weight: bolder">Current</span> File</span>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <button id="file-btn-6" type="button" class="btn btn-primary btn-lg ladda-button" data-style="zoom-out" onclick="set_form_trigger('open_new_file')">
+                            <span class="ladda-label">New</span>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" id="file-submit" form="obj_choice_form" class="btn btn-primary" style="display: none"></button>
+            </form>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Irradiation Params</h3>
+                        <p style="font-size: small">
+                            - Irradiation Time<br>
+                            - Correction Factors<br>
+                            - ...<br>
+                        </p>
+                        <p>
+                            <a href="{% url 'params_views' 'show_irra' %}" class="btn btn-primary" role="button">Edit</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Calculation Params</h3>
+                        <p style="font-size: small">
+                            - Decay Constants<br>
+                            - Isotopic Mass<br>
+                            - ...<br>
+                        </p>
+                        <p>
+                            <a href="{% url 'params_views' 'show_calc' %}" class="btn btn-primary" role="button">Edit</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Sample Params</h3>
+                        <p style="font-size: small">
+                            - J Value<br>
+                            - Other Options<br>
+                            - ...<br>
+                        </p>
+                        <p>
+                            <a href="{% url 'params_views' 'show_smp' %}" class="btn btn-primary" role="button">Edit</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Raw Data Input Filter</h3>
+                        </p><br>
+                        <p>
+                            <a href="{% url 'params_views' 'show_input_filter' %}" class="btn btn-primary" role="button">Edit</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Draw PDF Figures</h3>
+                        </p><br>
+                        <p>
+                            <a href="{% url 'params_views' 'show_export_pdf' %}" class="btn btn-primary" role="button">Edit / Plot</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h3>Ar-Ar thermochronometry</h3>
+                        </p><br>
+                        <p>
+                            <a href="{% url 'thermo_home' %}" class="btn btn-primary" role="button">Edit / Plot</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    if (window.requestIdleCallback) {
+        requestIdleCallback(function () {
+            Fingerprint2.get(function (components) {
+                const values = components.map(components => components.value);
+                const fingerprint = Fingerprint2.x64hash128(values.join(''), 31);  // 生成指纹
+                $('#text-input-1').val(fingerprint);
+            })
+        });
+    } else {
+        setTimeout(function () {
+            Fingerprint2.get(function (components) {
+                const values = components.map(components => components.value);
+                const fingerprint = Fingerprint2.x64hash128(values.join(''), 31);  // 生成指纹
+                $('#text-input-1').val(fingerprint);
+            })
+        }, 500)
+    }
+    // 初始化文件选择框
+    $('#file-input-1').val('');
+    $('#file-input-2').val('');
+    $('#file-input-3').val('');
+    $('#button_index').val('');
+
+    let drop_zone = document.getElementById('drop-zone');
+    drop_zone.ondrop = function(e) {
+        this.className = 'upload-drop-zone';
+        dropHandler(e);
+    }
+    drop_zone.ondragover = function(e) {
+        this.className = 'upload-drop-zone drop';
+        dragOverHandler(e);
+        return false;
+    }
+    drop_zone.ondragleave = function() {
+        this.className = 'upload-drop-zone';
+        return false;
+    }
+
+    $(document).ready(function(){
+        try {
+            let msg = {{ type|default:"nothing"}};
+            if (msg!=="nothing") {
+                alert(`{{ type | safe }}: {{ message | safe}}`)
+            }
+        } catch (e) {
+            // pass
+        }
+    });
+
+</script>
+
+{% endblock %}

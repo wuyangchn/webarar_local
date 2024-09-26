@@ -1,0 +1,88 @@
+<h1 id="webarar">WebArAr</h1>
+<p><a href="/doc/en">English</a></p>
+<h2 id="introduciton">介绍</h2>
+<p>WebArAr是一个基于<a href="https://www.djangoproject.com/">Django</a> 框架的网络应用程序，用于
+<sup>40</sup>Ar/<sup>39</sup>Ar 地质年代学数据处理。</p>
+<ul>
+<li>后端的主要程序打包成名为 <a href="https://github.com/wuyangchn/ararpy.git">ArArPy</a> 的Python库，
+已经发布到 <a href="https://pypi.org/project/ararpy/">PyPi</a> ，可通过pip安装。</li>
+<li>Django框架、Bootstrap、Echarts、Bootstrap-table 等提供了直观的交互界面。</li>
+</ul>
+<p>访问 <a href="https://www.webarar.net">WebArAr</a></p>
+<h2 id="背景">背景</h2>
+<p>本项目源于更新和增强现有的 <sup>40</sup>Ar/<sup>39</sup>Ar 测年数据处理工具的需要。
+总的来说，ArArCALC 和 Isoplot/IsoplotR 已在该领域得到广泛应用。
+然而，有几个因素使得这些工具不足以满足不断变化的需求：
+(1) ArArCALC 和 Isoplot 是为Microsoft Excel 早期版本（如 Excel 2003）开发的宏工具。
+Isoplot 已经不再维护；
+(2) 数据处理软件需要新的功能，例如砸碎实验中氯校正的重要性日益显现，ArArCALC 不足以处理 Cl 相关的图解；
+(3) IsoplotR 非常适合绘图，但缺乏对 <sup>40</sup>Ar/<sup>39</sup>Ar 数据校正和相对复杂计算的支持，例如更改参数重新计算等。
+此外，ArArCALC 和 Isoplot/IsoplotR的等时线回归方式有所不同。</p>
+<p>WebArAr 的主要目的是更进 <sup>40</sup>Ar/<sup>39</sup>Ar 定年新的需求，
+平衡 ArArCALC 和 IsoplotR 的使用体验，并将根据需求不断更新，以服务社区。</p>
+<h2 id="使用">使用</h2>
+<ul>
+<li>请访问 <a href="http://www.webarar.net">http://www.webarar.net</a> 访问本应用程序，可将本域名加入收藏夹。</li>
+<li>详细使用指导请参阅 <a href="/doc/tutorial/zh-cn">教程</a>。</li>
+<li>（可选）在您的计算机上部署并启动 WebArAr 以供离线使用。请参阅 <a href="/doc/deploy/zh-cn">部署</a>.</li>
+<li>（可选）用任意 Python IDE 引用 ArArPy 以使用处理处理功能。请参阅 <a href="#ararpy">ArArPy</a>.<!-- * [Vedio examples]() -->
+</li>
+</ul>
+<h2 id="功能">功能</h2>
+<ul>
+<li>[x] 导入<ul>
+<li>[x] 质谱仪原始文件</li>
+<li>[x] ArArCALC 项目文件 （后缀 .age）</li>
+<li>[x] ArArCALC 导出文件 （后缀 .xls）</li>
+<li>[x] 手动输入</li>
+</ul>
+</li>
+<li>[x] 原始数据处理<ul>
+<li>[x] 外推零时刻截距值</li>
+<li>[x] 本底校正</li>
+<li>[x] 质量歧视校正</li>
+<li>[x] 衰变校正</li>
+<li>[x] 干扰核反应校正</li>
+</ul>
+</li>
+<li>[ ] 计算<ul>
+<li>[x] 年龄计算<ul>
+<li>[x] 常规年龄计算</li>
+<li>[x] Min 计算公式</li>
+<li>[x] Renne 年龄标定</li>
+</ul>
+</li>
+<li>[ ] 等时线拟合<ul>
+<li>[x] 正反等时线</li>
+<li>[x] 氯相关性图解</li>
+<li>[x] York 考虑误差相关性的加权回归</li>
+<li>[ ] 鲁棒回归</li>
+<li>[ ] 其他回归方法</li>
+</ul>
+</li>
+<li>[x] 三维氯校正图解</li>
+<li>[x] 年龄谱<ul>
+<li>[x] 由等时线推导的初始比值再校正年龄坪</li>
+<li>[x] 坪年龄</li>
+</ul>
+</li>
+<li>[x] 卡方检测值和 P 值</li>
+<li>[x] MSWD </li>
+</ul>
+</li>
+<li>[x] 界面、数据表和图解<ul>
+<li>[x] 交互式多表格和图解</li>
+</ul>
+</li>
+<li>[x] 导出<ul>
+<li>[x] XLS：EXCEL 文件，包含所有数据表和图表（除三维图）</li>
+<li>[x] PDF：可由Adobe Acrobat / Illustrator / CorelDRAW 打开根据需要再编辑</li>
+<li>[x] SVG：轻量化</li>
+<li>[ ] 三维图尚不能导出</li>
+</ul>
+</li>
+</ul>
+<h2 id="更新记录">更新记录</h2>
+<p>请查看 <a href="/doc/update_log">更新记录</a></p>
+<h2 id="引用-webarar-或-ararpy">引用 WebArAr 或 ArArPy</h2>
+<h2 id="参考资料">参考资料</h2>

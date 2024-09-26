@@ -1,0 +1,37 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    {% load static %}
+
+    <div class="doc-left-sidebar">
+        <p><a href="/doc/en">English</a></p>
+        <h2 id="-">目录</h2>
+        <ol>
+        <li><a href="#介绍">介绍</a></li>
+        <li><a href="#背景">背景</a></li>
+        <li><a href="#使用">使用</a></li>
+        <li><a href="#功能">功能</a></li>
+        <li><a href="#更新记录">更新记录</a></li>
+        <li><a href="#引用-webarar-或-ararpy">引用 WebArAr 或 ArArPy</a></li>
+        <li><a href="#参考资料">参考资料</a></li>
+        </ol>
+
+        <h2><a href="/doc/tutorial/zh-cn">使用教程</a></h2>
+        <h2><a href="/doc/deploy/zh-cn">本地部署</a></h2>
+
+    </div>
+
+    <div class="doc-container">
+
+        <div class="container-fluid article-container">
+            <div class="article-content-container">
+                {% include "doc_zh_cn_md.html" %}
+            </div>
+            <div class="article-right-sidebar">
+                <a title="返回顶部" href="#__top__" type="button" class="btn btn-default glyphicon glyphicon-menu-up" aria-hidden="true"></a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends 'calc.html' %}
+
+{% block raw_file_modal %}
+
+<div class="modal" id="modal-settings" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <!-- /.modal 辐照参数设置 -->
+    <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-irradiation-params">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Irradiation Parameters</h4>
+            </div>
+            <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                <div style="padding-right: 15px; padding-left: 30px;">
+                    <div class="radio form-inline">
+                        <label>
+                            <input type="radio" name="paramsRadio" id="irraParamsRadio1" value="option1" onchange="changeSubmitType()" checked>
+                            Edit an Irradiation Project
+                        </label>
+                        <select class="form-control" id="irraProjectName" name="projectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                            {% for each in allIrraNames %}
+                                <option>{{ each }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="paramsRadio" id="irraParamsRadio2" value="option2" onchange="changeSubmitType()">
+                            Create New
+                        </label>
+                    </div>
+
+                    {% include "irradiation_setting_modal_body_div.html" %}
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <br>
+                <div style="text-align: center">
+                    <button type="button" class="btn btn-danger" id="deleteBtn" onclick="submitDelete()">Delete</button>
+                    <a href="{% url 'calc_view' %}"  class="btn btn-default btn-Close">Close</a>
+                    <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitOrSave()">Save</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+
+<div class="modal" id="modal-submit" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Submit: determine a pin</h4>
+            </div>
+            <div class="modal-body" style="padding-left: 15px; padding-right: 15px; overflow: auto">
+                <form autocomplete="off">
+                    <div class="form-group">
+                        <label for="name1">Params Name</label>
+                        <input type="text" class="form-control" id="name1" placeholder="Params Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="pin1">Pin</label>
+                        <input type="password" class="form-control" id="pin1" placeholder="Pin" autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="email1">Email address</label>
+                        <input type="email" class="form-control" id="email1" placeholder="Email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <br>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-Close" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitParamObject('irra')">OK</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+
+<div class="modal" id="modal-save" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <!-- /.modal 辐照参数设置 -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Save: confirm the pin</h4>
+            </div>
+            <div class="modal-body" style="padding-left: 15px; padding-right: 15px; overflow: auto">
+                <form autocomplete="off">
+                    <div class="form-group">
+                        <label for="name2">Params Name</label>
+                        <input type="text" class="form-control" id="name2" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pin2">Pin</label>
+                        <input type="password" class="form-control" id="pin2" placeholder="Pin">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <br>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-Close" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveParamObject('irra')">OK</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+
+<div class="modal" id="modal-delete" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <!-- /.modal 辐照参数设置 -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete: confirm the pin</h4>
+            </div>
+            <div class="modal-body" style="padding-left: 15px; padding-right: 15px; overflow: auto">
+                <form autocomplete="off">
+                    <div class="form-group">
+                        <label for="name3">Params Name</label>
+                        <input type="text" class="form-control" id="name3" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="pin3">Pin</label>
+                        <input type="password" class="form-control" id="pin3" placeholder="Pin">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <br>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-Close" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="deleteParamObject('irra')">Delete</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+
+<script>
+$('#modal-settings').modal('show');
+showParamProject(document.getElementById('irraProjectName'));
+</script>
+
+{% endblock %}

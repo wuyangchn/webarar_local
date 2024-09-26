@@ -1,0 +1,49 @@
+%!
+%%Title: Example 2
+%%Author: Yang
+
+/Times-Roman findfont 
+12 scalefont 
+setfont
+
+%100 200 translate
+%45 rotate
+%4 3 scale
+
+/TEXT {
+newpath
+moveto
+(x xaxis) true charpath
+0.5 setlinewidth
+0.4 setgray
+stroke
+} def
+
+/GRIP {
+newpath
+50 50 moveto
+50 350 lineto
+450 350 lineto
+450 50 lineto
+closepath
+gsave
+1 1 1 setrgbcolor
+fill
+grestore
+1 setlinewidth
+%1.0 0.7 0.0 setrgbcolor
+%0.75 setgray
+stroke
+} def
+
+%0 rotate
+230 35 TEXT
+
+90 rotate
+180 -40 TEXT
+
+-90 rotate
+GRIP
+
+showpage
+

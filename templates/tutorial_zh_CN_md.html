@@ -1,0 +1,368 @@
+{% load static %}
+
+<h3 id="webarar-">WebArAr 使用教程</h3>
+<p><em>本文档更新于 <strong>2024年2月25日</strong></em></p>
+<p><a href="/doc/tutorial">English</a></p>
+
+<h3 id="基本流程">基本流程</h3>
+<ol>
+<li><p><strong>导入数据</strong></p>
+<ul>
+<li><p>支持读取质谱仪输出的<strong>原始文件</strong>：参阅<a href="#导入原始文件">导入原始文件</a>。</p>
+</li>
+<li><p>打开 <strong>arr</strong> 文件：arr 文件是WebArAr保存文件时的格式。参见<a href="#arr文件">arr文件</a>。</p>
+</li>
+<li><p>打开 ArArCALC 软件相关的 <strong>age</strong> 文件或其导出的 <strong>xls</strong> 文件。其他形式的 xls 文件不被支持。</p>
+</li>
+<li><p>创建<strong>空白</strong>对象：参阅<a href="#创建空白对象">创建空白对象</a>。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>查看、修改、计算</strong></p>
+<p> 成功创建并打开样本对象后，将进入对象显示页面。左侧导航栏列出该对象拥有的表格和图形。</p>
+<p> <img src="{% static 'readme/image-15.png' %}" alt="alt text" data-action="zoom"></p>
+<p> 已打开的任何文件都将不再与用户的本地文件有关联，Sample 对象以数据流的形式在服务器端和用户端之间传递，不会自动形成文件，因此，除非用户下载 arr 文件，否则关闭窗口时将丢失所有操作。</p>
+<p> 在对象显示页面可以进行的操作包括：</p>
+<ul>
+<li><p><strong>修改样品信息</strong>：</p>
+<p>  采样地点、实验室、研究人员等信息可在 Information 修改，这些与计算无关。</p>
+</li>
+<li><p><strong>修改表格内容</strong>：</p>
+<p>  所有的表格都是可编辑的，编辑后需要点击下方 Save changes 以保存修改。<a href="#图表内容">图表内容</a> 介绍了各个图表中的详细内容。</p>
+</li>
+<li><p><strong>修改参数集</strong>：</p>
+<p>  <em>注意：修改参数后不会自动调用计算，需要用户根据需要触发重新计算。参见 <a href="#重新计算">重新计算</a>。</em></p>
+<ul>
+<li><p>Total Param 包括了所有参数，编辑该表格并保存可以设置新的参数。</p>
+</li>
+<li><p>通过下方的 Irra Params、Calc Params 和 Smp Params 为所有阶段选择预先设定好的参数集，或手动输入参数。参见 <a href="#参数设置">参数设置</a></p>
+</li>
+</ul>
+</li>
+<li><p><strong>修改图谱样式</strong></p>
+<p>  所有的图形都由Echarts渲染，因此具备Echarts的特征和属性。为一些常用的属性添加了设置选项，参见<a href="#修改图件样式">修改图件样式</a>。</p>
+</li>
+<li><p><strong>等时线中选点拟合</strong></p>
+<p>  参见 <a href="#等时线选点">等时线选点</a>。</p>
+<p>  WebArAr提供了五个等时线，包括正反等时线和三个与氯相关的等时线。所有等时线和年龄谱图将使用相同的阶段选择组合，支持两种选择组合，即 Set1 和 Set2。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="导入原始文件">导入原始文件</h3>
+<ul>
+<li><p>原始文件通常需要至少包括以下信息：每个 <strong>cycle</strong> 的<strong>零时刻时间</strong>，<strong>测量时间</strong>，<strong>信号量</strong>。</p>
+</li>
+<li><p>根据特定的<strong>过滤器</strong>读取文件内容，<a href="#设置原始文件过滤器">设置原始文件过滤器</a> 提供了设置过滤器的说明和示例。</p>
+<ol>
+<li><p>Mass Spec Raw Files </p>
+<p> <img src="{% static 'readme/image-24.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>可以一起打开多个原始文件作为一个样品文件，为每个文件选择过滤器 </p>
+<p> <img src="{% static 'readme/image-22.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ol>
+</li>
+<li><p><strong>外推零时刻值</strong>。</p>
+<p>  可单击取消选择某些离群点，可勾选是否对这当前 <strong>阶段</strong> 的所有同位素都取消这一散点，可选择要采纳的拟合方式，可勾选是否将这个拟合方式对所有同位素应用，可将当前 <strong>阶段</strong> 设置为 本底，可导出指定阶段。</p>
+<p>  <img src="{% static 'readme/image-25.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p><strong>指定本底</strong>。</p>
+<p>  下图的示例中，1-7-13 三个阶段被指定为本底阶段，可在默认下拉框中选择不同的扣本底策略，也可在各个本底阶段下拉框中灵活选择本底，可在右侧界面对本底进行计算，如 拟合计算插值，详见 <a href="#计算本底">计算本底</a>。</p>
+<p>  <img src="{% static 'readme/image-26.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  默认的扣本底策略：</p>
+<ol>
+<li><strong>前置本底</strong>：每个本底被用于矫正在其之后进行的样品阶段，直到下一个本底出现，如果第一个阶段不是本底，则第一个本底也将被用于扣除其之前的几个样品阶段；</li>
+<li><strong>后置本底</strong>：每个本底将用于矫正其之前进行的样品阶段，如果最后一个阶段不是本底，最后一个本底也将被用于扣除最后几个样品阶段；</li>
+<li><strong>邻近本底</strong>：每个本底将被用于矫正距离最近的几个样品阶段。</li>
+<li><strong>本底插值</strong>：以给定的本底信号值和测试时间拟合，每个样品阶段将根据测量时间计算本底值。需要先进性插值计算。</li>
+</ol>
+</li>
+</ul>
+<h3 id="arr文件">arr文件</h3>
+<ul>
+<li>arr 文件是以二进制保存的JSON序列化之后的Sample对象。</li>
+</ul>
+<h3 id="创建空白对象">创建空白对象</h3>
+<ul>
+<li><p>创建空白对象需要用户手动粘贴或键入数据。</p>
+</li>
+<li><p>通常当只需要利用 WebArAr 的部分功能时，创建空白对象比较方便。如这些示例：<a href="#-2-1-">示例：绘制年龄谱</a>，<a href="#-2-2-">示例：绘制等时线</a></p>
+</li>
+</ul>
+<h3 id="设置原始文件过滤器">设置原始文件过滤器</h3>
+<ol>
+<li><p>从 <em>Run</em> 界面编辑 原始文件过滤器。</p>
+<p> <img src="{% static 'readme/image-17.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>编辑已存在的过滤器（需要验证Pin），或创建一个新的过滤器。</p>
+<p> <img src="{% static 'readme/image-3.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>过滤器支持文本格式的文件和Excel多表格文件（xls）。对于 xls 文件，表格序号、行数、列数三位整数用于定位数据；对于文本文件，需要行数和列数两位整数。</p>
+</li>
+<li><p>示例1：AHD 文件。</p>
+<p> 文件具有如下结构，TAB制表符分隔。下载该 AHD 文件 <a href="{% static 'readme/AHD.ahd' %}">AHD</a> 查看。</p>
+<pre><code> Sample    sample_name
+ Experiment    experiment_name
+ Project
+ Irradiation
+ Standard
+ Instrument    Argus    <span class="hljs-number">1</span>E-<span class="hljs-number">13</span>
+ Time Stamp    <span class="hljs-number">21/06/2023</span>    <span class="hljs-number">0</span>:<span class="hljs-number">08</span>:<span class="hljs-number">53</span>
+ Analyst
+ Temperature    <span class="hljs-number">0</span>    Laser
+ J-Value
+ Fractionation
+ Volume Correction    <span class="hljs-number">1</span>
+ Counters    <span class="hljs-number">1</span>    <span class="hljs-number">15</span>    <span class="hljs-number">1</span>    <span class="hljs-number">0</span>
+
+ Time    Intensity    <span class="hljs-number">37</span>    <span class="hljs-number">38</span>    <span class="hljs-number">39</span>    <span class="hljs-number">40</span>        Cycle #    Peakreading #
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">039713085</span>
+ <span class="hljs-number">139.839784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">017819889</span>
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">095037932</span>
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">8.217368387</span>
+ <span class="hljs-number">96.124784</span>    <span class="hljs-number">52.50271246</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">0</span>.<span class="hljs-number">039292885</span>
+ <span class="hljs-number">227.343784</span>    <span class="hljs-number">0.01599587</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">0.088180873</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">7</span>.<span class="hljs-number">980598974</span>
+ <span class="hljs-number">183.630784</span>    <span class="hljs-number">53.55335785</span>
+</code></pre><p> 从文件可以确定各个参数及索引，头部信息 15 行，样品名 (0, 1, 2)，实验名 (0, 2, 2)，零时刻日期 (0, 7, 2)，零时刻时间 (0, 7, 3)，同位素值呈列排列，五个一组，因此36Ar为 (1, 2)，37Ar (2, 2)，38Ar (3, 2)，39Ar (4, 2)，40Ar (5, 2)，对应依次为 (1, 1)，37Ar (2, 1)，38Ar (3, 1)，39Ar (4, 1)，40Ar (5, 1)。注意勾选日期和时间均为单列字符串。</p>
+<p> <img src="{% static 'readme/image-16.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>示例2：NGX 导出的 xls 文件。</p>
+<p> 文件部分内容如截图所示，详细可下载 <a href="{% static 'readme/NGX_Exported_XLS.xls' %}">NGX_Exported_XLS</a> 查看。</p>
+<p> <img src="{% static 'readme/image-18.png' %}" alt="alt text" data-action="zoom"></p>
+<p> <img src="{% static 'readme/image-19.png' %}" alt="alt text" data-action="zoom"></p>
+<p> 对于这个文件，过滤器设置如下：</p>
+<p> <img src="{% static 'readme/image-20.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ol>
+<h3 id="计算本底">计算本底</h3>
+<ol>
+<li><p>单击下方的本底阶段名，将本底名添加到 Input 输入框，再次单击删除该本底。</p>
+<p> <img src="{% static 'readme/image-27.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>选择求平均 或 拟合插值。</p>
+<p> 如下图示例，三个本底阶段拟合约束了中间十个样品阶段的本底值。</p>
+<p> <img src="{% static 'readme/image-28.png' %}" alt="alt text" data-action="zoom"></p>
+<p> 计算平均值或插值后，新的本底阶段将出现在 Output 文本框中，单击 Add 按钮 将其添加到本底中，之后即可在左侧 本底阶段 下拉框中选择该本底。</p>
+<p> <img src="{% static 'readme/image-29.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ol>
+<h3 id="图表内容">图表内容</h3>
+<p><strong>表格</strong></p>
+<ol>
+<li>Information: 样品信息，如编号、矿物材料、实验室等。</li>
+<li>Unknown：各样品阶段的同位素值。误差均为一倍 σ 绝对误差。</li>
+<li>Blank：各样品阶段扣本底所用的同位素值。</li>
+<li>Corrected：各样品阶段经过必须的校正之后的同位素值，包括本底校正、质量歧视矫正校正和衰变校正。</li>
+<li>Degas Pattern：各同位素区分来源之后的值。</li>
+<li>Publish：大多数情况下用于文章中发表Ar-Ar数据，包括阶段名、阶段条件、36Ara、37ArCa、38ArCl、39ArK、40Arr、表观年龄、年龄误差、各阶段内40Arr占比、各阶段39ArK释放占总量的比例、Ca/K值。</li>
+<li>Age Spectra：40Arr/39ArK 和 表观年龄。</li>
+<li>Isochrons：等时线数据，包括正反等时线、三个Cl相关图、三位图数据。</li>
+<li>Total Params：所有参数。</li>
+</ol>
+<p><strong>图件</strong></p>
+<ol>
+<li>Age Spectra：年龄谱图。</li>
+<li>Nor. Isochron：正等时线图。</li>
+<li>Inv. Isochron：反等时线图。</li>
+<li>K-Cl-Ar 1：二维Cl相关图 1，三张图的横纵坐标不同。</li>
+<li>K-Cl-Ar 2：二维Cl相关图 2。</li>
+<li>K-Cl-Ar 3：二维Cl相关图 3。</li>
+<li>3D Correlation：三维校正图。</li>
+<li>Degas Pattern：显示各个阶段释放的不同同位素比例。</li>
+<li>Ages Distribution：显示表观年龄的分布，包括柱状图和KDE曲线。</li>
+</ol>
+<h3 id="参数设置">参数设置</h3>
+<ul>
+<li><p>参数设置分了三个类别：辐照参数（Irradiation Params），计算常数（Calculation Params），特征参数（Sample Params）。</p>
+</li>
+<li><p>在 <em>Run</em> 界面新增或编辑参数组，之后应用这些参数。</p>
+<p>  <img src="{% static 'readme/image-32.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>也可以在 Total Params 表中任意修改参数，这样可以为每个阶段设置不同的参数。</p>
+</li>
+<li><p>辐照参数</p>
+<p>  <img src="{% static 'readme/image-30.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>计算常数</p>
+<p>  <img src="{% static 'readme/image-33.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>特征参数</p>
+<p>  <img src="{% static 'readme/image-34.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="重新计算">重新计算</h3>
+<ul>
+<li><p>设置新的参数后并不会自动进行计算。</p>
+</li>
+<li><p>可勾选的选项如图所示：</p>
+<ul>
+<li>Reset Arr Attributes: 检查Arr结构，可以修正由于程序更新而缺失部分属性的旧文件。</li>
+<li>Recalculate Correction 和 Degas 用于重新进行校正和Degas，需要勾选特定过程及其之后的计算。例如：修改了本底数据，则需要勾选从本底校正到年龄计算的所有选项，否则新的参数将不会真正作用到最终结果；如果修改了 J 值，则只需要勾选重新计算表观年龄，前面的阶段并不会受 J 值影响，同时还应该重新计算 等时线数据，因此还应该勾选 Reset Plot Data。</li>
+<li><p>Reset Plot Style 用于重置图件样式。</p>
+<p><img src="{% static 'readme/image-35.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="等时线选点">等时线选点</h3>
+<ul>
+<li><p>等时线支持两组选点（Set1 和 Set2），同时将在年龄谱图中绘制相应的年龄坪（年龄坪根据设置用指定的初始值扣除空气氩）。右侧显示两组选点的正反等时线和坪年龄。</p>
+<p>  <img src="{% static 'readme/image-36.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>单击散点将可以选择或取消选择阶段数据点。每次点击都会自动重新计算回归和年龄，响应速度与网络速度和阶段数有关。</p>
+</li>
+<li><p>为了提高相应速度为了方便操作，可以在按住 Ctrl 键后，连续点击多个数据点，这时不会自动重新计算，之后需要触发重新计算，或松开 Ctrl 的情况下再点击一个散点。</p>
+</li>
+</ul>
+<h3 id="修改图件样式">修改图件样式</h3>
+<ul>
+<li><p>点击底部的 Style 按钮，可以设置当前显示的图件的属性信息，如坐标范围、线宽、颜色、字号等。</p>
+</li>
+<li><p>打开 Style 窗体后，点击图件元素，如线、点或文字，可以设置相应元素的属性。</p>
+<p>  如打开 Style 后点击散点，打开散点属性设置，见下图。</p>
+<p>  <img src="{% static 'readme/image-37.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  设置点大小为20：</p>
+<p>  <img src="{% static 'readme/image-38.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="用等时线初始值扣空气氩">用等时线初始值扣空气氩</h3>
+<ul>
+<li><p>在 特征参数（Sample Parameter）中为 Set1 和 Set2 设置初始值。</p>
+</li>
+<li><p>使用反等时线初始值扣除空气氩：</p>
+<p>  <img src="{% static 'readme/image-40.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  <img src="{% static 'readme/image-39.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>使用其他值扣除空气氩，本实例中与黑线参数相同，两者重合：</p>
+<p>  <img src="{% static 'readme/image-42.png' %}" alt="alt text" data-action="zoom"></p>
+<p>  <img src="{% static 'readme/image-41.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="年龄分布图">年龄分布图</h3>
+<ul>
+<li><p>年龄分布图常用于单颗粒Ar-Ar年龄分析。数据来自 Age Spectra 表中的表观年龄。包括 KDE 曲线，柱状图，及年龄方块。</p>
+<p>  <img src="{% static 'readme/image-43.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>打开 Style 后，点击 红色KDE曲线 可以设置属性和KDE参数：
+  常用正态概率密度函数，Scott和Sliverman两种自动计算带宽宽度方法，或选择none手动输入宽度。</p>
+<p>  <img src="{% static 'readme/image-44.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+</ul>
+<h3 id="保存及导出">保存及导出</h3>
+<ul>
+<li><p>点击 Export 打开导出对话框。</p>
+<p>  <img src="{% static 'readme/image-45.png' %}" alt="alt text" data-action="zoom"></p>
+</li>
+<li><p>下载 arr 文件，单击 sample_name.arr 或右键另存。</p>
+</li>
+<li><p>选择其他格式导出:</p>
+<ol>
+<li>Excel：包含所有数据和图表（除三维图）；</li>
+<li>PDF：导出二维的图件到PDF，可由Illustrator和CorelDRAW打开编辑。</li>
+<li>SVG：导出二维的图件到SVG。</li>
+</ol>
+</li>
+</ul>
+<h3 id="-1-">示例 1：打开文件</h3>
+<h4 id="-1-1-arr-age-xls-">示例 1-1：打开 arr、age、xls 文件</h4>
+<p><em>注意：此处 xls 文件特指 ArArCALC 导出的文件，通常文件名类似 xxxx.full.xls</em></p>
+<p>arr 文件</p>
+<p><img src="{% static 'readme/gif.02.gif' %}" alt="alt text" data-action="zoom"></p>
+<p>age 文件</p>
+<p><img src="{% static 'readme/gif.04.gif' %}" alt="alt text" data-action="zoom"></p>
+<p>xls 文件</p>
+<p><img src="{% static 'readme/gif.12.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-1-2-">示例 1-2：打开原始文件</h4>
+<p><img src="{% static 'readme/gif.13.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-2-">示例 2：手动输入数据计算或绘图</h3>
+<h4 id="-2-1-">示例 2-1：绘制年龄谱</h4>
+<p>如果我们有如下数据，age 列是一系列表观年龄，sage 为对应的误差，39ArK 为每个阶段释放的39ArK占总39ArK的百分数。则可以绘制出年龄谱图。</p>
+<pre><code>ages        sages                   <span class="hljs-number">39</span>ArK
+---------------------------------------------
+<span class="hljs-number">310.2176</span>    <span class="hljs-number">6.751487</span>                <span class="hljs-number">0.609066</span>
+<span class="hljs-number">247.3470</span>    <span class="hljs-number">5.148231</span>                <span class="hljs-number">0.827120</span>
+<span class="hljs-number">181.8897</span>    <span class="hljs-number">3.651214</span>                <span class="hljs-number">1.114444</span>
+<span class="hljs-number">78.62951</span>    <span class="hljs-number">1.499786</span>                <span class="hljs-number">1.164400</span>
+<span class="hljs-number">46.35105</span>    <span class="hljs-number">0.777316</span>                <span class="hljs-number">2.393310</span>
+<span class="hljs-number">25.54040</span>    <span class="hljs-number">0.332920</span>                <span class="hljs-number">4.833698</span>
+<span class="hljs-number">17.78667</span>    <span class="hljs-number">0.158893</span>                <span class="hljs-number">8.091584</span>
+<span class="hljs-number">14.99925</span>    <span class="hljs-number">0.096756</span>                <span class="hljs-number">11.02284</span>
+<span class="hljs-number">13.37219</span>    <span class="hljs-number">0.062124</span>                <span class="hljs-number">12.43698</span>
+<span class="hljs-number">12.88552</span>    <span class="hljs-number">0.052385</span>                <span class="hljs-number">12.25010</span>
+<span class="hljs-number">12.82013</span>    <span class="hljs-number">0.052100</span>                <span class="hljs-number">10.68799</span>
+<span class="hljs-number">12.92644</span>    <span class="hljs-number">0.057349</span>                <span class="hljs-number">8.552752</span>
+<span class="hljs-number">13.14080</span>    <span class="hljs-number">0.066860</span>                <span class="hljs-number">6.502910</span>
+<span class="hljs-number">13.50955</span>    <span class="hljs-number">0.094057</span>                <span class="hljs-number">4.772416</span>
+<span class="hljs-number">13.86147</span>    <span class="hljs-number">0.108181</span>                <span class="hljs-number">3.397764</span>
+<span class="hljs-number">14.32179</span>    <span class="hljs-number">0.136590</span>                <span class="hljs-number">2.627816</span>
+<span class="hljs-number">15.01300</span>    <span class="hljs-number">0.191949</span>                <span class="hljs-number">2.019118</span>
+<span class="hljs-number">15.84402</span>    <span class="hljs-number">0.240927</span>                <span class="hljs-number">1.453867</span>
+<span class="hljs-number">15.86743</span>    <span class="hljs-number">0.272241</span>                <span class="hljs-number">1.095365</span>
+<span class="hljs-number">16.73648</span>    <span class="hljs-number">0.286714</span>                <span class="hljs-number">0.879736</span>
+<span class="hljs-number">17.61575</span>    <span class="hljs-number">0.396227</span>                <span class="hljs-number">0.709635</span>
+<span class="hljs-number">17.85348</span>    <span class="hljs-number">0.394215</span>                <span class="hljs-number">0.579252</span>
+<span class="hljs-number">18.15503</span>    <span class="hljs-number">0.400108</span>                <span class="hljs-number">0.491160</span>
+<span class="hljs-number">18.06496</span>    <span class="hljs-number">0.418386</span>                <span class="hljs-number">0.423491</span>
+<span class="hljs-number">17.94611</span>    <span class="hljs-number">0.449840</span>                <span class="hljs-number">0.397428</span>
+<span class="hljs-number">18.49410</span>    <span class="hljs-number">0.547799</span>                <span class="hljs-number">0.351599</span>
+<span class="hljs-number">18.04896</span>    <span class="hljs-number">0.498315</span>                <span class="hljs-number">0.314126</span>
+</code></pre><p><img src="{% static 'readme/gif.01.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-2-2-">示例 2-2：绘制等时线</h4>
+<p>以正等时线为例，对如下数据：</p>
+<pre><code><span class="hljs-number">39</span>ArK/<span class="hljs-number">36</span>Ara     s               <span class="hljs-number">40</span>Ar*/<span class="hljs-number">36</span>Ara     s               r
+----------------------------------------------------------------------------
+<span class="hljs-number">2.2751877337</span>    <span class="hljs-number">0.0048052876</span>    <span class="hljs-number">1025.80432325</span>    <span class="hljs-number">2.0780870475</span>    <span class="hljs-number">0.9583594665</span>
+<span class="hljs-number">3.2975019175</span>    <span class="hljs-number">0.0069230743</span>    <span class="hljs-number">1106.38664780</span>    <span class="hljs-number">2.2460834483</span>    <span class="hljs-number">0.9652901189</span>
+<span class="hljs-number">6.0105856008</span>    <span class="hljs-number">0.0125928899</span>    <span class="hljs-number">1129.37582601</span>    <span class="hljs-number">2.2957337825</span>    <span class="hljs-number">0.9681744730</span>
+<span class="hljs-number">11.011886341</span>    <span class="hljs-number">0.0230813208</span>    <span class="hljs-number">1031.99720845</span>    <span class="hljs-number">2.1002662774</span>    <span class="hljs-number">0.9691720209</span>
+<span class="hljs-number">21.166235256</span>    <span class="hljs-number">0.0445848717</span>    <span class="hljs-number">1032.99035293</span>    <span class="hljs-number">2.1147591021</span>    <span class="hljs-number">0.9694927363</span>
+<span class="hljs-number">38.319930905</span>    <span class="hljs-number">0.0802844606</span>    <span class="hljs-number">1161.70364073</span>    <span class="hljs-number">2.3634476617</span>    <span class="hljs-number">0.9683575059</span>
+<span class="hljs-number">73.534352138</span>    <span class="hljs-number">0.1541520678</span>    <span class="hljs-number">1424.54372436</span>    <span class="hljs-number">2.9001681727</span>    <span class="hljs-number">0.9680880478</span>
+<span class="hljs-number">123.79413109</span>    <span class="hljs-number">0.2600566737</span>    <span class="hljs-number">1853.22212767</span>    <span class="hljs-number">3.7827521310</span>    <span class="hljs-number">0.9679013050</span>
+<span class="hljs-number">153.88009163</span>    <span class="hljs-number">0.3267535355</span>    <span class="hljs-number">2014.19098315</span>    <span class="hljs-number">4.1574887414</span>    <span class="hljs-number">0.9680163127</span>
+<span class="hljs-number">169.26290975</span>    <span class="hljs-number">0.3585793106</span>    <span class="hljs-number">2082.32698095</span>    <span class="hljs-number">4.2899067708</span>    <span class="hljs-number">0.9675027883</span>
+<span class="hljs-number">176.63909925</span>    <span class="hljs-number">0.3841523273</span>    <span class="hljs-number">2118.74942736</span>    <span class="hljs-number">4.4886093793</span>    <span class="hljs-number">0.9702703124</span>
+<span class="hljs-number">173.34246119</span>    <span class="hljs-number">0.3715170066</span>    <span class="hljs-number">2053.75380022</span>    <span class="hljs-number">4.2846436868</span>    <span class="hljs-number">0.9697460420</span>
+<span class="hljs-number">155.86396720</span>    <span class="hljs-number">0.3301618618</span>    <span class="hljs-number">1890.74520283</span>    <span class="hljs-number">3.8947628293</span>    <span class="hljs-number">0.9694010629</span>
+<span class="hljs-number">140.36930466</span>    <span class="hljs-number">0.3062175333</span>    <span class="hljs-number">1764.29506449</span>    <span class="hljs-number">3.7505862656</span>    <span class="hljs-number">0.9717015933</span>
+<span class="hljs-number">111.89720737</span>    <span class="hljs-number">0.2417092178</span>    <span class="hljs-number">1485.86613648</span>    <span class="hljs-number">3.1244156563</span>    <span class="hljs-number">0.9716471684</span>
+<span class="hljs-number">89.596934208</span>    <span class="hljs-number">0.1943473730</span>    <span class="hljs-number">1289.37540024</span>    <span class="hljs-number">2.7214060085</span>    <span class="hljs-number">0.9709019830</span>
+<span class="hljs-number">74.759825437</span>    <span class="hljs-number">0.1629035766</span>    <span class="hljs-number">1176.13040758</span>    <span class="hljs-number">2.4954842282</span>    <span class="hljs-number">0.9700300082</span>
+<span class="hljs-number">54.783766008</span>    <span class="hljs-number">0.1209899702</span>    <span class="hljs-number">992.623614989</span>    <span class="hljs-number">2.1345085268</span>    <span class="hljs-number">0.9711071450</span>
+<span class="hljs-number">49.944918143</span>    <span class="hljs-number">0.1124668310</span>    <span class="hljs-number">958.882771121</span>    <span class="hljs-number">2.1001119929</span>    <span class="hljs-number">0.9688506856</span>
+<span class="hljs-number">41.885267737</span>    <span class="hljs-number">0.0966704784</span>    <span class="hljs-number">878.915538075</span>    <span class="hljs-number">1.9638220829</span>    <span class="hljs-number">0.9645186720</span>
+<span class="hljs-number">36.117315422</span>    <span class="hljs-number">0.0846212613</span>    <span class="hljs-number">817.979157915</span>    <span class="hljs-number">1.7920764969</span>    <span class="hljs-number">0.9317125525</span>
+<span class="hljs-number">35.339155787</span>    <span class="hljs-number">0.0910717060</span>    <span class="hljs-number">829.231298578</span>    <span class="hljs-number">2.1075521253</span>    <span class="hljs-number">0.9643027965</span>
+<span class="hljs-number">33.032540877</span>    <span class="hljs-number">0.0827595535</span>    <span class="hljs-number">797.007327462</span>    <span class="hljs-number">1.9386916525</span>    <span class="hljs-number">0.9667530193</span>
+<span class="hljs-number">33.887955355</span>    <span class="hljs-number">0.1034956784</span>    <span class="hljs-number">822.155008652</span>    <span class="hljs-number">2.4563990293</span>    <span class="hljs-number">0.9746915090</span>
+<span class="hljs-number">31.516055387</span>    <span class="hljs-number">0.0875097358</span>    <span class="hljs-number">782.986056641</span>    <span class="hljs-number">2.1059773490</span>    <span class="hljs-number">0.9647646486</span>
+<span class="hljs-number">30.867564655</span>    <span class="hljs-number">0.1875046762</span>    <span class="hljs-number">767.179621092</span>    <span class="hljs-number">4.1062809401</span>    <span class="hljs-number">0.8801480023</span>
+<span class="hljs-number">31.690337436</span>    <span class="hljs-number">0.1828130406</span>    <span class="hljs-number">786.765990745</span>    <span class="hljs-number">4.0486556249</span>    <span class="hljs-number">0.8198342732</span>
+</code></pre><p><img src="{% static 'readme/gif.03.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-3-">示例 3：等时线选点</h3>
+<p><img src="{% static 'readme/gif.05.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-4-">示例 4：修改图谱样式</h3>
+<h4 id="-4-1-">示例 4-1：修改等时线样式</h4>
+<p><img src="{% static 'readme/gif.08.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-4-2-">示例 4-2：修改图中文字</h4>
+<p><img src="{% static 'readme/gif.09.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-4-3-">示例 4-3：修改坐标范围</h4>
+<p><img src="{% static 'readme/gif.10.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-5-">示例 5：导出和保存</h3>
+<h4 id="-5-1-arr">示例 5-1：保存 arr</h4>
+<p><img src="{% static 'readme/gif.11.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-5-2-dpf">示例 5-2：导出到DPF</h4>
+<p><img src="{% static 'readme/gif.06.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-5-3-excel">示例 5-3：导出到EXCEL</h4>
+<p><img src="{% static 'readme/gif.07.gif' %}" alt="alt text" data-action="zoom"></p>
+<h3 id="-6-">示例 6：修改参数集</h3>
+<h4 id="-6-1-">示例 6-1：创建新的参数集</h4>
+<p><img src="{% static 'readme/gif.14.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-6-2-">示例 6-2：修改参数集</h4>
+<p><img src="{% static 'readme/gif.15.gif' %}" alt="alt text" data-action="zoom"></p>
+<h4 id="-6-3-">示例 6-3：删除参数集</h4>
+<p><img src="{% static 'readme/gif.16.gif' %}" alt="alt text" data-action="zoom"></p>

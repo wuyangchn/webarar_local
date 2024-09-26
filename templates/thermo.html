@@ -1,0 +1,558 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<script>
+
+</script>
+
+<div class="jumbotron" style="height: 860px">
+    <div style="width: 1000px; margin-left: 100px; float: left">
+        <div class="upload-drop-zone" style="margin-left: 40px; height: 100px;" id="drop-zone">
+            <h4 style="padding-top: 30px">Drag a log file <i>here</i>.</h4>
+        </div>
+        <div id="oven_log_container" style="width: 100%; height: 700px;"></div>
+
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+        <div style="width: 100%; height: 700px;" class="oven_step_chart_container"></div>
+    </div>
+    <div style="float: left; margin-left: 50px">
+{#            <label for="text_area"></label><textarea class="container" style="height: 500px; width: 500px; float: left" id="text_area"></textarea>#}
+        <div style="height: 800px; width: 400px; float: right; padding-left: 20px">
+            <label><input id="sample_name" type="text" class="button" style="width: 200px">Sample Name</label>
+            <label><input id="file_name" type="text" class="button" style="width: 200px">File Name</label>
+            <label><input id="random_index" type="text" class="button" style="width: 200px">Random Index</label>
+            <label><input id="max_age" type="number" class="button" style="width: 200px">Max Age</label>
+            <div>
+            <label><button class="btn-info" onclick="CheckSample()" >Check</button></label>
+            <label><button class="btn-info" onclick="RunArrmulti()" >RunArrmulti</button></label>
+            <label><button class="btn-info" onclick="RunAgemon()" >RunAgemon</button></label>
+            <label><button class="btn-info" onclick="ReadLog()" >ReadLog</button></label>
+            <label><button id="plot_agemon" class="btn-danger" onclick="PlotAgemon()" >Plot</button></label>
+            </div>
+            <div id="step_table_container" class="container" style="height: 1000px; width: 800px; padding: 0 0 0 0;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let table_data = [];
+    const color_map = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+    const oven_log_chart = echarts.init(document.getElementById('oven_log_container'), null, {renderer: 'svg'}); // svg渲染适合小数据，更清晰
+    const charts = [oven_log_chart];
+    const step_chart_containers = document.querySelectorAll("[class*=oven_step_chart_container]");
+    const step_table = new Handsontable(document.getElementById('step_table_container'), {
+        colHeaders: ['Usable', 'Mark', 'Setpoint', 'Temp [c]', 'Time [min]', 'Age',
+            'Sig Age', 'Ar39', 'Sig Ar', 'Cumulative f', 'd/r2', 'ln(d/r2)', 'wt'],
+        rowHeaders: [],  // 行标题
+        data: table_data,
+        columns: [
+            {type: 'checkbox',},
+            {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',},
+            {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',},
+            {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',},
+        ],
+        contextMenu: true,  // 右键菜单
+        licenseKey: 'non-commercial-and-evaluation',
+        className: 'htLeft htMiddle',
+        renderAllRows: true,
+        afterChange: (changes) => {
+            changes?.forEach(([row, col, oldValue, newValue]) => {
+                table_data[col][row] = newValue;
+            });
+        }
+    });
+    step_chart_containers.forEach(val => {
+        charts.push(echarts.init(val, null, {renderer: 'svg'}));
+    })
+
+    window.onresize = function() {
+        forEach(charts, chart => chart.resize());
+    };
+
+    forEach(charts, (chart, index) => {
+        chart.setOption({
+            title: {
+                show: true, text: 'Diffusivity diagrams', left: 'center', top: '6%',
+                textStyle: {
+                    color: '#333', fontWeight: 'bolder', fontFamily: 'Microsoft Sans Serif',
+                    fontSize: 18
+                },
+                triggerEvent: true, z: 0,
+            },
+            grid: {show: true, borderWidth: 1, borderColor: '#222', z: 100,
+                top: '5%', left: '8%', bottom: '15%', right: '4%'},
+            legend: {top: 0},
+            toolbox: {
+                id: 'toolbox', show: true,
+                feature: {
+                    dataZoom: {},
+                    myTool1: {
+                        show: true,
+                        title: 'for what',
+                        icon: 'path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891',
+                        onclick: function (){
+                            // let show_label = oven_log_chart.getOption().series[2].label.show;
+                            oven_log_chart.getOption().series.map((series, index) => {
+                                if (series.id.includes('Inside')) {
+                                    oven_log_chart.setOption({
+                                        series: {
+                                            id: series.id, name: series.name,
+                                            //label: {show: !show_label},
+                                            label: {show: !series.label.show},
+                                        }
+                                    })
+                                }
+                            })
+                        }
+                    },
+                }
+            },
+            xAxis: [
+                {
+                    id: '1', name: 'Temperature [10000 / K]', type: 'value', nameLocation: 'middle', nameGap: 25,
+                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                    axisLabel: {showMaxLabel: true, color: '#222'},
+                    axisTick: {inside: false},
+                    nameTextStyle: {
+                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                    },
+                },
+                {
+                    id: '2', name: 'Temperature [C]', type: 'value', nameLocation: 'start', nameGap: 0,
+                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                    axisLabel: {
+                        showMaxLabel: true, color: '#222'
+                    },
+                    axisTick: {inside: false},
+                    nameTextStyle: {
+                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                    },
+                },
+            ],
+            yAxis: [
+                {
+                    id: '1', name: 'Ln Dr2', type: 'value', nameLocation: 'middle', nameGap: 50,
+                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                    axisLabel: {showMaxLabel: true, color: '#222',},
+                    axisTick: {inside: false},
+                    nameTextStyle: {
+                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                    },
+                },
+            ],
+            series: [
+                //{
+                //    id: 'LnDr2', name: 'LnDr2', color: '#a4d38f',
+                //    type: 'scatter', symbolSize: 6, z: 2,  silent: true,
+                //    lineStyle: {width: 1, type: 'solid'},
+                //    itemStyle: {borderColor: '#a4d38f', borderWidth: 2, opacity: 0.8},
+                //},
+            ],
+            animation: true,
+            animationDuration: 500,
+        });
+        chart.resize();
+        extendChartFuncs(chart);
+    });
+    charts[1].setOption({
+        title: {text: 'Age Spectra'},
+        xAxis: [{
+            id: '1', name: 'Cumulative {sup|39}Ar Released (%)',
+            nameTextStyle: {
+                fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                rich: {
+                    sub: {verticalAlign: "bottom",fontSize: 10, fontFamily: 'Microsoft Sans Serif'},
+                    sup: {verticalAlign: "top", fontSize: 10, fontFamily: 'Microsoft Sans Serif'}
+                },
+            },
+        }],
+        yAxis: [{
+            id: '1', name: 'Apparent Age (Ma)',
+        }],
+    });
+    charts[2].setOption({
+        title: {text: 'Cooling History'},
+        xAxis: [{
+            id: '1', name: 'Age (Ma)',
+            nameTextStyle: {
+                fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                rich: {
+                    sub: {verticalAlign: "bottom",fontSize: 10, fontFamily: 'Microsoft Sans Serif'},
+                    sup: {verticalAlign: "top", fontSize: 10, fontFamily: 'Microsoft Sans Serif'}
+                },
+            },
+        }],
+        yAxis: [{
+            id: '1', name: 'Temperature (℃)',
+        }],
+    });
+    oven_log_chart.registerDrag("Text", (params) => {});
+
+    document.addEventListener("wheel", function(event){
+        if(document.activeElement.type === "number"){
+            document.activeElement.blur();
+        }
+    });
+
+    // 初始化文件选择框
+    $('#file-input-text').val('');
+
+    function CheckSample() {
+        //
+        $.ajax({
+            url: url_thermo_check_sample,
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                'name': $('#sample_name').val(),
+                'file_name': $('#file_name').val(),
+                'random_index': $('#random_index').val()
+            }),
+            contentType:'application/json',
+            success: function(res){
+                table_data = myParse(res.data);
+                step_table.updateSettings({
+                    data: transpose(table_data)
+                });
+                if (res.has_files) {
+                    document.getElementById('plot_agemon').className = "btn-success";
+                } else {
+                    document.getElementById('plot_agemon').className = "btn-danger";
+                }
+            }
+        });
+    }
+
+    function PlotAgemon() {
+        let groups = {};
+        transpose(table_data).forEach((row, index) => {
+            const key = row[1];
+            if (key !== "" && key !== null){
+                if (!groups[key]) {
+                    groups[key] = [];
+                }
+                groups[key].push([10000 / (row[3] + 273.15), row[11], index, row[0], row[3]]);
+            }
+        });
+        Object.entries(groups).map(([key, value]) => {
+            console.log(value);
+            let series = {
+                id: key, name: key, data: value.filter((v, _i) => v[0] !== Infinity && v[1] !== Infinity && v[3]),
+                color: color_map[key], type: 'scatter', symbolSize: 10, z: 2,  silent: false, opacity: 0.5,
+                xAxisIndex: 0, yAxisIndex: 0, draggable: true, onDragged: false,
+                lineStyle: {width: 1, type: 'solid'},
+                itemStyle: {
+                    borderColor: color_map[key],
+                    borderWidth: 2, opacity: 0.8},
+
+            }
+            console.log(series);
+            oven_log_chart.updateSeries(series);
+        });
+
+        console.log(oven_log_chart.getSeries("1"));
+
+        $.ajax({
+            url: url_thermo_plot,
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                'sample_name': $('#sample_name').val(),
+                'file_name': $('#file_name').val(),
+                'random_index': $('#random_index').val(),
+                'max_age': $('#max_age').val(),
+                'data': transpose(table_data).filter((v, _i) => v[0]),
+            }),
+            contentType:'application/json',
+            success: function(res){
+                //
+                let data = myParse(res.data);
+                let k = myParse(res.line_data);
+                let line_data = getLineData(oven_log_chart, k[0], k[1]);
+                let k0 = transpose(data[0]);
+                let k1 = data[1];
+                let k2 = data[2];
+                let k3 = data[3];
+
+                plotSubPlot(oven_log_chart, "Regression", line_data, "line", "none", "black", {x: 0, y: 1}, true);
+                plotSubPlot(charts[1], "line1", k0, "line", "none", "black", {x:0, y:1});
+                plotSubPlot(charts[1], "line2", k0, "line", "none", "black", {x:0, y:2});
+
+                let text_data = getPercentagePos(oven_log_chart, 0.4, 0.5);
+                try {
+                    text_data = oven_log_chart.getSeries("Text").data;
+                } catch (e) {
+                    //
+                }
+                plotSubPlot(oven_log_chart, "Text", text_data, "scatter", "circle", "none", {x: 0, y: 1}, true, true, `Intercept: ${k[0]} \n Slop: ${k[1]}`, true);
+
+                {#const draw_agemon = false;#}
+                const draw_agemon = true;
+
+                if (draw_agemon) {
+
+                    charts[1].showLegend(false);
+                    k1.forEach((data, index) => {
+                        let t = transpose(data);
+                        plotSubPlot(charts[1], index.toString(), t, "line", "none", "red", {x: 0, y: 1}, false);
+                        // plotSubPlot(charts[1], index.toString(), t, "line", "none", "red", {x: 0, y: 2}, false);
+                    });
+
+                    charts[2].showLegend(false);
+                    k2.forEach((data, index) => {
+                        let t = transpose(data);
+                        plotSubPlot(charts[2], index.toString(), t, "line", "none", "black", {x: 0, y: 1}, false);
+                    });
+
+                }
+
+            }
+        });
+
+    }
+    function plotSubPlot(chart, name, data, type, symbol, color, encode,
+                         showLegend=true, showLabel=false, labelText="", draggable=false) {
+
+        let newSeries = {
+            id: name, name: name, data: data,
+            type: type, symbol: symbol, symbolSize: 6, z: 2,  silent: false, xAxisIndex: 0, yAxisIndex: 0,
+            encode: encode, color: color,
+            lineStyle: {borderColor: color, width: 1, type: 'solid'},
+            itemStyle: {borderWidth: 2, opacity: 0.8, color: color},
+            label: {
+                show: showLabel, position: 'inside', color: 'black', fontSize: 16,
+                // fontFamily: figure.text1.font_family, fontWeight: figure.text1.font_weight, rich: rich_format,
+                formatter: labelText,
+            },
+            draggable: draggable,
+        }
+        chart.updateSeries(newSeries);
+    }
+    function getLineData(chart, intercept, slop) {
+        let option = chart.getOption();
+        let xa = chart._model._componentsMap.get('xAxis')[0].axis.scale._extent;
+        let ya = chart._model._componentsMap.get('yAxis')[0].axis.scale._extent;
+        let y = (_x) => intercept + slop * _x;
+        let x = (_y) => slop !== 0 ? (_y - intercept) / slop : null;
+        let points = [
+            [xa[0], y(xa[0])], [xa[1], y(xa[1])], [x(ya[0]), ya[0]], [x(ya[1]), ya[1]],
+        ];
+        return points.filter((v, _i) =>  v[0] >= xa[0] && v[1] >= ya[0] && v[0] <= xa[1] && v[1] <= ya[1])
+    }
+    function getPercentagePos(chart, x, y) {
+        let xa = chart._model._componentsMap.get('xAxis')[0].axis.scale._extent;
+        let ya = chart._model._componentsMap.get('yAxis')[0].axis.scale._extent;
+        return [[xa[0] + (xa[1] - xa[0]) * x, ya[0] + (ya[1] - ya[0]) * y]]
+    }
+    function RunAgemon() {
+        //
+        $.ajax({
+            url: url_thermo_run_agemon,
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                'sample_name': $('#sample_name').val(),
+                'file_name': $('#file_name').val(),
+                'random_index': $('#random_index').val(),
+                'max_age': $('#max_age').val(),
+                'data': transpose(table_data).filter((v, _i) => v[0]),
+            }),
+            contentType:'application/json',
+            success: function(res){
+                //
+            }
+        });
+    }
+    function RunArrmulti() {
+        //
+        $.ajax({
+            url: url_thermo_run_arrmulti,
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                'sample_name': $('#sample_name').val(),
+                'file_name': $('#file_name').val(),
+                'random_index': $('#random_index').val(),
+                'max_age': $('#max_age').val(),
+                'data': transpose(table_data).filter((v, _i) => v[0]),
+            }),
+            contentType:'application/json',
+            success: function(res){
+                //
+            }
+        });
+    }
+    function ReadLog() {
+        $.ajax({
+            url: url_read_log,
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                'sample_name': $('#sample_name').val(),
+                'file_name': $('#file_name').val(),
+            }),
+            contentType:'application/json',
+            success: function(res){
+                //
+            }
+        });
+    }
+
+    function _dropHandler(ev) {
+        // Prevent default behavior (Prevent file from being opened)
+        // Handle drag and drop events
+        ev.preventDefault();
+        let files = [];
+        let directory_entry = [];
+        if (ev.dataTransfer.items) {
+            // Use DataTransferItemList interface to access the file(s)
+            for (let item of [...ev.dataTransfer.items]){
+                if (item.kind === "file") {
+                    let file = item.getAsFile();
+                    let entry = item.webkitGetAsEntry();
+                    if (entry.isDirectory) {
+                        directory_entry.push(entry);
+                    } else {files.push(file);}
+                }
+            }
+        }
+        let formData = new FormData();
+        let num_file = 0;
+        let getFileFormdata = (_) => {
+            if (_.constructor === Array) {
+                _.forEach((__, i) => (getFileFormdata(__)));
+            } else {
+                formData.append(`${num_file}`, _);
+                num_file += 1;
+            }
+        }
+        getFileFormdata(files);
+        let send_erquest = () => {
+            $.ajax({
+                url: url_thermo_arr_input,
+                type: 'POST',
+                data: formData,
+                processData : false,
+                contentType : false,
+                mimeType: "multipart/form-data",
+                success: function(res){
+                    res = JSON.parse(res);
+                    $('#sample_name').val(res.sample_name);
+                    $('#file_name').val(res.file_name);
+                    $('#random_index').val(res.random_index);
+
+                    // let sp;
+                    // for (let i=0; i < res.data[0].length; i++) {
+                    //     if (sp !== res.data[0][i][1]) {
+                    //         sp = res.data[0][i][1]
+                    //         console.log(res.data[0][i]);
+                    //     }
+                    // }
+                    // oven_log_chart.setOption({
+                    //     series: res.data.map((item, index) => {
+                    //         return {
+                    //             id: ['SP', 'AP'][index],
+                    //             name: ['SP', 'AP'][index],
+                    //             data: item,
+                    //         };
+                    //     }),
+                    // });
+                    // oven_log_chart.resize();
+                }
+            })
+        }
+        if (directory_entry.length === 0) {
+            send_erquest();
+        } else {
+            if (directory_entry.length > 1) {
+                alert("Only one directory on the top level is supported.");
+            }
+            traverseDirectory(directory_entry[0]).then((files_promise)=> {
+                // AT THIS POINT THE DIRECTORY SHOULD BE FULLY TRAVERSED.
+                Promise.all(files_promise[0]).then((res) => {
+                    files.push(...res);
+                    send_erquest();
+                });
+            });
+        }
+    }
+
+    let drop_zone = document.getElementById('drop-zone');
+    drop_zone.ondrop = function(e) {
+        this.className = 'upload-drop-zone';
+        _dropHandler(e);
+    }
+    drop_zone.ondragover = function(e) {
+        this.className = 'upload-drop-zone drop';
+        dragOverHandler(e);
+        return false;
+    }
+    drop_zone.ondragleave = function() {
+        this.className = 'upload-drop-zone';
+        return false;
+    }
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,198 @@
+<div class="div-params" style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: auto; float: left">
+    <form id="smpParamsInputForm" method="post">
+        <!-- Export settings -->
+        <div style="width: 400px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+
+            <!-- Open files -->
+            <label style="width: 400px; text-align: left; font-weight: bold">Files</label>
+
+            <div class="form-group">
+                <input type="file" id="files_to_export" name="files_to_export" multiple="multiple" accept=".arr" onchange="filesToExportChanged()">
+            </div>
+
+            <table class="table-export-to-pdf">
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>sample name</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>sample name 2</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Arrange settings -->
+            <label style="width: 400px; text-align: left; font-weight: bold">Arrange Settings</label>
+            <div class="form-inline">
+                <label class="label-left">Rows
+                    <input type="number" min="1" step="1" class="export-params">
+                </label>
+                <label class="label-right">Columns
+                    <input type="number" min="1" step="1" class="export-params">
+                </label>
+            </div>
+            <table class="table-export-to-pdf">
+                <tbody>
+                    <tr>
+                        <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>
+                        <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>
+                    </tr>
+                    <tr>
+                        <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>
+                        <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Page setup -->
+            <label style="width: 400px; text-align: left; font-weight: bold">Page Setup</label>
+            <div class="form-inline">
+                <label>Orientation
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>Portrait</option>
+                        <option class="label-right" n>Landscape</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label>Page Size
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>A4</option>
+                        <option>A3</option>
+                        <option>A2</option>
+                        <option>B5</option>
+                        <option>Letter</option>
+                        <option>Auto</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label class="label-left">Width
+                    <input type="number" step="any" class="export-params"> mm
+                </label>
+                <label class="label-right">Height
+                    <input type="number" step="any" class="export-params"> mm
+                </label>
+            </div>
+            <div class="form-inline">
+                <label class="label-left">PPI
+                    <input type="number" step="any" class="export-params">
+                </label>
+                <label class="label-right">DPI
+                    <input type="number" step="any" class="export-params">
+                </label>
+            </div>
+
+            <!-- Layer Size -->
+            <label title="Layer is the plotting area of your merged figure" style="width: 400px; text-align: left; font-weight: bold">Layer</label>
+            <div class="form-inline">
+                <label>Unit
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>mm</option>
+                        <option>cm</option>
+                        <option title="PPI related">pixel</option>
+                        <option title="DPI related">point</option>
+                        <option>inch</option>
+                        <option>% of page</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Width of the merged figure" class="label-left">Width
+                    <input type="number" step="any" class="export-params"> mm
+                </label>
+                <label class="label-right" title="Height of the merged figure">Height
+                    <input type="number" step="any" class="export-params"> mm
+                </label>
+            </div>
+
+            <!-- Spacing -->
+            <label style="width: 400px; text-align: left; font-weight: bold">Spacing</label>
+            <div class="form-inline">
+                <label>Unit
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>mm</option>
+                        <option>cm</option>
+                        <option title="PPI related">pixel</option>
+                        <option title="DPI related">point</option>
+                        <option>inch</option>
+                        <option>% of page</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label class="label-left">Horizontal Gap
+                    <input type="number" step="any" class="export-params">
+                </label>
+                <label class="label-right">Vertical Gap
+                    <input type="number" step="any" class="export-params">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label class="label-left">Left Margin
+                    <input type="number" step="any" class="export-params">
+                </label>
+                <label class="label-right">Right Margin
+                    <input type="number" step="any" class="export-params">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label class="label-left">Top Margin
+                    <input type="number" step="any" class="export-params">
+                </label>
+                <label class="label-right">Bottom Margin
+                    <input type="number" step="any" class="export-params">
+                </label>
+            </div>
+
+            <!-- Add Label -->
+            <label style="width: 400px; text-align: left; font-weight: bold">Add label</label>
+            <div class="form-inline">
+                <label>Label Text
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>a</option>
+                        <option>A</option>
+                        <option>1</option>
+                        <option>(a)</option>
+                        <option>(A)</option>
+                        <option>(1)</option>
+                    </select>
+                </label>
+                <label>Label Position
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>Top Left Inside</option>
+                        <option>Top Right Inside</option>
+                        <option>Top Center Inside</option>
+                        <option>Top Left Outside</option>
+                        <option>Top Right Outside</option>
+                        <option>Top Center Outside</option>
+                    </select>
+                </label>
+            </div>
+
+        </div>
+        <!-- Graphs settings -->
+        <div style="width: 400px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+            <!-- Graph setup -->
+            <label style="width: 400px; text-align: left; font-weight: bold">Graph Components</label>
+            <div class="form-inline">
+                <label>Graph
+                    <select class="export-params" style="margin-right: 15px; height: 30px; width: 100px">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </label>
+            </div>
+
+        </div>
+        <!--  Regression and correction  -->
+        <div style="width: 700px; float: left; margin-right: 15px; border: 1px solid #ccc" >
+            {% load static %}
+            <embed src="{% static 'download/22WHA0218_Age Spectra.pdf' %}" width="100%" height="600" type="application/pdf">
+        </div>
+
+    </form>
+</div>

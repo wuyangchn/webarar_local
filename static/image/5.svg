@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2020 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1796px" height="1232px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 260.27 178.58"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#332C2B;stroke-width:0.34;stroke-miterlimit:22.9256}
+    .str0 {stroke:black;stroke-width:0.34;stroke-miterlimit:22.9256}
+    .str2 {stroke:black;stroke-width:0.17;stroke-miterlimit:22.9256}
+    .fil0 {fill:none}
+    .fil3 {fill:#B3B3B3}
+    .fil1 {fill:#E6E6E6}
+    .fil5 {fill:yellow}
+    .fil4 {fill:white}
+    .fil2 {fill:black;fill-rule:nonzero}
+   ]]>
+  </style>
+ </defs>
+ <g id="图层_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0 str0" x="0.17" y="0.17" width="259.93" height="178.23" rx="2.72" ry="2.87"/>
+  <path class="fil1 str1" d="M0.17 16.02l259.93 0 0 -13.13c0,-1.5 -1.22,-2.72 -2.72,-2.72l-254.49 0c-1.5,0 -2.72,1.22 -2.72,2.72l0 13.13z"/>
+  <polygon class="fil2" points="27.38,12.47 25.35,3.82 27.15,3.82 28.43,9.76 30.01,3.82 32.09,3.82 33.6,9.86 34.92,3.82 36.67,3.82 34.59,12.47 32.72,12.47 31.02,6 29.3,12.47 "/>
+  <path id="1" class="fil2" d="M40.98 10.49l1.66 0.27c-0.21,0.61 -0.55,1.07 -1.01,1.39 -0.46,0.31 -1.03,0.47 -1.72,0.47 -1.09,0 -1.89,-0.35 -2.41,-1.07 -0.42,-0.57 -0.62,-1.29 -0.62,-2.16 0,-1.04 0.27,-1.85 0.81,-2.44 0.54,-0.59 1.23,-0.88 2.06,-0.88 0.93,0 1.66,0.3 2.2,0.92 0.54,0.62 0.8,1.56 0.77,2.83l-4.14 0c0.01,0.49 0.14,0.88 0.4,1.15 0.25,0.27 0.57,0.41 0.95,0.41 0.26,0 0.48,-0.07 0.65,-0.21 0.18,-0.14 0.31,-0.37 0.4,-0.68zm0.1 -1.68c-0.01,-0.48 -0.14,-0.85 -0.37,-1.1 -0.24,-0.25 -0.52,-0.38 -0.86,-0.38 -0.36,0 -0.66,0.14 -0.89,0.4 -0.24,0.26 -0.35,0.62 -0.35,1.08l2.47 0z"/>
+  <path id="2" class="fil2" d="M44 12.47l0 -8.65 1.66 0 0 3.12c0.51,-0.58 1.11,-0.87 1.81,-0.87 0.77,0 1.4,0.27 1.89,0.83 0.5,0.55 0.75,1.34 0.75,2.38 0,1.07 -0.25,1.9 -0.76,2.48 -0.51,0.57 -1.13,0.86 -1.86,0.86 -0.35,0 -0.71,-0.09 -1.05,-0.27 -0.35,-0.19 -0.65,-0.45 -0.9,-0.8l0 0.92 -1.54 0zm1.63 -3.26c0,0.65 0.11,1.14 0.31,1.45 0.29,0.44 0.67,0.66 1.15,0.66 0.36,0 0.67,-0.16 0.93,-0.47 0.26,-0.32 0.39,-0.81 0.39,-1.48 0,-0.72 -0.13,-1.24 -0.39,-1.56 -0.26,-0.32 -0.59,-0.48 -1,-0.48 -0.4,0 -0.73,0.16 -0.99,0.47 -0.26,0.31 -0.4,0.78 -0.4,1.41z"/>
+  <path id="3" class="fil2" d="M59.25 12.47l-1.88 0 -0.75 -1.97 -3.47 0 -0.72 1.97 -1.85 0 3.36 -8.65 1.85 0 3.46 8.65zm-3.2 -3.43l-1.2 -3.2 -1.17 3.2 2.37 0z"/>
+  <path id="4" class="fil2" d="M61.75 12.47l-1.65 0 0 -6.27 1.53 0 0 0.89c0.27,-0.42 0.5,-0.7 0.72,-0.83 0.21,-0.13 0.45,-0.19 0.71,-0.19 0.38,0 0.75,0.1 1.1,0.31l-0.52 1.44c-0.28,-0.18 -0.54,-0.27 -0.77,-0.27 -0.24,0 -0.44,0.07 -0.6,0.19 -0.16,0.13 -0.28,0.36 -0.38,0.7 -0.09,0.33 -0.14,1.03 -0.14,2.09l0 1.94z"/>
+  <path id="5" class="fil2" d="M72.67 12.47l-1.88 0 -0.75 -1.97 -3.47 0 -0.72 1.97 -1.85 0 3.36 -8.65 1.85 0 3.46 8.65zm-3.2 -3.43l-1.2 -3.2 -1.17 3.2 2.37 0z"/>
+  <path id="6" class="fil2" d="M75.17 12.47l-1.65 0 0 -6.27 1.53 0 0 0.89c0.27,-0.42 0.5,-0.7 0.72,-0.83 0.21,-0.13 0.45,-0.19 0.71,-0.19 0.38,0 0.75,0.1 1.1,0.31l-0.52 1.44c-0.28,-0.18 -0.54,-0.27 -0.77,-0.27 -0.24,0 -0.44,0.07 -0.6,0.19 -0.16,0.13 -0.28,0.36 -0.38,0.7 -0.09,0.33 -0.14,1.03 -0.14,2.09l0 1.94z"/>
+  <rect class="fil0 str0" x="0.17" y="20.8" width="259.93" height="138.79"/>
+  <g id="_2967562889856">
+   <rect class="fil0 str0" x="28.15" y="97.7" width="45.51" height="38.2" rx="1.19" ry="0.42"/>
+   <rect class="fil3" x="35.92" y="120.44" width="5.25" height="1.81"/>
+   <rect class="fil3" x="35.92" y="123.78" width="13.73" height="1.81"/>
+   <rect class="fil3" x="35.92" y="126.72" width="11.2" height="1.81"/>
+   <rect class="fil3" x="59.87" y="126.72" width="6.86" height="1.81"/>
+   <rect class="fil3" x="50.2" y="123.78" width="15.27" height="1.81"/>
+   <rect class="fil3" x="41.76" y="120.44" width="13.26" height="1.81"/>
+   <rect class="fil3" x="55.53" y="120.44" width="11.84" height="1.81"/>
+   <rect class="fil3" x="47.79" y="126.72" width="11.56" height="1.81"/>
+   <rect class="fil3" x="35.92" y="106.79" width="5.25" height="1.81"/>
+   <rect class="fil3" x="35.92" y="110.13" width="13.73" height="1.81"/>
+   <rect class="fil3" x="35.92" y="113.07" width="11.2" height="1.81"/>
+   <rect class="fil3" x="59.87" y="113.07" width="6.86" height="1.81"/>
+   <rect class="fil3" x="50.2" y="110.13" width="15.27" height="1.81"/>
+   <rect class="fil3" x="41.76" y="106.79" width="13.26" height="1.81"/>
+   <rect class="fil3" x="55.53" y="106.79" width="11.84" height="1.81"/>
+   <rect class="fil3" x="47.79" y="113.07" width="11.56" height="1.81"/>
+  </g>
+  <rect class="fil0 str0" x="107.55" y="97.7" width="45.51" height="38.2" rx="1.19" ry="0.42"/>
+  <g id="_2967562889232">
+   <rect class="fil0 str0" x="186.95" y="97.7" width="45.51" height="38.2" rx="1.19" ry="0.42"/>
+   <rect class="fil3" x="194.72" y="120.44" width="5.25" height="1.81"/>
+   <rect class="fil3" x="194.72" y="123.78" width="13.73" height="1.81"/>
+   <rect class="fil3" x="194.72" y="126.72" width="11.2" height="1.81"/>
+   <rect class="fil3" x="218.67" y="126.72" width="6.86" height="1.81"/>
+   <rect class="fil3" x="209.01" y="123.78" width="15.27" height="1.81"/>
+   <rect class="fil3" x="200.56" y="120.44" width="13.26" height="1.81"/>
+   <rect class="fil3" x="214.33" y="120.44" width="11.84" height="1.81"/>
+   <rect class="fil3" x="206.6" y="126.72" width="11.56" height="1.81"/>
+   <rect class="fil3" x="194.72" y="106.79" width="5.25" height="1.81"/>
+   <rect class="fil3" x="194.72" y="110.13" width="13.73" height="1.81"/>
+   <rect class="fil3" x="194.72" y="113.07" width="11.2" height="1.81"/>
+   <rect class="fil3" x="218.67" y="113.07" width="6.86" height="1.81"/>
+   <rect class="fil3" x="209.01" y="110.13" width="15.27" height="1.81"/>
+   <rect class="fil3" x="200.56" y="106.79" width="13.26" height="1.81"/>
+   <rect class="fil3" x="214.33" y="106.79" width="11.84" height="1.81"/>
+   <rect class="fil3" x="206.6" y="113.07" width="11.56" height="1.81"/>
+  </g>
+  <rect class="fil4 str0" x="48.77" y="29.1" width="160.03" height="102.06" rx="4.18" ry="1.12"/>
+  <rect class="fil4 str0" x="84.99" y="34.53" width="115.84" height="71.38"/>
+  <rect class="fil0 str0" x="81.51" y="112.62" width="119.32" height="7.81"/>
+  <rect class="fil0 str0" x="53.1" y="34.53" width="27.51" height="71.38"/>
+  <rect class="fil0 str0" x="177.91" y="123.35" width="16.64" height="5.21"/>
+  <rect class="fil3" x="90.48" y="41.38" width="49.46" height="2.5"/>
+  <rect class="fil3" x="90.48" y="53.55" width="47.53" height="2.5"/>
+  <rect class="fil3" x="90.48" y="65.72" width="36.11" height="2.5"/>
+  <rect class="fil3" x="90.48" y="77.89" width="68.14" height="2.5"/>
+  <rect class="fil3" x="90.48" y="71.81" width="47.75" height="2.5"/>
+  <rect class="fil3" x="90.48" y="90.06" width="43.25" height="2.5"/>
+  <rect class="fil3" x="90.48" y="83.98" width="45.95" height="2.5"/>
+  <rect class="fil3" x="90.48" y="59.64" width="56.96" height="2.5"/>
+  <rect class="fil3" x="90.48" y="47.47" width="59.65" height="2.5"/>
+  <rect class="fil3" x="55.84" y="37.2" width="15.74" height="2.5"/>
+  <rect class="fil3" x="55.84" y="49.38" width="17.29" height="2.5"/>
+  <rect class="fil3" x="55.84" y="61.57" width="13.14" height="2.5"/>
+  <rect class="fil3" x="55.84" y="73.76" width="20.92" height="2.5"/>
+  <rect class="fil3" x="55.84" y="67.66" width="17.38" height="2.5"/>
+  <rect class="fil3" x="55.84" y="85.94" width="15.74" height="2.5"/>
+  <rect class="fil3" x="55.84" y="79.85" width="14.49" height="2.5"/>
+  <rect class="fil3" x="55.84" y="55.48" width="20.73" height="2.5"/>
+  <rect class="fil3" x="55.84" y="43.29" width="19.85" height="2.5"/>
+  <rect class="fil3" x="55.84" y="92.04" width="20.92" height="2.5"/>
+  <rect class="fil3" x="55.84" y="98.13" width="14.49" height="2.5"/>
+  <polygon class="fil5 str2" points="146.5,89.06 148.92,88.23 142.3,79.76 142.3,90.51 144.72,89.67 146.34,94.39 148.12,93.78 "/>
+  <rect class="fil3" x="84.82" y="115.05" width="82.75" height="2.5"/>
+ </g>
+</svg>

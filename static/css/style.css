@@ -1,0 +1,350 @@
+.radio-div-red label {
+    position: relative;
+}
+
+.radio-div-red p {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border: 1px #222 solid;
+    border-radius: 50%;
+    display: block;
+    top: 4px;
+    left: 0;
+}
+
+.radio-div-red input:checked+p{
+    background-color: #fff;
+}
+
+.radio-div-red input:checked+p span{
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: red;
+    left: 1px;
+    top: 1px;
+}
+
+.radio-div-blue label {
+    position: relative;
+}
+
+.radio-div-blue p {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border: 1px #222 solid;
+    border-radius: 50%;
+    display: block;
+    top: 4px;
+    left: 0;
+}
+
+.radio-div-blue input:checked+p{
+    background-color: #fff;
+}
+
+.radio-div-blue input:checked+p span{
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #00B0F0;
+    left: 1px;
+    top: 1px;
+}
+
+.irra-params, .calc-params, .smp-params, .sample-info, .input-filter-params, .export-params {
+    width: 100%;
+    height: 30px;
+    padding: 6px 12px;
+    margin: 2px 0 2px 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -moz-appearance: textfield;
+}
+
+input.input-filter-params {
+    padding-right: 2px;
+    padding-left: 2px;
+    text-align: center;
+}
+input.export-params {
+    float: right;
+    width: 60px;
+}
+
+.irra-params:focus, .calc-params:focus, .smp-params:focus, .sample-info, .input-filter-params, .export-params:focus {
+    border-color: #66afe9;
+    outline: 0;
+}
+
+.irra-params::-webkit-outer-spin-button,
+.irra-params::-webkit-inner-spin-button,
+.calc-params::-webkit-outer-spin-button,
+.calc-params::-webkit-inner-spin-button,
+.smp-params::-webkit-outer-spin-button,
+.smp-params::-webkit-inner-spin-button,
+.export-params::-webkit-outer-spin-button,
+.export-params::-webkit-inner-spin-button,
+.sample-info::-webkit-outer-spin-button,
+.sample-info::-webkit-inner-spin-button,
+.input-filter-params::-webkit-outer-spin-button,
+.input-filter-params::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+
+.calc-check-box, .smp-check-box {
+    margin-top: 10px;
+}
+
+.div-params label {
+    line-height: 34px;
+    font-weight: normal;
+}
+
+.text-doc-content {
+    font-size: 16px;
+    text-align: justify;
+}
+.first-title{
+    font-size: 20px;
+    text-align: justify;
+    text-transform: uppercase;
+}
+.main-text{
+    font-size: 16px;
+    text-align: justify;
+    text-transform: initial;
+}
+
+.setting-attr-dialog:not([open]) {
+    display: none;
+}
+.setting-attr-dialog {
+    display: block;
+    overflow: scroll;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #000000;
+    margin: auto;
+    border-width: 0;
+    border-style: none;
+    border-color: #ddd;
+    border-image: none;
+    padding: 1em;
+    background: white;
+}
+.setting-dialog label input[type='number'] {
+    width: 80px;
+}
+.modal-dialog-width-85{
+    width: 85%;
+}
+.modal-page-size{
+    height: 700px;
+}
+.modal-div{
+    height: 400px;
+}
+
+
+/*用于消除鼠标点击与键盘左右键导致的样式显示困扰*/
+/*不做修改的话，鼠标点击之后，再用左右键控制的话，之前选中的按钮会保持focus的样式*/
+.btn-no-outline:hover,
+.btn-no-outline:focus:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.btn-no-outline:focus,
+.btn-no-outline:focus:active {
+    background-color: #fff;
+    color: #333;
+    border-color: #ccc;
+}
+
+/*pre containter, copy from bootstrap.btn*/
+.pre {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+/*https://blog.csdn.net/linhaiyun_ytdx/article/details/76212182*/
+.upload-drop-zone {
+  height: 200px;
+  border-width: 2px;
+  margin-bottom: 20px;
+}
+/* skin.css Style*/
+.upload-drop-zone {
+  color: #ccc;
+  border-style: dashed;
+  border-color: #ccc;
+  line-height: 200px;
+  text-align: center;
+}
+.upload-drop-zone.drop {
+  color: #333;
+  border-color: #333;
+}
+
+.article-content-container h1, .doc-left-sidebar h1 {
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1em;
+    margin: 1em 0;
+}
+
+.article-content-container h2, .doc-left-sidebar h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.article-content-container p {
+    margin: 1em;
+    font-size: 100%;
+    line-height: 1.6em;
+}
+
+.article-content-container img {
+    max-width: 700px
+}
+
+.doc-container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.doc-left-sidebar {
+    float: left;
+    width: 250px;
+    max-height: 700px;
+    overflow-y: auto;
+    position: fixed;
+    padding-left: 15px;
+    padding-top: 15px;
+    background-color: #f8f8f8;
+}
+
+.article-container {
+    margin-left: 250px;
+    max-width: 1030px;
+    display: block;
+    box-sizing: inherit;
+    background-color: #ffffff;
+}
+
+.article-content-container {
+    float: left;
+    max-width: 750px;
+}
+
+.article-right-sidebar {
+    width: 250px;
+    margin-left: 765px;
+    margin-top: 600px;
+    position: fixed;
+    padding-left: 50px;
+}
+
+/*.doc-content {*/
+/*    width: 350px;*/
+/*    height: 700px;*/
+/*    background-color: #f4f4f4;*/
+/*    padding: 20px;*/
+/*    position: fixed;*/
+/*    top: 80px;*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    overflow-y: auto;*/
+/*}*/
+
+/*.right-content {*/
+/*    width: 350px;*/
+/*    height: 50px;*/
+/*    background-color: #ffffff;*/
+/*    padding: 20px;*/
+/*    position: fixed;*/
+/*    top: 750px;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    overflow-y: -moz-scrollbars-none;*/
+/*}*/
+
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 9999;
+}
+
+.popup-content {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 500px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.popup-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.popup-message {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.popup-button {
+    position: relative;
+    float: right;
+    bottom: 0;
+    margin-left: 10px;
+    display: none;
+    border-radius: 7px;
+}
+
+.table-export-to-pdf tbody tr td {
+    border: 1px solid black;
+    padding-right: 20px;
+    padding-left: 5px;
+}
+
+.label-left {
+    width: 45%;
+    margin-right: 5%;
+}
+.label-right {
+    width: 45%;
+}

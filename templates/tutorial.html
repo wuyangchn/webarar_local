@@ -1,0 +1,81 @@
+{% extends 'home.html' %}
+
+{% block content %}
+    {% load static %}
+
+    <style>
+
+        .p_content {
+            -webkit-margin-before:0;
+            -webkit-margin-after:0
+        }
+    
+    </style>
+
+    <div class="doc-left-sidebar">
+
+        <p><a href="/doc/tutorial/zh-cn">简体中文</a></p>
+        <h2 id="content">Content</h2>
+        <ol>
+        <li><a href="#general-procedure">General procedure</a></li>
+        <li><a href="#import-raw-data">Import raw data</a></li>
+        <li><a href="#arr-files">Arr files</a></li>
+        <li><a href="#create-new-sample">Create new sample</a></li>
+        <li><a href="#set-raw-file-filter">Set raw-file filter</a></li>
+        <li><a href="#calculate-blank">Calculate blank</a></li>
+        <li><a href="#tables-and-figures">Tables and figures</a></li>
+        <li><a href="#set-parameters">Set parameters</a></li>
+        <li><a href="#recalculation">Recalculation</a></li>
+        <li><a href="#isochron-scatter-points-selection">Isochron scatter points selection</a></li>
+        <li><a href="#change-figure-styles">Change figures styles</a></li>
+        <li><a href="#air-corrected-plateaus">Air-corrected plateaus</a></li>
+        <li><a href="#age-distribution-figure">Age distribution figure</a></li>
+        <li><a href="#save-and-export">Save and export</a></li>
+
+        <li><p class="p_content"><a href="#-1-">Example 1: Open files</a></p>
+        <p class="p_content"><a href="#-1-1-arr-age-xls-">Example 1-1: Open arr, age, xls files</a></p>
+        <p class="p_content"><a href="#-1-2-">Example 1-2: Open raw data files</a></p>
+        </li>
+        <li><p class="p_content"><a href="#-2-">Example 2: Enter data manually for calculation and making figures</a></p>
+        <p class="p_content"><a href="#-2-1-">Example 2-1: Make age spectra</a></p>
+        <p class="p_content"><a href="#-2-2-">Example 2-2: Make isochron diagrams</a></p>
+        </li>
+        <li><p class="p_content"><a href="#-3-">Example 3: Datapoint selection in isochron figures</a></p>
+        </li>
+        <li><p class="p_content"><a href="#-4-">Example 4: Change styles of figures</a></p>
+        <p class="p_content"><a href="#-4-1-">Example 4-1: Change styles of isochrons</a></p>
+        <p class="p_content"><a href="#-4-2-">Example 4-2: Change styles of text elements</a></p>
+        <p class="p_content"><a href="#-4-3-">Example 4-3: Change scale of axes</a></p>
+        </li>
+        <li><p class="p_content"><a href="#-5-">Example 5: Export and save</a></p>
+        <p class="p_content"><a href="#-5-1-arr">Example 5-1: Save arr</a></p>
+        <p class="p_content"><a href="#-5-2-dpf">Example 5-2: Export to DPF</a></p>
+        <p class="p_content"><a href="#-5-3-excel">Example 5-3: Export to EXCEL</a></p>
+        </li>
+        <li><p class="p_content"><a href="#-6-">Example 6: Edit parameter sets</a></p>
+        <p class="p_content"><a href="#-6-1-">Example 6-1: Create a parameter set</a></p>
+        <p class="p_content"><a href="#-6-2-">Example 6-2: Update a parameter set</a></p>
+        <p class="p_content"><a href="#-6-3-">Example 6-3: Delete a parameter set</a></p>
+        </li>
+
+        </ol>
+
+        <h2><a href="/doc">Overview</a></h2>
+        <h2><a href="/doc/deploy">Deployment</a></h2>
+
+    </div>
+
+    <div class="doc-container">
+
+        <div class="container-fluid article-container">
+            <div class="article-content-container">
+                {% include "tutorial_md.html" %}
+            </div>
+            <div class="article-right-sidebar">
+                <a title="返回顶部" href="#__top__" type="button" class="btn btn-default glyphicon glyphicon-menu-up" aria-hidden="true"></a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
