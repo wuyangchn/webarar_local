@@ -88,7 +88,7 @@ See [Deploy on your own caomputer](/static/readme/Deployment.md).
 
 ## Update Log
 
-The log is [here](/../CHANGE_LOG.md)
+The log is [here](/CHANGE_LOG.md)
 
 ## Citing WebArAr or ArArPy
 
