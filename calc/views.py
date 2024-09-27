@@ -944,11 +944,18 @@ class ThermoView(http_funcs.ArArView):
         file_path = os.path.join(loc, f"{file_name}.arr")
         sample = ap.from_arr(file_path=file_path)
 
+        sample.name(file_name)
+
         use_dll = True
         # use_dll = False
 
         if use_dll:
-            source = os.path.join(settings.SETTINGS_ROOT, "mddfuncs.dll")
+            if os.name == 'nt':  # Windows system
+                source = os.path.join(settings.SETTINGS_ROOT, "mddfuncs.dll")
+            elif os.name == 'posix':  # Linux
+                source = os.path.join(settings.SETTINGS_ROOT, "mddfuncs.so")
+            else:
+                return JsonResponse({}, status=403)
             ap.smp.diffusion_funcs.run_agemon_dll(sample, source, loc, data, float(max_age))
         else:
             agemon = ap.smp.diffusion_funcs.DiffAgemonFuncs(smp=sample, loc=loc)
@@ -1010,7 +1017,6 @@ class ThermoView(http_funcs.ArArView):
         else:
             file_path = os.path.join(loc, f"{file_name}.arr")
             sample = ap.from_arr(file_path=file_path)
-            sample.name(file_name)
 
             arr = ap.smp.diffusion_funcs.DiffDraw(smp=sample, loc=loc)
             arr.ni = len(data)
