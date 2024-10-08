@@ -17,6 +17,9 @@ urlpatterns = [
     # /calc/thermo/...
     path('thermo', views.ThermoView.as_view(), name="thermo_home"),
     path('thermo/<str:flag>', views.ThermoView.as_view(), name="thermo_views"),
+    # /calc/export/...
+    path('export', views.ExportView.as_view(), name="export_home"),
+    path('export/<str:flag>', views.ExportView.as_view(), name="export_views"),
     # api
     path('api/<str:flag>', views.ApiView.as_view(), name="api_views"),
 ]

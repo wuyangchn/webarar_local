@@ -215,7 +215,7 @@ class ArArView(View):
 
         # Ajax request, json type content, flag is included in body
         try:
-            self.body = json.loads(request.body.decode('utf-8'))
+            self.body = ap.smp.json.loads(request.body.decode('utf-8'))
             self.cache_key = str(self.body['cache_key'])  # Key to obtain sample from cache
             self.sample = pickle.loads(cache.get(self.cache_key, default=pickle.dumps(ap.smp.Sample())))
             touch_cache(self.cache_key)  # Update cache time

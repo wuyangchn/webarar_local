@@ -6,6 +6,7 @@ import traceback
 import re
 import ctypes
 import numpy as np
+import pdf_maker as pm
 import time
 import gc
 
@@ -398,9 +399,6 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
         return http_funcs.open_last_object(request)
 
 
-""" For open raw files """
-
-
 class RawFileView(http_funcs.ArArView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -732,10 +730,10 @@ class ParamsSettingView(http_funcs.ArArView):
         log_funcs.set_info_log(self.ip, '005', 'info', f'Show input filter project names: {names}')
         return render(request, 'input_filter_setting.html', {'allInputFilterNames': names})
 
-    def show_export_pdf(self, request, *args, **kwargs):
-        names = list(models.ExportPDFParams.objects.values_list('name', flat=True))
-        log_funcs.set_info_log(self.ip, '005', 'info', f'Show export PDF project names: {names}')
-        return render(request, 'export_pdf_setting.html', {'allExportPDFNames': names})
+    # def show_export_pdf(self, request, *args, **kwargs):
+    #     names = list(models.ExportPDFParams.objects.values_list('name', flat=True))
+    #     log_funcs.set_info_log(self.ip, '005', 'info', f'Show export PDF project names: {names}')
+    #     return render(request, 'export_pdf_setting.html', {'allExportPDFNames': names})
 
     def change_param_objects(self, request, *args, **kwargs):
         type = str(self.body['type'])  # type = irra, calc, smp
@@ -756,8 +754,12 @@ class ParamsSettingView(http_funcs.ArArView):
                 if 'calc' in type.lower():
                     param = [*data[34:56], *data[71:97]]
                 if 'smp' in type.lower():
-                    param = [*data[67:71], *data[58:67], *data[97:100], *data[115:123],
-                             *ap.calc.corr.get_method_fitting_law_by_name(data[100]), *data[101:114]]
+                    _ = [i == {'l': 0, 'e': 1, 'p': 2}.get(str(data[100]).lower()[0], -1) for i in range(3)]
+                    param = [*data[67:71], *data[58:67], *data[97:100], *data[115:120], *data[126:136],
+                             *data[120:123], *_, *data[101:114]]
+                if 'thermo' in type.lower():
+                    param = [*data[0:20], *data[56:58], *data[20:27],
+                             *ap.calc.corr.get_irradiation_datetime_by_string(data[27]), data[28], '', '']
             except IndexError:
                 param = []
             return JsonResponse({'status': 'success', 'param': np.nan_to_num(param).tolist()})
@@ -836,14 +838,17 @@ class ThermoView(http_funcs.ArArView):
     def get(self, request, *args, **kwargs):
         # names = list(models.IrraParams.objects.values_list('name', flat=True))
         # log_funcs.set_info_log(self.ip, '005', 'info', f'Show irradiation param project names: {names}')
-        return render(request, 'thermo.html')
+        allThermoNames = list(models.ThermoParams.objects.values_list('name', flat=True))
+        return render(request, 'thermo.html', {'allThermoNames': allThermoNames})
 
-    # /calc/arr_input
+    # /calc/thermo/arr_input
     def arr_input(self, request, *args, **kwargs):
         file = request.FILES.get(str(0))
+        random_index = request.POST.get('random_index')
         name = ''
         file_name = ''
-        destination_folder, random_index = ap.smp.diffusion_funcs.get_random_dir(settings.MDD_ROOT, length=7)
+        destination_folder, random_index = ap.smp.diffusion_funcs.get_random_dir(
+            settings.MDD_ROOT, length=7, random_index=random_index)
         try:
             web_file_path, file_name, suffix = ap.files.basic.upload(file, destination_folder)
         except (Exception, BaseException) as e:
@@ -854,7 +859,7 @@ class ThermoView(http_funcs.ArArView):
 
         return JsonResponse({'sample_name': name, "file_name": file_name, "random_index": random_index})
 
-    # /calc/check_sample
+    # /calc/thermo/check_sample
     def check_sample(self, request, *args, **kwargs):
         # names = list(models.IrraParams.objects.values_list('name', flat=True))
         # log_funcs.set_info_log(self.ip, '005', 'info', f'Show irradiation param project names: {names}')
@@ -862,6 +867,8 @@ class ThermoView(http_funcs.ArArView):
         name = self.body['name']
         file_name = self.body['file_name']
         random_index = self.body['random_index']
+        params = self.body['settings']
+
         loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
         if not os.path.exists(loc) or random_index == "":
             return JsonResponse({}, status=403)
@@ -883,13 +890,17 @@ class ThermoView(http_funcs.ArArView):
         f = np.cumsum(ar) / ar.sum()
 
         # dr2, ln_dr2 = ap.smp.diffusion_funcs.dr2_popov(f, ti)
-        # dr2, ln_dr2 = ap.smp.diffusion_funcs.dr2_yang(f, ti)
-        dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_lovera(f, ti, ar, sar)
+        if str(params[6]).lower() == 'lovera':
+            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_lovera(f, ti, ar=ar, sar=sar)
+        elif str(params[6]).lower() == 'yang':
+            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_yang(f, ti, ar=ar, sar=sar)
+        else:
+            return JsonResponse({}, status=403)
 
         data = np.array([
             sequence.value, te, ti, age, sage, ar, sar, f, dr2, ln_dr2, wt
         ]).tolist()
-        data.insert(0, [True for i in range(nsteps)])
+        data.insert(0, np.where(np.array(data[3]) > 0, True, False).tolist())
         data.insert(1, [1 for i in range(nsteps)])
 
         res = False
@@ -905,6 +916,10 @@ class ThermoView(http_funcs.ArArView):
         random_index = self.body['random_index']
         max_age = self.body['max_age']
         data = self.body['data']
+        params = self.body['settings']
+
+        print(data)
+
         loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
         if not os.path.exists(loc) or random_index == "":
             return JsonResponse({"random_index": random_index}, status=403)
@@ -913,19 +928,25 @@ class ThermoView(http_funcs.ArArView):
         sample = ap.from_arr(file_path=file_path)
 
         arr = ap.smp.diffusion_funcs.DiffArrmultiFunc(smp=sample, loc=loc)
-        arr.ni = len(data)
+
+        print(f"{params = }")
+        # params = [8, 10, 8, 2, 0.5, 0.01, 'wt', 'xlogd', 'random', 'fit', False]
+        filtered_data = list(filter(lambda x: x[0], data))
+        filtered_index = [i for i, row in enumerate(data) if row[0]]
+        arr.ni = len(filtered_data)
         data = ap.calc.arr.transpose(data)
-        arr.telab = [i + 273.15 for i in data[3]]
-        arr.tilab = [i * 60 for i in data[4]]
-        arr.ya = data[5]
-        arr.sig = data[6]
-        arr.a39 = data[7]
-        arr.sig39 = data[8]
-        arr.f = data[9]
-        arr.f[-1] = 0.9999999999999999 if arr.f[-1] >= 1 else arr.f[-1]
+        filtered_data = ap.calc.arr.transpose(filtered_data)
+        arr.telab = [i + 273.15 for i in filtered_data[3]]
+        arr.tilab = [i * 60 for i in filtered_data[4]]
+        arr.ya = filtered_data[5]
+        arr.sig = filtered_data[6]
+        arr.a39 = filtered_data[7]
+        arr.sig39 = filtered_data[8]
+        arr.f = filtered_data[9]
+        dr2, arr.xlogd, arr.wt = ap.smp.diffusion_funcs.dr2_lovera(
+            f=arr.f, ti=filtered_data[4], ar=filtered_data[7], sar=filtered_data[8])
+
         arr.f.insert(0, 0)
-        arr.xlogd = data[11]
-        arr.wt = data[12]
         arr.main()
 
         return JsonResponse({})
@@ -948,6 +969,8 @@ class ThermoView(http_funcs.ArArView):
 
         use_dll = True
         # use_dll = False
+
+        data = list(filter(lambda x: x[0], data))
 
         if use_dll:
             if os.name == 'nt':  # Windows system
@@ -982,7 +1005,7 @@ class ThermoView(http_funcs.ArArView):
                 agemon.telab[i] = data[3][i] + 273.15
                 agemon.tilab[i] = data[4][i] / 5.256E+11
 
-            agemon.xs[-1] = 0.9999999999999999 if agemon.xs[-1] >= 1 else agemon.xs[-1]
+            agemon.xs = np.where(np.array(agemon.xs) >= 1, 0.9999999999999999, np.array(agemon.xs))
 
             for i in range(agemon.nit):
                 if agemon.telab[i] > 1373:
@@ -1003,47 +1026,77 @@ class ThermoView(http_funcs.ArArView):
         file_name = self.body['file_name']
         random_index = self.body['random_index']
         data = self.body['data']
+        params = self.body['settings']
+
         loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
         if not os.path.exists(loc) or random_index == "":
             return JsonResponse({}, status=403)
 
+        n = len(data)
+        data = ap.calc.arr.transpose(data)
+
         # read_from_ins = True
         read_from_ins = False
 
-        k = [a, b, siga, sigb, chi2, q] = [0, 0, 0, 0, 0, 0]
-        if read_from_ins:
-            loc = r"C:\Users\Young\OneDrive\00-Projects\【2】个人项目\2024-06 MDD\MDDprograms\Sources Codes"
-            arr = ap.smp.diffusion_funcs.DiffDraw(name="Y51a", loc=loc, read_from_ins=read_from_ins)
+        if params[12] and params[13]:
+            if read_from_ins:
+                loc = r"C:\Users\Young\OneDrive\00-Projects\【2】个人项目\2024-06 MDD\MDDprograms\Sources Codes"
+                arr = ap.smp.diffusion_funcs.DiffDraw(name="Y51a", loc=loc, read_from_ins=read_from_ins)
+            else:
+                file_path = os.path.join(loc, f"{file_name}.arr")
+                sample = ap.from_arr(file_path=file_path)
+
+                arr = ap.smp.diffusion_funcs.DiffDraw(smp=sample, loc=loc)
+                arr.ni = n
+                arr.telab = [i + 273.15 for i in data[3]]
+                arr.tilab = [i * 60 for i in data[4]]
+                arr.age = data[5]
+                arr.sage = data[6]
+                arr.a39 = data[7]
+                arr.sig39 = data[8]
+                arr.f = data[9]
+            plot_data = list(arr.get_plot_data())
         else:
-            file_path = os.path.join(loc, f"{file_name}.arr")
-            sample = ap.from_arr(file_path=file_path)
+            plot_data = [[], [], [], []]
 
-            arr = ap.smp.diffusion_funcs.DiffDraw(smp=sample, loc=loc)
-            arr.ni = len(data)
-            data = ap.calc.arr.transpose(data)
-            arr.telab = [i + 273.15 for i in data[3]]
-            arr.tilab = [i * 60 for i in data[4]]
-            arr.age = data[5]
-            arr.sage = data[6]
-            arr.a39 = data[7]
-            arr.sig39 = data[8]
-            arr.f = data[9]
-
+        k = [a, b, siga, sigb, chi2, q] = [0, 0, 0, 0, 0, 0]
+        if params[11]:
+            ti = [i + 273.15 for i in data[3]]
             x, y, wtx, wty = [], [], [], []
-            for i in range(arr.ni):
+            for i in range(len(data)):
                 if str(data[1][i]) == "2":
-                    x.append(10000 / arr.telab[i])
-                    wtx.append(10000 * 5 / arr.telab[i] ** 2)
+                    x.append(10000 / ti[i])
+                    wtx.append(10000 * 5 / ti[i] ** 2)
                     y.append(data[11][i])
                     wty.append(data[12][i])
-            # x = [10000 / arr.telab[i] for i in range(arr.ni) if index[i] == "1"]
-            # wtx = [10000 * 5 / arr.telab[i] ** 2 for i in range(arr.ni) if index[i] == "1"]
-            # y = data[11]
-            # wty = data[12]
             if len(x) > 0:
                 k = [a, b, siga, sigb, chi2, q] = ap.smp.diffusion_funcs.fit(x, y, wtx, wty)
 
-        plot_data = arr.get_plot_data()
+        if params[14]:
+            loc = f"C:\\Users\\Young\\OneDrive\\00-Projects\\【2】个人项目\\2022-05论文课题\\【3】分析测试\\ArAr\\01-VU实验数据和记录\\{sample_name}"
+            try:
+                furnace_log = libano_log = np.loadtxt(os.path.join(loc, f"{file_name}-temp.txt"), delimiter=',')
+                heating_out = np.loadtxt(os.path.join(loc, f"{file_name}-heated-index.txt"), delimiter=',', dtype=int)
+            except FileNotFoundError:
+                print(f"FileNotFoundError")
+                furnace_log = [[], [], [], [], [], []]
+                heating_out = []
+            else:
+                # pass
+                heating_timestamp = [j for v in heating_out for j in libano_log[0, v]]  # 加热起止点的时间标签
+                furnace_log = [libano_log[:, 0]]
+                for i in range(1, libano_log.shape[1] - 1):
+                    if not all([(i==i[0]).all() for i in libano_log[[1, 2, 4, 5], i-1: i+2]]) or libano_log[0, i] in heating_timestamp:
+                        furnace_log.append(libano_log[:, i])
+                furnace_log.append(libano_log[:, -1])
+                furnace_log = np.transpose(furnace_log)
+                heating_out = np.reshape([index for index, _ in enumerate(furnace_log[0]) if _ in heating_timestamp], (len(heating_timestamp) // 2, 2))
+        else:
+            furnace_log = []
+            heating_out = []
+
+        plot_data.append(furnace_log)
+        plot_data.append(heating_out)
 
         return JsonResponse({'status': 'success', 'data': ap.smp.json.dumps(plot_data),
                              'line_data': ap.smp.json.dumps(k)})
@@ -1053,19 +1106,97 @@ class ThermoView(http_funcs.ArArView):
         sample_name = self.body['sample_name']
         file_name = self.body['file_name']
         loc = f"C:\\Users\\Young\\OneDrive\\00-Projects\\【2】个人项目\\2022-05论文课题\\【3】分析测试\\ArAr\\01-VU实验数据和记录\\{sample_name}"
-        arr_path = f"C:\\Users\\Young\\OneDrive\\00-Projects\\【2】个人项目\\2022-05论文课题\\【3】分析测试\\ArAr\\01-VU实验数据和记录\\Arr Data\\{file_name}.arr"
 
         libano_log_path = f"{loc}\\Libano-log"
         libano_log_path = [os.path.join(libano_log_path, i) for i in os.listdir(libano_log_path)]
         helix_log_path = f"{loc}\\LogFiles"
         helix_log_path = [os.path.join(helix_log_path, i) for i in os.listdir(helix_log_path)]
 
-        print(libano_log_path)
-        print(helix_log_path)
         ap.smp.diffusion_funcs.SmpTemperatureCalibration(
-            libano_log_path=libano_log_path, helix_log_path=helix_log_path, arr_path=arr_path, loc=loc, name=file_name)
+            libano_log_path=libano_log_path, helix_log_path=helix_log_path, loc=loc, name=file_name)
 
         return JsonResponse({})
+
+
+class ExportView(http_funcs.ArArView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.dispatch_post_method_name = []
+
+    # /calc/export
+    def get(self, request, *args, **kwargs):
+        return render(request, 'export_pdf_setting.html')
+
+    def get_plotdata(self, request, *args, **kwargs):
+        files = json.loads(self.body['json_string'])['files']
+        file_names = [each['file_name'] for each in files if each['checked']]
+        file_paths = [each['file_path'] for each in files if each['checked']]
+        diagrams = [each['diagram'] for each in files if each['checked']]
+        print(f"{file_names = }")
+        print(f"{file_paths = }")
+        print(f"{diagrams = }")
+
+        colors = ['#1f3c40', '#e35000', '#e1ae0f', '#3d8ebf', '#77dd83', '#c7ae88', '#83d6bb', '#653013', '#cc5f16',
+                  '#d0b269']
+        series = []
+
+        # ------ 构建数据 -------
+        for index, file in enumerate(file_paths):
+            _, ext = os.path.splitext(file)
+            if ext[1:] not in ['arr', 'age']:
+                continue
+            smp = (ap.from_arr if ext[1:] == 'arr' else ap.from_age)(file_path=file)
+            age = smp.ApparentAgeValues[2:4]
+            ar = smp.DegasValues[20]
+            data = ap.calc.spectra.get_data(*age, ar, cumulative=False)
+            series.append({
+                'type': 'series.line', 'id': f'line{index * 2 + 0}', 'name': f'line{index * 2 + 0}',
+                'color': colors[index],
+                'data': np.transpose([data[0], data[1]]).tolist(), 'line_caps': 'square',
+            })
+            series.append({
+                'type': 'series.line', 'id': f'line{index * 2 + 1}', 'name': f'line{index * 2 + 1}',
+                'color': colors[index],
+                'data': np.transpose([data[0], data[2]]).tolist(), 'line_caps': 'square',
+            })
+            series.append({
+                'type': 'text', 'id': f'text{index * 2 + 0}', 'name': f'text{index * 2 + 0}', 'color': colors[index],
+                'text': f'{smp.name()}<r>{round(smp.Info.results.age_plateau[0]["age"], 2)}', 'size': 10,
+                'data': [[index * 15 + 5, 23]],
+            })
+        data = {
+            "data": [
+                {
+                    'xAxis': [{'extent': [0, 100], 'interval': [0, 20, 40, 60, 80, 100],
+                               'title': 'Cumulative <sup>39</sup>Ar Released (%)', 'nameLocation': 'middle', }],
+                    'yAxis': [{'extent': [0, 25], 'interval': [0, 5, 10, 15, 20, 25],
+                               'title': 'Apparent Age (Ma)', 'nameLocation': 'middle', }],
+                    'series': series
+                }
+            ],
+            "file_name": "WHA",
+            "plot_names": ["all age plateaus"],
+        }
+
+        file_name = data["file_name"]
+        plot_data = data["data"]
+        # write pdf
+        file = pm.NewPDF(filepath=f"{settings.DOWNLOAD_URL}{file_name}.pdf")
+        for index, each in enumerate(plot_data):
+            # rich text tags should follow this priority: color > script > break
+            file.text(page=index, x=50, y=780, line_space=1.2, size=12, base=0, h_align="left",
+                      text=f"The PDF can be edited with Adobe Acrobat, Illustrator and CorelDRAW")
+            cv = ap.smp.export.export_chart_to_pdf(each)
+            file.canvas(page=index, base=0, margin_top=5, canvas=cv, unit="cm", h_align="middle")
+            if index + 1 < len(plot_data):
+                file.add_page()
+
+        # save pdf
+        file.save()
+
+        export_href = '/' + settings.DOWNLOAD_URL + f"{file_name}.pdf"
+
+        return JsonResponse({'data': ap.smp.json.dumps(data), 'href': export_href})
 
 
 class ApiView(http_funcs.ArArView):
@@ -1101,6 +1232,28 @@ class ApiView(http_funcs.ArArView):
     @staticmethod
     def open_multi(request, *args, **kwargs):
         return CalcHtmlView().open_multi_files(request, *args, **kwargs)
+
+    @staticmethod
+    def multi_files(request, *args, **kwargs):
+        res = []
+        try:
+            length = int(request.POST.get('length'))
+        except TypeError:
+            files = request.FILES.getlist('files')
+        else:
+            files = [request.FILES.get(str(i)) for i in range(length)]
+        print(f"Number of files: {len(files)}")
+        for file in files:
+            try:
+                web_file_path, file_name, suffix = ap.files.basic.upload(
+                    file, settings.UPLOAD_ROOT)
+            except (Exception, BaseException):
+                continue
+            else:
+                res.append({
+                    'name': file_name, 'extension': suffix, 'path': web_file_path,
+                })
+        return JsonResponse({'files': res})
 
     def export_arr(self, request, *args, **kwargs):
         sample = self.sample
@@ -1203,3 +1356,31 @@ class ApiView(http_funcs.ArArView):
         # cp.EmptyClipboard()
         # cp.SetClipboardData(cp.RegisterClipboardFormat('Portable Document Format'), pdf_data)
         # cp.CloseClipboard()
+
+    def export_chart(self, request, *args, **kwargs):
+        data = self.body['data']
+        file_name = self.body['file_name']
+        plot_names = self.body['plot_names']
+        export_filepath = os.path.join(settings.DOWNLOAD_ROOT, f"{file_name}.pdf")
+
+        # write pdf
+        file = pm.NewPDF(filepath=export_filepath)
+        for index, each in enumerate(data):
+            # rich text tags should follow this priority: color > script > break
+            file.text(page=index, x=50, y=780, line_space=1.2, size=12, base=0, h_align="left",
+                      text=f"The PDF can be edited with Adobe Acrobat, Illustrator and CorelDRAW.<r>"
+                           f"<r> {file_name}"
+                           f"<r> {plot_names[index]}",
+                      )
+            cv = ap.smp.export.export_chart_to_pdf(each)
+            file.canvas(page=index, base=0, margin_top=5, canvas=cv, unit="cm", h_align="middle")
+            if index + 1 < len(data):
+                file.add_page()
+
+        # save pdf
+        file.save()
+
+        export_href = '/' + settings.DOWNLOAD_URL + f"{file_name}.pdf"
+
+        return JsonResponse({'status': 'success', 'href': export_href})
+

@@ -11,6 +11,7 @@
     {% load static %}
     <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.css' %}" rel="stylesheet"  type="text/css">
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/tree.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'handsontable/handsontable.full.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'loading-indicator-dist/ladda-themeless.min.css' %}" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
@@ -29,8 +30,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
 
-    <script src="{% static 'js/calc.main.js' %}?v=20240926" type="text/javascript"></script>
-    <script src="{% static 'js/calc.func.js' %}?v=20240926" type="text/javascript"></script>
+    <script src="{% static 'js/calc.main.js' %}?v=20240917" type="text/javascript"></script>
+    <script src="{% static 'js/calc.func.js' %}?v=20240917" type="text/javascript"></script>
 {#    <script src="{% static 'js/myecharts.js' %}?v=20240223" type="text/javascript"></script>#}
 
     <link href="{% static 'css/zoom.css' %}" rel="stylesheet">
@@ -65,6 +66,8 @@
         const url_export_xls = "{% url 'api_views' 'export_xls' %}";
         const url_export_opju = "{% url 'api_views' 'export_opju' %}";
         const url_export_pdf = "{% url 'api_views' 'export_pdf' %}";
+        const url_export_chart = "{% url 'api_views' 'export_chart' %}";
+        const url_multi_files = "{% url 'api_views' 'multi_files' %}";
 
         const url_set_params = "{% url 'object_views' 'set_params' %}";
         const url_show_param_projects = "{% url 'params_views' 'change_param_objects' %}";
@@ -91,6 +94,8 @@
         const url_thermo_run_arrmulti = "{% url 'thermo_views' 'run_arrmulti' %}";
         const url_read_log = "{% url 'thermo_views' 'read_log' %}";
         const url_thermo_plot = "{% url 'thermo_views' 'plot_agemon' %}";
+
+        const url_export_plotdata = "{% url 'export_views' 'get_plotdata' %}";
 
         function post_fingerprint(value) {
             $.ajax({
@@ -129,6 +134,7 @@
 </head>
 <body>
     <div id="__top__"></div>
+    <a id="export_path_link" href="/user/SAMPLE%20NAME.arr" class="sr-only" download></a>
     <div id="popupContainer" class="popup-container" onclick="closePopupMessage()">
         <div id="popupContent" class="popup-content">
             <p id="popupTitle" class="popup-title"></p>

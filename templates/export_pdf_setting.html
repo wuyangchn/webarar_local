@@ -1,143 +1,307 @@
-{% extends 'calc.html' %}
+{% extends 'home.html' %}
 
-{% block raw_file_modal %}
+{% block content %}
 
-<div class="modal" id="modal-settings" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
-    <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-calc-params">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Sample Parameters</h4>
-            </div>
-
-            <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
-                    <div style="padding-right: 15px; padding-left: 30px;">
-                        <div class="radio form-inline">
-                            <label>
-                                <input type="radio" name="paramsRadio" id="exportPDFParamsRadio1" value="option1" onchange="changeSubmitType()" checked>
-                                Edit an Calculation Project
-                            </label>
-                            <select class="form-control" id="exportPDFProjectName" name="projectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
-                                {% for each in allExportPDFNames %}
-                                    <option>{{ each }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="radio">
-                            <label>
-                                <input type="radio" name="paramsRadio" id="exportPDFParamsRadio2" value="option2" onchange="changeSubmitType()">
-                                Create New
-                            </label>
-                        </div>
-                        {% include "export_pdf_setting_modal_body_div.html" %}
-                    </div>
-                </div>
-
-            <div class="modal-footer">
-                <br>
-                <div style="text-align: center">
-                    <button type="button" class="btn btn-danger" id="deleteBtn" onclick="submitDelete()">Delete</button>
-                    <a href="{% url 'calc_view' %}"  class="btn btn-default btn-Close">Close</a>
-                    <button type="button" class="btn btn-primary" id="submitBtn" onclick="submitOrSave()">Save</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div>
+<div class="container-fluid" style="height: 800px" style="padding-right: 15px; padding-left: 30px;">
+    {% include "export_pdf_setting_modal_body_div.html" %}
 </div>
 
-<div class="modal" id="modal-submit" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Submit: determine a pin</h4>
-            </div>
-            <div class="modal-body" style="padding-left: 15px; padding-right: 15px; overflow: auto">
-                <form autocomplete="off">
-                    <div class="form-group">
-                        <label for="name1">Params Name</label>
-                        <input type="text" class="form-control" id="name1" placeholder="Params Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="pin1">Pin</label>
-                        <input type="password" class="form-control" id="pin1" placeholder="Pin" autocomplete="new-password">
-                    </div>
-                    <div class="form-group">
-                        <label for="email1">Email address</label>
-                        <input type="email" class="form-control" id="email1" placeholder="Email">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <br>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-default btn-Close" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="submitParamObject('exportPDF')">OK</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div>
-</div>
 
-<div class="modal" id="modal-save" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Save: confirm the pin</h4>
-            </div>
-            <div class="modal-body" style="padding-left: 15px; padding-right: 15px; overflow: auto">
-                <form autocomplete="off">
-                    <div class="form-group">
-                        <label for="name2">Params Name</label>
-                        <input type="text" class="form-control" id="name2" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="pin2">Pin</label>
-                        <input type="password" class="form-control" id="pin2" placeholder="Pin">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <br>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-default btn-Close" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="saveParamObject('exportPDF')">OK</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div>
-</div>
-
-<div class="modal" id="modal-delete" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Delete: confirm the pin</h4>
-            </div>
-            <div class="modal-body" style="padding-left: 15px; padding-right: 15px; overflow: auto">
-                <form autocomplete="off">
-                    <div class="form-group">
-                        <label for="name3">Params Name</label>
-                        <input type="text" class="form-control" id="name3" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="pin3">Pin</label>
-                        <input type="password" class="form-control" id="pin3" placeholder="Pin">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <br>
-                <div class="pull-right">
-                    <button type="button" class="btn btn-default btn-Close" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="deleteParamObject('exportPDF')">Delete</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div>
-</div>
 
 <script>
-$('#modal-settings').modal('show');
-showParamProject(document.getElementById('exportPDFProjectName'));
+
+function getPlotDataToExport() {
+    let data = {};
+    let diagrams = (ele) => ele.options[ele.selectedIndex].innerText;
+    let json_string = JSON.stringify({
+        'files': $('#export_arr_file_list').bootstrapTable('getData').map((item, index) => {
+            return {
+                'checked': item['checked'], 'file_name': item['file_name'],
+                'file_path': item['file_path'], 'diagram': diagrams($('.input-filter-selection')[index]),
+            }
+        })
+    });
+    $.ajax({
+        url: url_export_plotdata,
+        type: 'POST',
+        data: JSON.stringify({
+            'json_string': json_string
+        }),
+        contentType:'application/json',
+        success: function(res){
+            data = myParse(res.data);
+
+            // 获取目标容器并将生成的树状结构插入到页面中
+            const treeContainer = document.querySelector('.x-tree-div');
+            treeContainer.innerHTML = ''; // This removes all child elements
+            
+            let ul = document.createElement('ul');
+            ul.classList.add('x-tree-root-ct', 'x-tree-lines', 'x-tree-node-active');
+
+            const tree = Json2Tree('myPlotData', data);
+            ul.appendChild(tree);
+
+            treeContainer.appendChild(ul);
+
+            let embedElement = document.getElementById("pdfEmbed");
+            embedElement.src = res.href;
+        }
+    });
+}
+function Tree2Json(treeNode, order=0, isArray=false) {
+    const json = {};
+    const array = [];
+    const ulNodes = order===0?treeNode.querySelector('ul.x-tree-root-ct'):treeNode.querySelector('ul.x-tree-node-ct');
+    const liNodes = ulNodes.querySelectorAll(':scope > li.x-tree-node');
+    liNodes.forEach((liNode) => {
+        const div = liNode.querySelector('div.x-tree-node-el');
+        const span = liNode.querySelector('span.x-tree-node-key');
+        const input = span.querySelector('input');
+        if (span) {
+            const text = span.textContent.trim();
+            const key = text.split(':').map(s => s.trim())[0];
+            if (input) {
+                let value = input.value;
+                value = Number.isNaN(Number(value)) && value.toLowerCase() !== 'nan'? value : Number(value);
+                if (isArray) {
+                    array.push(value);
+                } else {
+                    json[key] = value;
+                }
+            } else {
+                if (isArray) {
+                    let isArray = div.classList.contains('x-tree-node-expanded');
+                    array.push(Tree2Json(liNode, order+1, isArray));
+                } else {
+                    let isArray = div.classList.contains('x-tree-node-expanded');
+                    json[key] = Tree2Json(liNode, order+1, isArray);
+                }
+            }
+        }
+    });
+    return isArray ? array : json;
+}
+function Json2Tree(key, value, order=0) {
+
+    // 创建一个li节点表示key:value
+    const li = document.createElement('li');
+    li.classList.add('x-tree-node');
+
+    const div = document.createElement('div');
+    div.classList.add('x-tree-node-el', 'x-unselectable', 'active');
+
+    let span = document.createElement('span');
+    span.classList.add('x-tree-node-indent');
+    span.innerHTML = "";
+    for (let i=0; i<order; i++) {
+        span.innerHTML = span.innerHTML + '<img src="/static/image/s.gif" class="x-tree-icon" alt="">';
+    }
+
+    let img_1 = document.createElement('img');
+    img_1.src = "";
+    img_1.alt = "";
+
+    let img_2 = document.createElement('img');
+    img_2.src = "";
+    img_2.alt = "";
+
+    const text = document.createElement('span');
+    text.classList.add('x-tree-node-key');
+    // 如果value是基本类型（字符串、数字、布尔值等），直接显示key: value
+    if (typeof value !== 'object' || value === null) {
+        text.innerHTML = `${key} : <input class="x-tree-node-input" type="text" value="${value}">`;
+        img_1.classList.add('x-tree-ec-icon', 'x-tree-elbow-end');
+        img_2.classList.add('x-tree-node-icon', 'x-tree-node-inline-icon');
+        div.appendChild(span);
+        div.appendChild(img_1);
+        div.appendChild(img_2);
+        div.appendChild(text);
+        div.classList.add('x-tree-node-leaf');
+        li.appendChild(div);
+        return li;
+    }
+    // 如果value是对象或数组，递归生成子节点
+    else {
+        text.textContent = `${key} :`;
+        img_1.classList.add('x-tree-ec-icon', 'x-tree-elbow-end-plus');
+        img_1.onclick = function() { iconOnClick(img_1); }
+        if (Array.isArray(value)) {
+            img_2.classList.add('x-tree-node-icon', 'x-tree-node-inline-icon');
+            div.classList.add('x-tree-node-expanded');
+        } else {
+            img_2.classList.add('x-tree-node-icon', 'x-tree-node-inline-icon');
+            div.classList.add('x-tree-node-collapsed');
+        }
+        div.appendChild(span);
+        div.appendChild(img_1);
+        div.appendChild(img_2);
+        div.appendChild(text);
+        li.appendChild(div);
+
+        const ul_2 = document.createElement('ul');
+        ul_2.classList.add('x-tree-node-ct', 'x-tree-lines', 'x-tree-node-nested');
+
+        // 递归处理对象或数组的子元素
+        for (const childKey in value) {
+            if (value.hasOwnProperty(childKey)) {
+                const childLi = Json2Tree(childKey, value[childKey], order+1);
+                ul_2.appendChild(childLi);
+            }
+        }
+
+        li.appendChild(ul_2);
+
+        return li;
+    }
+}
+function iconOnClick(ele, expand=false, collapse=false) {
+    let treeNode = ele.closest('.x-tree-node');
+    let nestedList = treeNode.querySelector('.x-tree-node-ct');
+    if (nestedList === undefined || nestedList === null) {
+        return;
+    }
+    if (!nestedList.classList.contains('x-tree-node-active')) {
+        if (collapse) { return; }
+        ele.classList.remove('x-tree-elbow-end-plus');
+        ele.classList.add('x-tree-elbow-end-minus');
+        nestedList.classList.add('x-tree-node-active');
+        nestedList.classList.remove('x-tree-node-nested');
+    } else {
+        if (expand) { return; }
+        ele.classList.remove('x-tree-elbow-end-minus');
+        ele.classList.add('x-tree-elbow-end-plus');
+        nestedList.classList.remove('x-tree-node-active');
+        nestedList.classList.add('x-tree-node-nested');
+    }
+}
+function expandAll(){
+    if ($('#expand_all').text().includes('Expand')) {
+        for (let ele of $(".x-tree-ec-icon")) {
+            iconOnClick(ele, true, false);
+        }
+        $('#expand_all').text('Collapse All');
+    } else {
+        for (let ele of $(".x-tree-ec-icon")) {
+            iconOnClick(ele, false, true);
+        }
+        $('#expand_all').text('Expand All');
+    }
+}
+function preview(){
+    let json = Tree2Json($('.x-tree-div')[0]);
+    let data = json.myPlotData.data;
+    let fn = json.myPlotData.file_name;
+    let pn = json.myPlotData.plot_names;
+    let href = exportChart(data, fn, pn, false);
+    let embedElement = document.getElementById("pdfEmbed");
+    embedElement.src = href;
+}
+let input_files = []
+// initialize raw file List
+$('#export_arr_file_list').bootstrapTable(
+    {
+        clickToSelect: false,                //是否启用点击选中行
+        uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+        columns: [
+            {field: 'checked', checkbox: true, width: 20, formatter: function () {return true}},
+            {field: 'file_name', title: 'File name', width: 20, },
+            {field: 'file_path', title: 'File path', width: 200, },
+            {field: 'diagram', title: 'Diagram', width: 150, },
+        ]
+    }
+);
+let drop_zone = document.getElementById('drop-zone');
+drop_zone.ondrop = function(e) {
+    this.className = 'upload-drop-zone';
+    _dropHandler(e);
+}
+drop_zone.ondragover = function(e) {
+    this.className = 'upload-drop-zone drop';
+    dragOverHandler(e);
+    return false;
+}
+drop_zone.ondragleave = function() {
+    this.className = 'upload-drop-zone';
+    return false;
+}
+function _dropHandler(ev) {
+    // Prevent default behavior (Prevent file from being opened)
+    // Handle drag and drop events
+    ev.preventDefault();
+    let files = [];
+    let directory_entry = [];
+    if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to access the file(s)
+        for (let item of [...ev.dataTransfer.items]){
+            if (item.kind === "file") {
+                let file = item.getAsFile();
+                let entry = item.webkitGetAsEntry();
+                if (entry.isDirectory) {
+                    directory_entry.push(entry);
+                } else {files.push(file);}
+            }
+        }
+    }
+    let formData = new FormData();
+    let num_file = 0;
+    formData.append("files", []);
+    let getFileFormdata = (_) => {
+        if (_.constructor === Array) {
+            _.forEach((__, i) => (getFileFormdata(__)));
+        } else {
+            formData.append(`${num_file}`, _);
+            num_file += 1;
+        }
+    }
+    getFileFormdata(files);
+    formData.append('length', num_file);
+    let send_erquest = () => {
+        $.ajax({
+            url: url_multi_files,
+            type: 'POST',
+            data: formData,
+            processData : false,
+            contentType : false,
+            mimeType: "multipart/form-data",
+            success: function(res){
+                $('#files_to_export').val('');
+                let files = JSON.parse(res).files;
+                let table = $('#export_arr_file_list');
+                let data = table.bootstrapTable('getData');
+                let diagram_list = ['Age Spectra'];
+                let diagram = 'Age Spectra';
+                $.each(files, function (index, file) {
+                    table.bootstrapTable('insertRow', {index: data.length + index,
+                        row: {
+                            'file_name': file.name, 'file_path': file.path,
+                            'diagram': `<select class="input-sm input-filter-selection" style="width: 150px">${diagram_list.map((item, _) => {
+                                if (item.toUpperCase() === diagram.toUpperCase()) {
+                                    return "<option selected>" + item + "</option>"
+                                }
+                                return "<option>" + item + "</option>"
+                            }).join("")}$</select>`
+                        }
+                    })
+                })
+            }
+        })
+    }
+    if (directory_entry.length === 0) {
+        send_erquest();
+    } else {
+        if (directory_entry.length > 1) {
+            alert("Only one directory on the top level is supported.");
+        }
+        traverseDirectory(directory_entry[0]).then((files_promise)=> {
+            // AT THIS POINT THE DIRECTORY SHOULD BE FULLY TRAVERSED.
+            Promise.all(files_promise[0]).then((res) => {
+                files.push(...res);
+                send_erquest();
+            });
+        });
+    }
+}
+
 </script>
 
 {% endblock %}

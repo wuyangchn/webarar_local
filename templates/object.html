@@ -423,7 +423,6 @@
 
     <br>
     <div>
-        <a id="export_path_link" href="/user/SAMPLE%20NAME.arr" class="sr-only" download></a>
         <pre id="example_console" class="pre" style="float: left; width: 30%">console log</pre>
         <div id="table_btn_div" style="float: left; position: relative; left: 8%;">
             <button title="Save changes you made on the table, will not recalculate automatically" type="button" class="btn btn-default" onclick="clickSaveTable()">Save changes</button>
@@ -801,6 +800,7 @@
     let current_figure = () => (sampleComponents[getCurrentTableId()]);
     let chart = echarts.init(document.getElementById('figure_container'), null, {renderer: 'svg'}); // svg渲染适合小数据，更清晰
     // 2023.7.24: svg渲染不支持3D图形
+    extendChartFuncs(chart);
     let chart_3D = echarts.init(document.getElementById('figure_3D_container'));
     // 响应浏览器尺寸变化
     window.onresize = function() {

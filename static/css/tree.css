@@ -1,0 +1,197 @@
+
+
+ul.x-tree-node-ct {
+    padding: 0 0 0 0;
+    font-size: 0;
+    line-height: 0;
+    zoom:1;
+}
+
+.x-tree-node {
+    color: black;
+    font: normal 12px arial,tahoma,helvetica,sans-serif;
+    white-space: nowrap;
+}
+
+.x-tree-node-el {
+    line-height: 18px;
+    cursor: default;
+}
+
+.x-tree-node a,.x-dd-drag-ghost a {
+    text-decoration: none;
+    color: black;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -kthml-user-focus: normal;
+    -moz-user-focus: normal;
+    -moz-outline: 0 none;
+    outline: 0 none;
+}
+
+.x-tree-node a span,.x-dd-drag-ghost a span {
+    text-decoration: none;
+    color: black;
+    padding: 1px 3px 1px 2px;
+}
+
+.x-tree-node .x-tree-node-disabled a span {
+    color: gray!important;
+}
+
+.x-tree-node .x-tree-node-disabled .x-tree-node-icon {
+    -moz-opacity: 0.5;
+    opacity: .5;
+    filter: alpha(opacity=50);
+}
+
+.x-tree-node .x-tree-node-inline-icon {
+    background: transparent;
+}
+
+.x-tree-node a:hover,.x-dd-drag-ghost a:hover {
+    text-decoration: none;
+}
+
+.x-tree-node div.x-tree-drag-insert-below {
+    border-bottom: 1px dotted #36c;
+}
+
+.x-tree-node div.x-tree-drag-insert-above {
+    border-top: 1px dotted #36c;
+}
+
+.x-tree-dd-underline .x-tree-node div.x-tree-drag-insert-below {
+    border-bottom: 0 none;
+}
+
+.x-tree-dd-underline .x-tree-node div.x-tree-drag-insert-above {
+    border-top: 0 none;
+}
+
+.x-tree-dd-underline .x-tree-node div.x-tree-drag-insert-below a {
+    border-bottom: 2px solid #36c;
+}
+
+.x-tree-dd-underline .x-tree-node div.x-tree-drag-insert-above a {
+    border-top: 2px solid #36c;
+}
+
+.x-tree-node .x-tree-drag-append a span {
+    background: #ddd;
+    border: 1px dotted gray;
+}
+
+.x-tree-node .x-tree-node-over {
+    background-color: #eee;
+}
+
+.x-tree-node .x-tree-selected {
+    background-color: #d9e8fb;
+}
+
+.x-dd-drag-ghost .x-tree-node-indent,.x-dd-drag-ghost .x-tree-ec-icon {
+    display: none!important;
+}
+
+.x-tree-div {
+    overflow: auto;
+    width: 100%;
+    max-height: 430px;
+    min-height: 200px;
+}
+
+.x-tree-root-ct {
+    padding: 0 0 0 0;
+    zoom:1;
+}
+
+.x-tree-lines .x-tree-elbow {
+    background-image: url(/static/image/elbow.gif);
+}
+
+.x-tree-lines .x-tree-elbow-plus {
+    background-image: url(/static/image/elbow-plus.gif);
+}
+
+.x-tree-lines .x-tree-elbow-minus {
+    background-image: url(/static/image/elbow-minus.gif);
+}
+
+.x-tree-lines .x-tree-elbow-end {
+    background-image: url(/static/image/elbow-end.gif);
+}
+
+.x-tree-lines .x-tree-elbow-end-plus {
+    background-image: url(/static/image/elbow-end-plus.gif);
+}
+
+.x-tree-lines .x-tree-elbow-end-minus {
+    background-image: url(/static/image/elbow-end-minus.gif);
+}
+
+.x-tree-lines .x-tree-elbow-line {
+    background-image: url(/static/image/elbow-line.gif);
+}
+
+.x-tree-icon,.x-tree-ec-icon,.x-tree-elbow-line,.x-tree-elbow,.x-tree-elbow-end,.x-tree-elbow-plus,.x-tree-elbow-minus,.x-tree-elbow-end-plus,.x-tree-elbow-end-minus {
+    border: 0 none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    width: 16px;
+    background-repeat: no-repeat;
+}
+
+.x-tree-node-collapsed .x-tree-node-icon,.x-tree-node-expanded .x-tree-node-icon,.x-tree-node-leaf .x-tree-node-icon {
+    border: 0 none;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    vertical-align: top;
+    width: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.ext-ie .x-tree-node-indent img,.ext-ie .x-tree-node-icon,.ext-ie .x-tree-ec-icon {
+    vertical-align: middle!important;
+}
+
+.x-tree-node-expanded .x-tree-node-icon {
+    background-image: url(/static/image/folder-open.gif);
+}
+
+.x-tree-node-leaf .x-tree-node-icon {
+    background-image: url(/static/image/leaf.gif);
+}
+
+.x-tree-node-collapsed .x-tree-node-icon {
+    background-image: url(/static/image/object.gif);
+}
+
+.x-tree-node-expanded .x-tree-node-icon {
+    background-image: url(/static/image/array.gif);
+}
+
+ol,ul {
+    list-style: none;
+}
+
+.x-tree-node-nested {
+    display: none;
+}
+
+.x-tree-node-active {
+    display: block;
+}
+
+.x-tree-node-input {
+    border-bottom: 2px solid #eee;
+    border-left-width: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    outline: none;
+}
+

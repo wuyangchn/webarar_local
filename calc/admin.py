@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CalcRecord, CalcParams, IrraParams, SmpParams, InputFilterParams
+from .models import CalcRecord, CalcParams, IrraParams, SmpParams, InputFilterParams, ThermoParams
 
 # Register your models here.
 
@@ -20,4 +20,5 @@ admin.site.register(CalcParams, ParamsAdmin)
 admin.site.register(IrraParams, ParamsAdmin)
 admin.site.register(SmpParams, ParamsAdmin)
 admin.site.register(InputFilterParams, ParamsAdmin)
+admin.site.register(ThermoParams, ParamsAdmin)
 
