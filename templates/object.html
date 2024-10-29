@@ -443,7 +443,7 @@
 {#            <button title="Export current figure as a PDF file" type="button" class="btn btn-default" onclick="exportSmp(url_export_pdf)">PDF</button>#}
             <button title="Open exporting modal dialog" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
         </div>
-        <pre id="sample_name_console" class="pre" style="float: right; width: 15%">Sample Name</pre>
+        <pre id="right_console" class="pre" style="float: right; width: 15%">Sample Name</pre>
     </div>
 
     <div class="modal fade" id="editIrraParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
@@ -592,7 +592,7 @@
                         <p><span style="font-weight: bold">Download .Arr </span>
                             (with a single click, or right click and
                             <span style="font-weight: bold">Save Link As...</span>)</p>
-                        <a id="download-arr" href="" download>Link</a><br><br>
+                        <a id="download-arr" href="" download onclick="arrDownloaded()">Link</a><br><br>
                         <p><span style="font-weight: bold">Other formats:</span></p>
                         <label>
                             <select class="form-control" id="exportChoicesLabel">
@@ -759,6 +759,7 @@
     let tableBtnDiv = $('#table_btn_div');
     let figureBtnDiv = $('#figure_btn_div');
     let exampleConsole = document.getElementById('example_console');
+    let rightConsole = document.getElementById('right_console');
 
     let ctrlIsPressed = false
     let isochron_marks_changed = false

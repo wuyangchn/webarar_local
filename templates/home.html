@@ -30,8 +30,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.6/dist/jstat.min.js"></script>
 
-    <script src="{% static 'js/calc.main.js' %}?v=20240917" type="text/javascript"></script>
-    <script src="{% static 'js/calc.func.js' %}?v=20240917" type="text/javascript"></script>
+    <script src="{% static 'js/calc.main.js' %}?v=20241028" type="text/javascript"></script>
+    <script src="{% static 'js/calc.func.js' %}?v=20241028" type="text/javascript"></script>
 {#    <script src="{% static 'js/myecharts.js' %}?v=20240223" type="text/javascript"></script>#}
 
     <link href="{% static 'css/zoom.css' %}" rel="stylesheet">
@@ -81,6 +81,7 @@
         const url_raw_import_blank_file = "{% url 'raw_views' 'import_blank_file' %}";
         const url_raw_files_changed = "{% url 'raw_views' 'raw_files_changed' %}";
         const url_raw_export_sequence = "{% url 'raw_views' 'export_sequence' %}";
+        const url_raw_check_regression = "{% url 'raw_views' 'check_regression' %}";
         const url_raw_change_fitting_method = "{% url 'raw_views' 'change_seq_fitting_method' %}";
         const url_raw_change_seq_state = "{% url 'raw_views' 'change_seq_state' %}";
 
@@ -93,7 +94,7 @@
         const url_thermo_run_agemon = "{% url 'thermo_views' 'run_agemon' %}";
         const url_thermo_run_arrmulti = "{% url 'thermo_views' 'run_arrmulti' %}";
         const url_read_log = "{% url 'thermo_views' 'read_log' %}";
-        const url_thermo_plot = "{% url 'thermo_views' 'plot_agemon' %}";
+        const url_thermo_plot = "{% url 'thermo_views' 'plot' %}";
 
         const url_export_plotdata = "{% url 'export_views' 'get_plotdata' %}";
 
@@ -272,7 +273,7 @@
 {#                    <img src="{% static 'image/gonganbeian.png' %}" style="float:left;" alt=""/>#}
 {#                <a class="text-muted" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=42058102000098" style="display:inline-block">鄂公网安备 42058102000098号</a>#}
 {#            </li>#}
-            <li><span class="text-muted">Update: 2024/04/14 <span style="color: red">(Ctrl+Shift+R to Reload)</span></span></li>
+            <li><span class="text-muted">Update: 2024/10/28 <span style="color: red">(Ctrl+Shift+R to Reload)</span></span></li>
 {#            <li><a class="text-muted"href="http://www.bigarar.net/" target="_blank">Outside China</a></li>#}
         </ul>
         <ul class="list-inline">

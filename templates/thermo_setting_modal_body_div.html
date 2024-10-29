@@ -67,11 +67,11 @@
             </div>
 
             <div class="form-inline">
-                <label style="width: 250px; text-align: left">How to calculate of f:</label>
+                <label style="width: 250px; text-align: left">log10 or ln:</label>
                 <label>
                     <select class="thermo-params" style="height: 30px; width: 150px">
-                        <option value="lovera">Lovera</option>
-                        <option value="yang">Yang</option>
+                        <option value="log10">log10</option>
+                        <option value="ln">ln</option>
                     </select>
                 </label>
                 <a class="text-muted" target="_blank" style="display:inline-block">
@@ -85,6 +85,7 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
                     <select class="thermo-params" style="height: 30px; width: 150px">
                         <option value="lovera">Lovera</option>
                         <option value="yang">Yang</option>
+                        <option value="popov">Popov</option>
                     </select>
                 </label>
             </div>
@@ -103,6 +104,19 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
                     <select class="thermo-params" style="height: 30px; width: 150px">
                         <option value="lovera">ML (lovera)</option>
                         <option value="other">other</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 250px; text-align: left">Which of five isotopes will be used:</label>
+                <label>
+                    <select class="thermo-params" style="height: 30px; width: 150px">
+                        <option value="40">40Arr</option>
+                        <option value="39">39ArK</option>
+                        <option value="38">38ArCl</option>
+                        <option value="37">37ArCa</option>
+                        <option value="36">36Ara</option>
+                        <option value="total">total</option>
                     </select>
                 </label>
             </div>

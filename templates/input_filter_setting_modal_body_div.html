@@ -31,15 +31,16 @@
             <label style="width: 400px; text-align: left; font-weight: bold">Isotopic Data</label>
 
             <div class="form-inline">
-                <label style="width: 154px; text-align: left">Data Excel Sheet Index</label>
-                <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1"></label>
+                <label class="title" style="width: 154px; text-align: left" data-title="The default value is 1, unless the raw data is an Excel file with multiple sheets.">
+                    Data Sheet Index</label>
+                <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1" data-title="The default value is 1, unless the raw data is an Excel file with multiple sheets."></label>
                 <label style="width: 100px; text-align: right">Header Rows</label>
                 <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
             </div>
 
             <div class="form-inline">
                 <label style="width: 100px; text-align: left">Data Direction</label>
-                <label><select class="input-filter-params" style="width: 105px; padding-right: 0px">
+                <label><select class="input-filter-params" style="width: 105px; padding-right: 0">
                     <option value="0">Vertical</option>
                     <option value="1">Horizontal</option>
                 </select></label>
@@ -50,93 +51,94 @@
             <div>
                 <div class="form-inline">
                     <label style="width: 100px; text-align: left">Ar40 Intensity</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                     </label>
                     <label style="width: 100px; text-align: right">and Inlet Time</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                     </label>
                 </div>
                 <div class="form-inline">
                     <label style="width: 100px; text-align: left">Ar39 Intensity</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                     </label>
                     <label style="width: 100px; text-align: right">and Inlet Time</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                     </label>
                 </div>
                 <div class="form-inline">
                     <label style="width: 100px; text-align: left">Ar38 Intensity</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="3">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                     </label>
                     <label style="width: 100px; text-align: right">and Inlet Time</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="3">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                     </label>
                 </div>
                 <div class="form-inline">
                     <label style="width: 100px; text-align: left">Ar37 Intensity</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="4">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                     </label>
                     <label style="width: 100px; text-align: right">and Inlet Time</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="4">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                     </label>
                 </div>
                 <div class="form-inline">
                     <label style="width: 100px; text-align: left">Ar36 Intensity</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="5">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="2">
                     </label>
                     <label style="width: 100px; text-align: right">and Inlet Time</label>
-                    <label>
+                    <label class="title" data-title="Indexes: [row, col], row index starts with 0.">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="5">
                         <input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="1">
                     </label>
                 </div>
                 <div class="form-inline">
-                    <label style="width: 154px; text-align: left">Lines of Each Cycle</label>
+                    <label class="title" style="width: 154px; text-align: left" data-title="How many rows (for vertical records) / cols (for horizontal records) per measurement cycle?">Lines of Each Cycle</label>
                     <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="5"></label>
-                    <label style="width: 100px; text-align: right">Break Lines</label>
+                    <label class="title" style="width: 100px; text-align: right" data-title="Are there some empty rows between every two cycles?">Break Lines</label>
                     <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
                 </div>
 
             </div>
 
             <div class="form-inline">
-                <label title="age of the standard" style="width: 100px; text-align: left">Intensity Unit</label>
+                <label class="title" data-title="The unit will be displayed. Note that it should be changed based on the intensity scale factor." style="width: 100px; text-align: left">Intensity Unit</label>
                 <label><input type="text" class="input-filter-params" style="width: 50px;" value="mV"></label>
-                <label style="width: 154px; text-align: right">Intensity Scale Factor</label>
+                <label style="width: 154px; text-align: right" data-title="Used to adjust unit, like 1000 for changing mV to V.">Intensity Scale Factor</label>
                 <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 100px;" value="1"></label>
             </div>
 
 
             <div class="checkbox" style="margin-top: 10px; margin-bottom: 0">
-                <label style="margin-top: -10px; width: 200px"><input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
+                <label class="title" style="margin-top: -10px; width: 200px" data-title="True (checked) if multiple measurement steps are record in one file.">
+                    <input type="checkbox" value="" class="input-filter-check-box" style="margin-top: 10px">
                     Multiple Experimental Steps</label>
             </div>
-            <label style="width: 154px; text-align: left">Lines of Each Step</label>
+            <label class="title" style="width: 154px; text-align: left" data-title="How many rows for every step.">Lines of Each Step</label>
             <label><input type="number" min="0" step="1" class="input-filter-params" style="width: 50px;" value="0"></label>
 
         </div>
 
         <!--  Important Sample Information  -->
         <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
-            <label style="width: 400px; text-align: left; font-weight: bold">Sample Information</label>
+            <label style="width: 400px; text-align: left; font-weight: bold">Specific [Name, Datetime, ...]</label>
             <p>Three input are Sheet Index, Row Index, and Position Index. Only integer or zero will be allowed.</p>
 
             <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
@@ -144,9 +146,8 @@
                     Read Information from File Name</label></div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Filename Format</label>
-                <label>
-                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., {en}-{sn}"
-                           title="{en} refers experiment name, {sn} refers step name, {st} refers sample type, {} other phrases are considered as separators. Keywords should be enclosed in angle brackets.">
+                <label class="title" data-title="{en} refers experiment name, {sn} refers step name, {st} refers sample type, {} other phrases are considered as separators. Keywords should be enclosed in angle brackets.">
+                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., {en}-{sn}">
                 </label>
             </div>
 
@@ -155,12 +156,12 @@
                     Zero Date in one String</label></div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Date Format</label>
-                <label>
-                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., %d %m %Y %H:%M:%S.%f"
-                           title="Define the format of date string format. Note the whitespace should not be ignored. If leaving it empty, a default format will be used.">
+                <label class="title" data-title="Define a format of date string. Note the whitespace should not be ignored. If leaving it empty, a default format will be used.">
+                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., %d %m %Y %H:%M:%S.%f">
                 </label>
-                <a class="text-muted" target="_blank" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" style="display:inline-block">
-                    <span title="What format codes are available for use in parsing datetime string?" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                <a class="text-muted title" target="_blank" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" style="display:inline-block"
+                   data-title="What format is used for parsing datetime string?">
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
             </div>
 
             <div class="checkbox" style="margin-top: 0; margin-bottom: 0">
@@ -168,23 +169,116 @@
                     Zero Time in one String</label></div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Time Format</label>
-                <label>
-                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., %d %m %Y %H:%M:%S.%f"
-                           title="Define the format of time string format. Note the whitespace should not be ignored. If leaving it empty, a default format will be used." >
+                <label class="title" data-title="Define a format of time string. Note the whitespace should not be ignored. If leaving it empty, a default format will be used.">
+                    <input type="text" class="input-filter-params" style="width: 300px; text-align: right" placeholder="e.g., %d %m %Y %H:%M:%S.%f">
                 </label>
-                <a class="text-muted" target="_blank" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" style="display:inline-block">
-                    <span title="What format codes are available for use in parsing datetime string?" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                <a class="text-muted title" target="_blank" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes" style="display:inline-block"
+                   data-title="What format is used for parsing datetime string?">
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+            <div class="form-inline">
+                <label class="title" style="width: 120px; text-align: left" data-title="Timezone of experiments, adjust time to UTC">Time Zone</label>
+                <label class="title" data-title="Note that a potential ambiguous datetime error might occur when a experiment lasts to DST from SDT. Adjust it manually in the TotalParam table.">
+                    <select name="timezone" class="input-filter-params" style="width: 300px;">
+                        <option value="UTC">UTC</option>
+                        <option value="Etc/GMT+12">(Etc/GMT+12) International Date Line West</option>
+                        <option value="Pacific/Midway">(Pacific/Midway) Midway Island, Samoa</option>
+                        <option value="Pacific/Honolulu">(Pacific/Honolulu) Hawaii</option>
+                        <option value="US/Alaska">(US/Alaska) Alaska</option>
+                        <option value="America/Los_Angeles">(America/Los_Angeles) Pacific Time (US & Canada)</option>
+                        <option value="America/Tijuana">(America/Tijuana) Tijuana, Baja California</option>
+                        <option value="US/Arizona">(US/Arizona) Arizona</option>
+                        <option value="America/Chihuahua">(America/Chihuahua) Chihuahua, La Paz, Mazatlan</option>
+                        <option value="US/Mountain">(US/Mountain) Mountain Time (US & Canada)</option>
+                        <option value="America/Managua">(America/Managua) Central America</option>
+                        <option value="US/Central">(US/Central) Central Time (US & Canada)</option>
+                        <option value="America/Mexico_City">(America/Mexico_City) Guadalajara, Mexico City, Monterrey</option>
+                        <option value="Canada/Saskatchewan">(Canada/Saskatchewan) Saskatchewan</option>
+                        <option value="America/Bogota">(America/Bogota) Bogota, Lima, Quito, Rio Branco</option>
+                        <option value="US/Eastern">(US/Eastern) Eastern Time (US & Canada)</option>
+                        <option value="US/East-Indiana">(US/East-Indiana) Indiana (East)</option>
+                        <option value="Canada/Atlantic">(Canada/Atlantic) Atlantic Time (Canada)</option>
+                        <option value="America/Caracas">(America/Caracas) Caracas, La Paz</option>
+                        <option value="America/Manaus">(America/Manaus) Manaus</option>
+                        <option value="America/Santiago">(America/Santiago) Santiago</option>
+                        <option value="Canada/Newfoundland">(Canada/Newfoundland) Newfoundland</option>
+                        <option value="America/Sao_Paulo">(America/Sao_Paulo) Brasilia</option>
+                        <option value="America/Argentina/Buenos_Aires">(America/Argentina/Buenos_Aires) Buenos Aires, Georgetown</option>
+                        <option value="America/Godthab">(America/Godthab) Greenland</option>
+                        <option value="America/Montevideo">(America/Montevideo) Montevideo</option>
+                        <option value="America/Noronha">(America/Noronha) Mid-Atlantic</option>
+                        <option value="Atlantic/Cape_Verde">(Atlantic/Cape_Verde) Cape Verde Is.</option>
+                        <option value="Atlantic/Azores">(Atlantic/Azores) Azores</option>
+                        <option value="Africa/Casablanca">(Africa/Casablanca) Casablanca, Monrovia, Reykjavik</option>
+                        <option value="Etc/Greenwich">(Etc/Greenwich) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London</option>
+                        <option value="Europe/Amsterdam">(Europe/Amsterdam) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna</option>
+                        <option value="Europe/Belgrade">(Europe/Belgrade) Belgrade, Bratislava, Budapest, Ljubljana, Prague</option>
+                        <option value="Europe/Brussels">(Europe/Brussels) Brussels, Copenhagen, Madrid, Paris</option>
+                        <option value="Europe/Sarajevo">(Europe/Sarajevo) Sarajevo, Skopje, Warsaw, Zagreb</option>
+                        <option value="Africa/Lagos">(Africa/Lagos) West Central Africa</option>
+                        <option value="Asia/Amman">(Asia/Amman) Amman</option>
+                        <option value="Europe/Athens">(Europe/Athens) Athens, Bucharest, Istanbul</option>
+                        <option value="Asia/Beirut">(Asia/Beirut) Beirut</option>
+                        <option value="Africa/Cairo">(Africa/Cairo) Cairo</option>
+                        <option value="Africa/Harare">(Africa/Harare) Harare, Pretoria</option>
+                        <option value="Europe/Helsinki">(Europe/Helsinki) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius</option>
+                        <option value="Asia/Jerusalem">(Asia/Jerusalem) Jerusalem</option>
+                        <option value="Europe/Minsk">(Europe/Minsk) Minsk</option>
+                        <option value="Africa/Windhoek">(Africa/Windhoek) Windhoek</option>
+                        <option value="Asia/Kuwait">(Asia/Kuwait) Kuwait, Riyadh, Baghdad</option>
+                        <option value="Europe/Moscow">(Europe/Moscow) Moscow, St. Petersburg, Volgograd</option>
+                        <option value="Africa/Nairobi">(Africa/Nairobi) Nairobi</option>
+                        <option value="Asia/Tbilisi">(Asia/Tbilisi) Tbilisi</option>
+                        <option value="Asia/Tehran">(Asia/Tehran) Tehran</option>
+                        <option value="Asia/Muscat">(Asia/Muscat) Abu Dhabi, Muscat</option>
+                        <option value="Asia/Baku">(Asia/Baku) Baku</option>
+                        <option value="Asia/Yerevan">(Asia/Yerevan) Yerevan</option>
+                        <option value="Asia/Kabul">(Asia/Kabul) Kabul</option>
+                        <option value="Asia/Yekaterinburg">(Asia/Yekaterinburg) Yekaterinburg</option>
+                        <option value="Asia/Karachi">(Asia/Karachi) Islamabad, Karachi, Tashkent</option>
+                        <option value="Asia/Calcutta">(Asia/Calcutta) Chennai, Kolkata, Mumbai, New Delhi</option>
+                        <option value="Asia/Calcutta">(Asia/Calcutta) Sri Jayawardenapura</option>
+                        <option value="Asia/Katmandu">(Asia/Katmandu) Kathmandu</option>
+                        <option value="Asia/Almaty">(Asia/Almaty) Almaty, Novosibirsk</option>
+                        <option value="Asia/Dhaka">(Asia/Dhaka) Astana, Dhaka</option>
+                        <option value="Asia/Rangoon">(Asia/Rangoon) Yangon (Rangoon)</option>
+                        <option value="Asia/Bangkok">(Asia/Bangkok) Bangkok, Hanoi, Jakarta</option>
+                        <option value="Asia/Krasnoyarsk">(Asia/Krasnoyarsk) Krasnoyarsk</option>
+                        <option value="Asia/Hong_Kong">(Asia/Hong_Kong) Beijing, Chongqing, Hong Kong, Urumqi</option>
+                        <option value="Asia/Kuala_Lumpur">(Asia/Kuala_Lumpur) Kuala Lumpur, Singapore</option>
+                        <option value="Asia/Irkutsk">(Asia/Irkutsk) Irkutsk, Ulaan Bataar</option>
+                        <option value="Australia/Perth">(Australia/Perth) Perth</option>
+                        <option value="Asia/Taipei">(Asia/Taipei) Taipei</option>
+                        <option value="Asia/Tokyo">(Asia/Tokyo) Osaka, Sapporo, Tokyo</option>
+                        <option value="Asia/Seoul">(Asia/Seoul) Seoul</option>
+                        <option value="Asia/Yakutsk">(Asia/Yakutsk) Yakutsk</option>
+                        <option value="Australia/Adelaide">(Australia/Adelaide) Adelaide</option>
+                        <option value="Australia/Darwin">(Australia/Darwin) Darwin</option>
+                        <option value="Australia/Brisbane">(Australia/Brisbane) Brisbane</option>
+                        <option value="Australia/Canberra">(Australia/Canberra) Canberra, Melbourne, Sydney</option>
+                        <option value="Australia/Hobart">(Australia/Hobart) Hobart</option>
+                        <option value="Pacific/Guam">(Pacific/Guam) Guam, Port Moresby</option>
+                        <option value="Asia/Vladivostok">(Asia/Vladivostok) Vladivostok</option>
+                        <option value="Asia/Magadan">(Asia/Magadan) Magadan, Solomon Is., New Caledonia</option>
+                        <option value="Pacific/Auckland">(Pacific/Auckland) Auckland, Wellington</option>
+                        <option value="Pacific/Fiji">(Pacific/Fiji) Fiji, Kamchatka, Marshall Is.</option>
+                        <option value="Pacific/Tongatapu">(Pacific/Tongatapu) Nuku'alofa</option>
+                    </select>
+                </label>
+                <a class="text-muted title" target="" href="" style="display:inline-block"
+                   data-title="Note that a potential ambiguous datetime error might occur when a experiment lasts to DST from SDT. Adjust it manually in the TotalParam table.">
+                    <span  class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
             </div>
 
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Experiment Name</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
                 <label style="width: 120px; text-align: right">Step Name</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -192,13 +286,13 @@
             </div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Sample Type</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
                 <label style="width: 120px; text-align: right">Step Label</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -206,13 +300,13 @@
             </div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Zero time (Date)</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
                 <label style="width: 120px; text-align: right">Zero time (Time)</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -220,13 +314,13 @@
             </div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Zero time (Month)</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
                 <label style="width: 120px; text-align: right">Zero time (Minute)</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -234,13 +328,13 @@
             </div>
             <div class="form-inline">
                 <label style="width: 120px; text-align: left">Zero time (Day)</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
                 <label style="width: 120px; text-align: right">Zero time (Second)</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -254,112 +348,112 @@
             <p>Optional information of the given sample, which will be recorded into the final sample instance.</p>
 
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Sample material">
+                <label class="title" style="width: 120px; text-align: left" data-title="Sample material">
                     Sample Name</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Sample location">
+                <label class="title" style="width: 120px; text-align: right" data-title="Sample location">
                     Sample Location</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Sampel weight">
+                <label class="title" style="width: 120px; text-align: left" data-title="Sampel weight">
                     Sample Material</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Experiment type, like Crushing, Laser, Heating">
+                <label class="title" style="width: 120px; text-align: right" data-title="Experiment type, like Crushing, Laser, Heating">
                     Experiment Type</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Step name">
+                <label class="title" style="width: 120px; text-align: left" data-title="Step name">
                     Sample Weight</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Step Unit">
+                <label class="title" style="width: 120px; text-align: right" data-title="Step Unit">
                     Step Unit</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Heating Time">
+                <label class="title" style="width: 120px; text-align: left" data-title="Heating Time">
                     Heating Time</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-{#                <label style="width: 120px; text-align: right" title="Step Unit">#}
+{#                <label style="width: 120px; text-align: right" data-title="Step Unit">#}
 {#                    Step Unit</label>#}
-{#                <label>#}
+{#                <label class="title" data-title="Indexes: [sheet, row, col]">#}
 {#                    <input type="number" min=0" step=1" class="input-filter-params" style="width: 30px;" value="5">#}
 {#                    <input type="number" min=0" step=1" class="input-filter-params" style="width: 30px;" value="2">#}
 {#                    <input type="number" min=0" step=1" class="input-filter-params" style="width: 30px;" value="2">#}
 {#                </label>#}
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Instrument Name">
+                <label class="title" style="width: 120px; text-align: left" data-title="Instrument Name">
                     Instrument Name</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Researcher name">
+                <label class="title" style="width: 120px; text-align: right" data-title="Researcher name">
                     Researcher</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Analyst name of the laboratory">
+                <label class="title" style="width: 120px; text-align: left" data-title="Analyst name of the laboratory">
                     Analyst</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Laboratory name, one string">
+                <label class="title" style="width: 120px; text-align: right" data-title="Laboratory name, one string">
                     Laboratory</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="J value">
+                <label class="title" style="width: 120px; text-align: left" data-title="J value">
                     J-value</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="J value error in one sigma, note that checking if it is percentage or absolute error">
+                <label class="title" style="width: 120px; text-align: right" data-title="J value error in one sigma, note that checking if it is percentage or absolute error">
                     J-value Error</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -367,16 +461,16 @@
             </div>
 
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Calculation parameters name, e.g., Ar-Ar">
+                <label class="title" style="width: 120px; text-align: left" data-title="Calculation parameters name, e.g., Ar-Ar">
                     Calc Params</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Irradiation name, e.g., WH01">
+                <label class="title" style="width: 120px; text-align: right" data-title="Irradiation name, e.g., WH01">
                     Irradiation Name</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -384,16 +478,16 @@
             </div>
 
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Irradiation label, like the label of a glass tube, or of a aluminum tray">
+                <label class="title" style="width: 120px; text-align: left" data-title="Irradiation label, like the label of a glass tube, or of a aluminum tray">
                     Irradiation Label</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Height of the sample in the glass tube, or in a tray">
+                <label class="title" style="width: 120px; text-align: right" data-title="Height of the sample in the glass tube, or in a tray">
                     Irradiation H</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -401,25 +495,25 @@
             </div>
 
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="X position of the sample in a tray">
+                <label class="title" style="width: 120px; text-align: left" data-title="X position of the sample in a tray">
                     Irradiation X</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Y position of the sample in a tray">
+                <label class="title" style="width: 120px; text-align: right" data-title="Y position of the sample in a tray">
                     Irradiation Y</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Standard name">
+                <label class="title" style="width: 120px; text-align: left" data-title="Standard name">
                     Standard name</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
@@ -427,16 +521,16 @@
             </div>
 
             <div class="form-inline">
-                <label style="width: 120px; text-align: left" title="Standard age">
+                <label class="title" style="width: 120px; text-align: left" data-title="Standard age">
                     Standard Age</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                 </label>
-                <label style="width: 120px; text-align: right" title="Standard age error">
+                <label class="title" style="width: 120px; text-align: right" data-title="Standard age error">
                     Std Age Error</label>
-                <label>
+                <label class="title" data-title="Indexes: [sheet, row, col]">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="5">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">
                     <input type="number" min="0" step="1" class="input-filter-params" style="width: 30px;" value="2">

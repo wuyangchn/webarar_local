@@ -78,17 +78,21 @@
                     <div class="text-left" id="sequenceContainer"></div>
                     <br>
                     <div class="pull-right">
-                        <button title="Export Sequence" class="btn btn-default" onclick="export_sequence()">Export Sequence</button>
-                        <a title="Close" id="btn-Close-1" href="{% url 'calc_view' %}"  class="btn btn-default">Close</a>
-                        <button title="To blank selection" type="submit" class="btn btn-primary" name="btn" value="Submit" onclick="submitExtrapolate()">Submit</button>
+                        <label class="title" data-title="Export Sequence.">
+                            <button class="btn btn-default" onclick="export_sequence()">Export Sequence</button></label>
+                        <label class="title" data-title="Check if results of regression are all valid.">
+                            <button class="btn btn-default" onclick="check_regression()">Check Regression</button></label>
+                        <a data-title="Close" id="btn-Close-1" href="{% url 'calc_view' %}"  class="btn btn-default title">Close</a>
+                        <label class="title" data-title="Continue">
+                            <button type="submit" class="btn btn-primary" name="btn" value="Submit" onclick="submitExtrapolate()">Submit</button></label>
                     </div>
                     <div style="padding-left: 142px">
                         <div class="text-center">
                             <button type="button" class="btn btn-default" onclick="lastSequence()">
-                                <span title="Last Sequence" class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
+                                <span data-title="Last Sequence" class="glyphicon glyphicon-chevron-left title" aria-hidden="true"></span></button>
                             <label id="page_num" style="width: 40px; font-weight: normal">1/3</label>
                             <button type="button" class="btn btn-default" onclick="nextSequence()">
-                                <span title="Next Sequence" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+                                <span data-title="Next Sequence" class="glyphicon glyphicon-chevron-right title" aria-hidden="true"></span></button>
                         </div>
                     </div>
                 </div>

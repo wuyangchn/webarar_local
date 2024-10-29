@@ -91,7 +91,7 @@
             <label><button class="btn-info" onclick="ChangeSettings()" >Settings</button></label>
             </div>
             <div>
-            <label><button id="plot_agemon" class="btn-danger" onclick="PlotAgemon()" >Plot</button></label>
+            <label><button id="plot_diff" class="btn-danger" onclick="PlotDiff()" >Plot</button></label>
             <label><button id="export_chart" class="btn-danger" onclick="ThermoExportChart()" >Export</button></label>
             </div>
             <div id="step_table_container" class="container" style="height: 1000px; width: 800px; padding: 0 0 0 0;"></div>
@@ -132,7 +132,7 @@
                     <div style="text-align: center">
                         <label>
                             <input type="checkbox" value="" checked hidden>
-                            Attention: Recalculation will not be applied automatically, please click recalculate after parameter changes
+{#                            Attention: Recalculation will not be applied automatically, please click recalculate after parameter changes#}
                         </label>
                         <button type="button" class="btn btn-primary" value="Apply" data-dismiss="modal" onclick="">Apply</button>
                     </div>
@@ -152,7 +152,7 @@
     const step_chart_containers = document.querySelectorAll("[class*=oven_step_chart_container]");
     const step_table = new Handsontable(document.getElementById('step_table_container'), {
         colHeaders: ['Usable', 'Mark', 'Setpoint', 'Temp [c]', 'Time [min]', 'Age',
-            'Sig Age', 'Ar39', 'Sig Ar', 'Cumulative f', 'd/r2', 'ln(d/r2)', 'wt'],
+            'Sig Age', 'Argon', 'Sig Ar', 'Cumulative f', 'd/r2', 'ln(d/r2)', 'wt'],
         rowHeaders: [],  // 行标题
         data: table_data,
         columns: [
@@ -338,16 +338,16 @@
                     data: transpose(table_data)
                 });
                 if (res.has_files) {
-                    document.getElementById('plot_agemon').className = "btn-success";
+                    document.getElementById('plot_diff').className = "btn-success";
                     document.getElementById('export_chart').className = "btn-success";
                 } else {
-                    document.getElementById('plot_agemon').className = "btn-danger";
+                    document.getElementById('plot_diff').className = "btn-danger";
                     document.getElementById('export_chart').className = "btn-danger";
                 }
             }
         });
     }
-    function PlotAgemon() {
+    function PlotDiff() {
         let groups = {};
         transpose(table_data).forEach((row, index) => {
             const key = row[1];
@@ -524,11 +524,13 @@
         });
     }
     function ThermoExportChart() {
-        exportChart(
-            [charts[0].getPlotData(), charts[1].getPlotData(), charts[2].getPlotData(), charts[3].getPlotData(),],
-            $('#file_name').val(),
-            ["Arrhenius Plot", "Age Spectra", "Cooling History", "Heating Log", ],
-        );
+        let data = {
+            file_name: $('#file_name').val(),
+            data: [
+                charts[0].getPlotData(), charts[1].getPlotData(), charts[2].getPlotData(), charts[3].getPlotData()
+            ]
+        }
+        exportChart(data);
     }
     function ReadLog() {
         $.ajax({
@@ -642,6 +644,7 @@
 
     $(document).ready(function(){
         showParamProject(document.getElementById('thermoProjectName'), 'thermo');
+        paramsRadioChanged('thermo');
     });
 
 </script>

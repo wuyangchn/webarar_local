@@ -1,62 +1,15 @@
-<div style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: 100%; float: left">
-    <form id="smpParamsInputForm" method="post">
+<div class="div-params" style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: auto; float: left">
+    <form id="exportParamsInputForm" method="post">
+        <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+            <label style="width: 500px; text-align: left; font-weight: bold">Settings</label>
 
-        <!-- Export settings -->
-        <div style="width: 800px; height: 800px; float: left; margin-right: 15px">
-            <div id="drop-zone" class="upload-drop-zone" style="height: 100px;">
-                <h4 style="padding-top: 30px">Drag a log file <i>here</i>.</h4>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="export-pdf-check-box" style="margin-top: 10px">
+                    Plot together
+                </label>
             </div>
-            <div style="width: 800px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
 
-                <!-- Open files -->
-                <label style="width: 400px; text-align: left; font-weight: bold">Files</label>
-                <input type="file" id="files_to_export" name="files" multiple="multiple" accept=".arr" onchange="filesToExportChanged()">
-                <label><input type="text" id="export-file-table-input" name="export-file-table" class="sr-only"></label>
-                <table class="table table-hover" id="export_arr_file_list"></table>
-
-                <!-- Arrange settings -->
-                <label style="width: 400px; text-align: left; font-weight: bold">Arrange Settings</label>
-{#                <div class="form-inline">#}
-{#                    <label class="label-left">Rows#}
-{#                        <input type="number" min="1" step="1" class="export-params">#}
-{#                    </label>#}
-{#                    <label class="label-right">Columns#}
-{#                        <input type="number" min="1" step="1" class="export-params">#}
-{#                    </label>#}
-{#                </div>#}
-{#                <table class="table-export-to-pdf">#}
-{#                    <tbody>#}
-{#                        <tr>#}
-{#                            <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>#}
-{#                            <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>#}
-{#                        </tr>#}
-{#                        <tr>#}
-{#                            <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>#}
-{#                            <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>#}
-{#                        </tr>#}
-{#                    </tbody>#}
-{#                </table>#}
-                <div class="form-inline">
-                    <a class="btn btn-default" onclick="getPlotDataToExport()">Get PlotData</a>
-                    <a id="expand_all" class="btn btn-default" onclick="expandAll()">Expand All</a>
-                    <a id="preview" class="btn btn-default" onclick="preview()">Preview</a>
-                </div>
-
-                <!-- Plot Data Json Display -->
-                <label style="width: 400px; text-align: left; font-weight: bold">Plot Data</label>
-
-                <div class="x-tree-div"></div>
-
-
-
-            </div>
         </div>
-
-        <!--  PDF frame  -->
-        <div style="width: 700px; height: 800px; float: left; margin-right: 15px; border: 1px solid #ccc" >
-            {% load static %}
-            <embed id="pdfEmbed" src="{% static 'download/22WHA0218_Age Spectra.pdf' %}" width="100%" height="100%" type="application/pdf">
-        </div>
-
     </form>
 </div>

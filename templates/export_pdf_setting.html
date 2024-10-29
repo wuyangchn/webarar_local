@@ -2,8 +2,110 @@
 
 {% block content %}
 
-<div class="container-fluid" style="height: 800px" style="padding-right: 15px; padding-left: 30px;">
-    {% include "export_pdf_setting_modal_body_div.html" %}
+<div class="container-fluid" style="height: 800px; padding-right: 15px; padding-left: 30px;">
+
+    <div style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: 100%; float: left">
+        <form method="post">
+            <!-- Export settings -->
+            <div style="width: 800px; height: 800px; float: left; margin-right: 15px">
+                <div id="drop-zone" class="upload-drop-zone" style="height: 100px;">
+                    <h4 style="padding-top: 30px">Drag a log file <i>here</i>.</h4>
+                </div>
+                <div style="width: 800px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+
+                    <!-- Open files -->
+                    <label style="width: 400px; text-align: left; font-weight: bold">Files</label>
+                    <input type="file" id="files_to_export" name="files" multiple="multiple" accept=".arr" onchange="filesToExportChanged()">
+                    <label><input type="text" id="export-file-table-input" name="export-file-table" class="sr-only"></label>
+                    <table class="table table-hover" id="export_arr_file_list"></table>
+
+                    <!-- Arrange settings -->
+                    <label style="width: 400px; text-align: left; font-weight: bold">Arrange Settings</label>
+    {#                <div class="form-inline">#}
+    {#                    <label class="label-left">Rows#}
+    {#                        <input type="number" min="1" step="1" class="export-params">#}
+    {#                    </label>#}
+    {#                    <label class="label-right">Columns#}
+    {#                        <input type="number" min="1" step="1" class="export-params">#}
+    {#                    </label>#}
+    {#                </div>#}
+    {#                <table class="table-export-to-pdf">#}
+    {#                    <tbody>#}
+    {#                        <tr>#}
+    {#                            <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>#}
+    {#                            <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>#}
+    {#                        </tr>#}
+    {#                        <tr>#}
+    {#                            <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>#}
+    {#                            <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>#}
+    {#                        </tr>#}
+    {#                    </tbody>#}
+    {#                </table>#}
+                    <div class="form-inline">
+                        <a class="btn btn-default" onclick="getPlotDataToExport()">Get PlotData</a>
+                        <a id="expand_all" class="btn btn-default" onclick="expandAll()">Expand All</a>
+                        <a id="preview" class="btn btn-default" onclick="preview()">Preview</a>
+                        <a id="export_settings" class="btn btn-default" onclick="exportSettings()" >Settings</a>
+                    </div>
+
+                    <!-- Plot Data Json Display -->
+                    <label style="width: 400px; text-align: left; font-weight: bold">Plot Data</label>
+
+                    <div class="x-tree-div"></div>
+
+                </div>
+            </div>
+            <!--  PDF frame  -->
+            <div style="width: 700px; height: 800px; float: left; margin-right: 15px; border: 1px solid #ccc" >
+                {% load static %}
+                <embed id="pdfEmbed" src="{% static 'download/22WHA0218_Age Spectra.pdf' %}" width="100%" height="100%" type="application/pdf">
+            </div>
+        </form>
+
+        <div class="modal fade" id="editExportParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+                <!-- /.modal 扩散模型参数设置 -->
+                <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-export-params">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Export Parameters</h4>
+                        </div>
+                        <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                            <div style="padding-right: 15px; padding-left: 30px;">
+                                <div class="radio form-inline">
+                                    <label>
+                                        <input type="radio" name="exportParamsRadio" id="exportParamsRadio1" value="option1" onchange="paramsRadioChanged('export')" checked>
+                                        Use a Export Setting Project
+                                    </label>
+                                    <select class="form-control" id="exportProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                                        {% for each in allExportPDFNames %}
+                                            <option>{{ each }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="exportParamsRadio" id="exportParamsRadio2" value="option2" onchange="paramsRadioChanged('export')">
+                                        Use Input Params
+                                    </label>
+                                </div>
+                                {% include "export_pdf_setting_modal_body_div.html" %}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <br>
+                            <div style="text-align: center">
+                                <label>
+                                    <input type="checkbox" value="" checked hidden>
+{#                                    Attention: Recalculation will not be applied automatically, please click recalculate after parameter changes#}
+                                </label>
+                                <button type="button" class="btn btn-primary" value="Apply" data-dismiss="modal" onclick="">Apply</button>
+                            </div>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div>
+            </div>
+    </div>
 </div>
 
 
@@ -25,7 +127,8 @@ function getPlotDataToExport() {
         url: url_export_plotdata,
         type: 'POST',
         data: JSON.stringify({
-            'json_string': json_string
+            'json_string': json_string,
+            'settings': getParamsByObjectName('export-pdf'),
         }),
         contentType:'application/json',
         success: function(res){
@@ -61,8 +164,15 @@ function Tree2Json(treeNode, order=0, isArray=false) {
             const text = span.textContent.trim();
             const key = text.split(':').map(s => s.trim())[0];
             if (input) {
-                let value = input.value;
-                value = Number.isNaN(Number(value)) && value.toLowerCase() !== 'nan'? value : Number(value);
+                let value = (val => {
+                    if (val.toLowerCase() === "" || val.includes(" ")) {
+                        return val;
+                    }
+                    if (val.toLowerCase() === 'nan' || ! Number.isNaN(Number(val))) {
+                        return Number(val)
+                    }
+                    return val
+                })(input.value);
                 if (isArray) {
                     array.push(value);
                 } else {
@@ -189,12 +299,13 @@ function expandAll(){
 }
 function preview(){
     let json = Tree2Json($('.x-tree-div')[0]);
-    let data = json.myPlotData.data;
-    let fn = json.myPlotData.file_name;
-    let pn = json.myPlotData.plot_names;
-    let href = exportChart(data, fn, pn, false);
+    let data = json.myPlotData;
+    let href = exportChart(data, false);
     let embedElement = document.getElementById("pdfEmbed");
     embedElement.src = href;
+}
+function exportSettings() {
+    $('#editExportParams').modal('show');
 }
 let input_files = []
 // initialize raw file List
@@ -268,7 +379,11 @@ function _dropHandler(ev) {
                 let files = JSON.parse(res).files;
                 let table = $('#export_arr_file_list');
                 let data = table.bootstrapTable('getData');
-                let diagram_list = ['Age Spectra'];
+                let diagram_list = [
+                    'Age Spectra', 'Inverse Isochron','Degas Pattern',
+                    '39ArK Degas Spectra', '36Ara Degas Spectra', '40Arr Degas Spectra',
+                    '39ArK Degas Curve', '36Ara Degas Curve', '40Arr Degas Curve'
+                ];
                 let diagram = 'Age Spectra';
                 $.each(files, function (index, file) {
                     table.bootstrapTable('insertRow', {index: data.length + index,
@@ -301,6 +416,11 @@ function _dropHandler(ev) {
         });
     }
 }
+
+$(document).ready(function(){
+    showParamProject(document.getElementById('exportProjectName'), 'export-pdf');
+    paramsRadioChanged('export');
+});
 
 </script>
 
