@@ -4,11 +4,9 @@ import json
 import pickle
 import traceback
 import re
-import ctypes
 import numpy as np
 import pdf_maker as pm
-import time
-import gc
+import uuid
 
 # from math import ceil
 from django.http import JsonResponse, HttpResponse
@@ -299,15 +297,14 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
         adjusted_x = list(self.body.get('x'))
 
         x, adjusted_time = [], []
-        year, month, day, hour, min, second = re.findall("(.*)-(.*)-(.*)T(.*):(.*):(.*)", data[0][0])[0]
+        year, month, day, hour, min, second = re.findall(r"\d+", data[0][0])[0]
         for each in data[0]:
             x.append(ap.calc.basic.get_datetime(
-                *re.findall("(.*)-(.*)-(.*)T(.*):(.*):(.*)", each)[0],
+                *re.findall(r"\d+", each)[0],
                 base=[int(year), int(month), int(day), int(hour), int(min)]
             ))
         for each in adjusted_x:
-            adjusted_time.append(ap.calc.basic.get_datetime(
-                *re.findall("(.*)-(.*)-(.*)T(.*):(.*):(.*)", each)[0],
+            adjusted_time.append(ap.calc.basic.get_datetime(*re.findall(r"\d+", each)[0],
                 base=[int(year), int(month), int(day), int(hour), int(min)]
             ))
         y = data[1]
@@ -391,7 +388,6 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
         # Update cache
         http_funcs.create_cache(sample, self.cache_key)
         res = ap.smp.basic.get_diff_smp(backup=components_backup, smp=ap.smp.basic.get_components(sample))
-        # print(f"{res = }")
         return JsonResponse({'msg': "Success to recalculate", 'res': ap.smp.json.dumps(res)})
 
     def flag_not_matched(self, request, *args, **kwargs):
@@ -668,6 +664,25 @@ class RawFileView(http_funcs.ArArView):
         log_funcs.set_info_log(self.ip, '004', 'info', f'Success to submit raw file')
         return JsonResponse({})
 
+    def check_regression(self, request, *args, **kwargs):
+        raw: ap.RawData = self.sample
+
+        failed = []
+        for seq in raw.sequence:
+            if seq.is_removed:
+                continue
+            for ar in range(5):
+                regression_res = seq.results[ar][seq.fitting_method[ar]]
+                if not all([isinstance(i, (float, int)) for i in regression_res]):
+                    failed.append([seq.index, seq.name, f"Ar{36+ar}"])
+
+        msg = "All sequence are valid for later calculation!"
+        if failed:
+            failed = sorted(list(set([seq[0]+1 for seq in failed])))
+            msg = f"Errors occur at: {failed}"
+
+        return JsonResponse({'status': 'successful', 'msg': msg, 'failed': failed}, status=200)
+
     def export_sequence(self, request, *args, **kwargs):
         """
         Parameters
@@ -760,6 +775,8 @@ class ParamsSettingView(http_funcs.ArArView):
                 if 'thermo' in type.lower():
                     param = [*data[0:20], *data[56:58], *data[20:27],
                              *ap.calc.corr.get_irradiation_datetime_by_string(data[27]), data[28], '', '']
+                if 'export' in type.lower():
+                    param = [True]
             except IndexError:
                 param = []
             return JsonResponse({'status': 'success', 'param': np.nan_to_num(param).tolist()})
@@ -883,17 +900,28 @@ class ThermoView(http_funcs.ArArView):
         nsteps = sequence.size
         te = np.array(sample.TotalParam[124], dtype=np.float64)
         ti = (np.array(sample.TotalParam[123], dtype=np.float64) / 60).round(2)  # time in minute
-        ar = np.array(sample.DegasValues[20], dtype=np.float64)  # 20-21 Ar39
-        sar = np.array(sample.DegasValues[21], dtype=np.float64)
+        nindex = {"40": 24, "39": 20, "38": 10, "37": 8, "36": 0}
+        if params[10] in list(nindex.keys()):
+            ar = np.array(sample.DegasValues[nindex[params[10]]], dtype=np.float64)  # 20-21 Ar39
+            sar = np.array(sample.DegasValues[nindex[params[10]] + 1], dtype=np.float64)
+        elif params[10] == 'total':
+            all_ar = np.array(sample.CorrectedValues, dtype=np.float64)  # 20-21 Ar39
+            ar, sar = ap.calc.arr.add(*all_ar.reshape(5, 2, len(all_ar[0])))
+            ar = np.array(ar); sar = np.array(sar)
+        else:
+            raise KeyError
         age = np.array(sample.ApparentAgeValues[2], dtype=np.float64)  # 2-3 age
         sage = np.array(sample.ApparentAgeValues[3], dtype=np.float64)
         f = np.cumsum(ar) / ar.sum()
 
         # dr2, ln_dr2 = ap.smp.diffusion_funcs.dr2_popov(f, ti)
-        if str(params[6]).lower() == 'lovera':
-            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_lovera(f, ti, ar=ar, sar=sar)
-        elif str(params[6]).lower() == 'yang':
-            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_yang(f, ti, ar=ar, sar=sar)
+        ln = True if str(params[6]).lower() == 'ln' else False
+        if str(params[7]).lower() == 'lovera':
+            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_lovera(f, ti, ar=ar, sar=sar, ln=ln)
+        elif str(params[7]).lower() == 'yang':
+            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_yang(f, ti, ar=ar, sar=sar, ln=ln)
+        elif str(params[7]).lower() == 'popov':
+            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_popov(f, ti, ar=ar, sar=sar, ln=ln)
         else:
             return JsonResponse({}, status=403)
 
@@ -943,10 +971,12 @@ class ThermoView(http_funcs.ArArView):
         arr.a39 = filtered_data[7]
         arr.sig39 = filtered_data[8]
         arr.f = filtered_data[9]
-        dr2, arr.xlogd, arr.wt = ap.smp.diffusion_funcs.dr2_lovera(
-            f=arr.f, ti=filtered_data[4], ar=filtered_data[7], sar=filtered_data[8])
+        # dr2, arr.xlogd, arr.wt = ap.smp.diffusion_funcs.dr2_lovera(
+        #     f=arr.f, ti=filtered_data[4], ar=filtered_data[7], sar=filtered_data[8], ln=False)
+        dr2, arr.xlogd, arr.wt = filtered_data[10:13]
 
         arr.f.insert(0, 0)
+        arr.f = np.where(np.array(arr.f) >= 1, 0.9999999999999999, np.array(arr.f))
         arr.main()
 
         return JsonResponse({})
@@ -1019,7 +1049,7 @@ class ThermoView(http_funcs.ArArView):
         return JsonResponse({})
 
 
-    def plot_agemon(self, request, *args, **kwargs):
+    def plot(self, request, *args, **kwargs):
         # names = list(models.IrraParams.objects.values_list('name', flat=True))
         # log_funcs.set_info_log(self.ip, '005', 'info', f'Show irradiation param project names: {names}')
         sample_name = self.body['sample_name']
@@ -1038,7 +1068,7 @@ class ThermoView(http_funcs.ArArView):
         # read_from_ins = True
         read_from_ins = False
 
-        if params[12] and params[13]:
+        if params[13] and params[14]:
             if read_from_ins:
                 loc = r"C:\Users\Young\OneDrive\00-Projects\【2】个人项目\2024-06 MDD\MDDprograms\Sources Codes"
                 arr = ap.smp.diffusion_funcs.DiffDraw(name="Y51a", loc=loc, read_from_ins=read_from_ins)
@@ -1060,7 +1090,7 @@ class ThermoView(http_funcs.ArArView):
             plot_data = [[], [], [], []]
 
         k = [a, b, siga, sigb, chi2, q] = [0, 0, 0, 0, 0, 0]
-        if params[11]:
+        if params[12]:
             ti = [i + 273.15 for i in data[3]]
             x, y, wtx, wty = [], [], [], []
             for i in range(len(data)):
@@ -1072,7 +1102,7 @@ class ThermoView(http_funcs.ArArView):
             if len(x) > 0:
                 k = [a, b, siga, sigb, chi2, q] = ap.smp.diffusion_funcs.fit(x, y, wtx, wty)
 
-        if params[14]:
+        if params[15]:
             loc = f"C:\\Users\\Young\\OneDrive\\00-Projects\\【2】个人项目\\2022-05论文课题\\【3】分析测试\\ArAr\\01-VU实验数据和记录\\{sample_name}"
             try:
                 furnace_log = libano_log = np.loadtxt(os.path.join(loc, f"{file_name}-temp.txt"), delimiter=',')
@@ -1125,9 +1155,11 @@ class ExportView(http_funcs.ArArView):
 
     # /calc/export
     def get(self, request, *args, **kwargs):
-        return render(request, 'export_pdf_setting.html')
+        names = list(models.ExportPdfParams.objects.values_list('name', flat=True))
+        return render(request, 'export_pdf_setting.html', {'allExportPDFNames': names})
 
     def get_plotdata(self, request, *args, **kwargs):
+        params = self.body['settings']
         files = json.loads(self.body['json_string'])['files']
         file_names = [each['file_name'] for each in files if each['checked']]
         file_paths = [each['file_path'] for each in files if each['checked']]
@@ -1135,66 +1167,44 @@ class ExportView(http_funcs.ArArView):
         print(f"{file_names = }")
         print(f"{file_paths = }")
         print(f"{diagrams = }")
+        print(f"{params = }")
 
         colors = ['#1f3c40', '#e35000', '#e1ae0f', '#3d8ebf', '#77dd83', '#c7ae88', '#83d6bb', '#653013', '#cc5f16',
                   '#d0b269']
-        series = []
 
         # ------ 构建数据 -------
+        data = {"data": [], "file_name": "WHA"}
+        smps = []
         for index, file in enumerate(file_paths):
             _, ext = os.path.splitext(file)
             if ext[1:] not in ['arr', 'age']:
                 continue
-            smp = (ap.from_arr if ext[1:] == 'arr' else ap.from_age)(file_path=file)
-            age = smp.ApparentAgeValues[2:4]
-            ar = smp.DegasValues[20]
-            data = ap.calc.spectra.get_data(*age, ar, cumulative=False)
-            series.append({
-                'type': 'series.line', 'id': f'line{index * 2 + 0}', 'name': f'line{index * 2 + 0}',
-                'color': colors[index],
-                'data': np.transpose([data[0], data[1]]).tolist(), 'line_caps': 'square',
-            })
-            series.append({
-                'type': 'series.line', 'id': f'line{index * 2 + 1}', 'name': f'line{index * 2 + 1}',
-                'color': colors[index],
-                'data': np.transpose([data[0], data[2]]).tolist(), 'line_caps': 'square',
-            })
-            series.append({
-                'type': 'text', 'id': f'text{index * 2 + 0}', 'name': f'text{index * 2 + 0}', 'color': colors[index],
-                'text': f'{smp.name()}<r>{round(smp.Info.results.age_plateau[0]["age"], 2)}', 'size': 10,
-                'data': [[index * 15 + 5, 23]],
-            })
-        data = {
-            "data": [
-                {
-                    'xAxis': [{'extent': [0, 100], 'interval': [0, 20, 40, 60, 80, 100],
-                               'title': 'Cumulative <sup>39</sup>Ar Released (%)', 'nameLocation': 'middle', }],
-                    'yAxis': [{'extent': [0, 25], 'interval': [0, 5, 10, 15, 20, 25],
-                               'title': 'Apparent Age (Ma)', 'nameLocation': 'middle', }],
-                    'series': series
-                }
-            ],
-            "file_name": "WHA",
-            "plot_names": ["all age plateaus"],
-        }
+            smps.append((ap.from_arr if ext[1:] == 'arr' else ap.from_age)(file_path=file))
 
-        file_name = data["file_name"]
-        plot_data = data["data"]
-        # write pdf
-        file = pm.NewPDF(filepath=f"{settings.DOWNLOAD_URL}{file_name}.pdf")
-        for index, each in enumerate(plot_data):
-            # rich text tags should follow this priority: color > script > break
-            file.text(page=index, x=50, y=780, line_space=1.2, size=12, base=0, h_align="left",
-                      text=f"The PDF can be edited with Adobe Acrobat, Illustrator and CorelDRAW")
-            cv = ap.smp.export.export_chart_to_pdf(each)
-            file.canvas(page=index, base=0, margin_top=5, canvas=cv, unit="cm", h_align="middle")
-            if index + 1 < len(plot_data):
-                file.add_page()
+        plot_together = params[0]
+        if plot_together:
+            data['data'] = [{"name": "", "xAxis": [], "yAxis": [], "series": []}]
+        for index, smp in enumerate(smps):
+            if plot_together:
+                current = ap.smp.export.get_plot_data(smp=smp, diagram=diagrams[index], color=colors[index])
+                data['data'][0]['name'] = 'Combined Diagrams'
+                if index == 0:
+                    data['data'][0]['xAxis'] = current['xAxis']
+                    data['data'][0]['yAxis'] = current['yAxis']
+                else:
+                    data['data'][0]['xAxis'][0]['extent'][0] = min(current['xAxis'][0]['extent'][0], data['data'][0]['xAxis'][0]['extent'][0])
+                    data['data'][0]['xAxis'][0]['extent'][1] = max(current['xAxis'][0]['extent'][1], data['data'][0]['xAxis'][0]['extent'][1])
+                    data['data'][0]['yAxis'][0]['extent'][0] = min(current['yAxis'][0]['extent'][0], data['data'][0]['yAxis'][0]['extent'][0])
+                    data['data'][0]['yAxis'][0]['extent'][1] = max(current['yAxis'][0]['extent'][1], data['data'][0]['yAxis'][0]['extent'][1])
+                for ser in current['series']:
+                    data['data'][0]['series'].append(ser)
+            else:
+                current = ap.smp.export.get_plot_data(smp=smp, diagram=diagrams[index])
+                data['data'].append(current)
 
-        # save pdf
-        file.save()
-
-        export_href = '/' + settings.DOWNLOAD_URL + f"{file_name}.pdf"
+        filepath = f"{settings.DOWNLOAD_URL}{data['file_name']}-{uuid.uuid4().hex[:8]}.pdf"
+        filepath = ap.smp.export.export_chart_to_pdf(data, filepath=filepath)
+        export_href = '/' + filepath
 
         return JsonResponse({'data': ap.smp.json.dumps(data), 'href': export_href})
 
@@ -1359,28 +1369,13 @@ class ApiView(http_funcs.ArArView):
 
     def export_chart(self, request, *args, **kwargs):
         data = self.body['data']
-        file_name = self.body['file_name']
-        plot_names = self.body['plot_names']
-        export_filepath = os.path.join(settings.DOWNLOAD_ROOT, f"{file_name}.pdf")
+        params = self.body['settings']
+        print(f"{params = }")
 
-        # write pdf
-        file = pm.NewPDF(filepath=export_filepath)
-        for index, each in enumerate(data):
-            # rich text tags should follow this priority: color > script > break
-            file.text(page=index, x=50, y=780, line_space=1.2, size=12, base=0, h_align="left",
-                      text=f"The PDF can be edited with Adobe Acrobat, Illustrator and CorelDRAW.<r>"
-                           f"<r> {file_name}"
-                           f"<r> {plot_names[index]}",
-                      )
-            cv = ap.smp.export.export_chart_to_pdf(each)
-            file.canvas(page=index, base=0, margin_top=5, canvas=cv, unit="cm", h_align="middle")
-            if index + 1 < len(data):
-                file.add_page()
-
-        # save pdf
-        file.save()
-
-        export_href = '/' + settings.DOWNLOAD_URL + f"{file_name}.pdf"
+        file_name = data.get('file_name', 'file_name')
+        filepath = f"{settings.DOWNLOAD_URL}{file_name}-{uuid.uuid4().hex[:8]}.pdf"
+        filepath = ap.smp.export.export_chart_to_pdf(data, filepath)
+        export_href = '/' + filepath
 
         return JsonResponse({'status': 'success', 'href': export_href})
 

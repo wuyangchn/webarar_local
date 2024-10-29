@@ -111,7 +111,7 @@ class InputFilterParams(models.Model):
     uploader_email = models.EmailField('UPLOADER_EMAIL', max_length=64, null=True)
 
 
-class ExportPDFParams(models.Model):
+class ExportPdfParams(models.Model):
     id = models.BigAutoField(primary_key=True)
     # 新建者的ip地址
     ip = models.CharField("IP", max_length=64, null=False)
