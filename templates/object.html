@@ -19,7 +19,7 @@
         showPage("0");
     });
 </script>
-<div class="container-fluid" style="height: 800px">
+<div class="container-fluid" style="height: calc(100vh - 72px - 34px - 20px - 5px)">
     <div class="row" style="height: 100%; overflow: auto">
         <div class="col-xs-1 col-md-1-5" style="padding-left: 10px">
             <div class="list-group">
@@ -83,7 +83,6 @@
             <div class="col-xs-6 text-left">
                 <h2 class="h2 align-top" id="sample_name_title">Sample Name</h2>
                 <br>
-
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                     <label class="sr-only" for="inputFingerprint">Fingerprint
                         <input type="text" style="display: none" id="inputFingerprint" name="fingerprint" value="fingerprint">
@@ -153,12 +152,11 @@
                 </div>
                 <img id="sample_picture" src="" alt="Sample Photo" class="img-rounded" onclick="showUploadPictureBtn()">
             </div>
-
         </div>
-        <div id="table_container" class="col-xs-11 col-md-10" style="height: 100%;overflow: hidden; margin-bottom: 10px"></div>
+        <div id="table_container" class="col-xs-11 col-md-10" style="height: 100%;overflow: hidden;"></div>
         <div id="figure_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;"></div>
         <div id="figure_3D_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;" hidden></div>
-        <div id="figure_right_container" class="col-xs-1 col-md-2" style="float: right; border: #ddd 1px solid;height: 720px; margin-top: 40px; margin-right: 20px">
+        <div id="figure_right_container" class="col-xs-1 col-md-2" style="float: right; border: #ddd 1px solid;height: calc(100% - 80px); margin-top: 40px; margin-right: 20px">
             <div class="text-left" style="height: 100%">
                 <div class="radio-div-red" style="height: 46%;">
                     <label class="radio-inline" style="display:inline-block; vertical-align:top; line-height:22px">
@@ -269,11 +267,10 @@
                     <label>Color <input type="color" name="errLineColor"></label>
 
                 </div>
-{#                <div style="height: 50px"></div>#}
-{#                <div style="position:fixed; top: 760px">#}
-                    <button class="btn btn-primary" value="confirm" onclick="applySettingDialog()">Apply</button>
-                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
-{#                </div>#}
+
+                <button class="btn btn-primary" value="confirm" onclick="applySettingDialog()">Apply</button>
+                <button class="btn btn-default" value="close" onclick="closeSettingDialog()">Close</button>
+
             </dialog>
             <dialog id="3DfigurePropertiesDialog" class="setting-attr-dialog">
                 <h3>Properties Dialog</h3>
@@ -291,7 +288,7 @@
                 <div style="height: 50px"></div>
                 <div style="position:fixed; top: 760px">
                     <button class="btn btn-primary" value="confirm" onclick="apply3DSetting()">Apply</button>
-                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+                    <button class="btn btn-default" value="close" onclick="closeSettingDialog()">Close</button>
                 </div>
             </dialog>
             <dialog id="degasPatternPropertiesDialog" class="setting-attr-dialog">
@@ -310,7 +307,7 @@
                 <div style="height: 50px"></div>
                 <div style="position:fixed; top: 760px">
                     <button class="btn btn-primary" value="confirm" onclick="">Apply</button>
-                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+                    <button class="btn btn-default" value="close" onclick="closeSettingDialog()">Close</button>
                 </div>
             </dialog>
             <dialog id="ageDistributionPropertiesDialog" class="setting-attr-dialog">
@@ -415,7 +412,7 @@
                 <div style="height: 50px"></div>
                 <div style="position:fixed; top: 760px">
                     <button class="btn btn-primary" value="confirm" onclick="applySettingDialog()">Apply</button>
-                    <button class="btn btn-primary" value="close" onclick="closeSettingDialog()">Close</button>
+                    <button class="btn btn-default" value="close" onclick="closeSettingDialog()">Close</button>
                 </div>
             </dialog>
         </div>
@@ -425,7 +422,7 @@
     <div>
         <pre id="example_console" class="pre" style="float: left; width: 30%">console log</pre>
         <div id="table_btn_div" style="float: left; position: relative; left: 8%;">
-            <button title="Save changes you made on the table, will not recalculate automatically" type="button" class="btn btn-default" onclick="clickSaveTable()">Save changes</button>
+            <button title="Save changes you made on the table, will not recalculate automatically" type="button" class="btn btn-primary" onclick="clickSaveTable()">Save changes</button>
             <button title="Change irradiation params" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
             <button title="Change calculation params" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
             <button title="Change other calculation settings" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
@@ -460,7 +457,7 @@
                                 <input type="radio" name="irraParamsRadio" id="irraParamsRadio1" value="option1" onchange="paramsRadioChanged('irra')" checked>
                                 Use an Irradiation Project
                             </label>
-                            <select class="form-control" id="irraProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                            <select class="form-control" id="irraProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
                                 {% for each in allIrraNames %}
                                     <option>{{ each }}</option>
                                 {% endfor %}
@@ -497,14 +494,14 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Calculation Parameters</h4>
                     </div>
-                    <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                    <div class="modal-body modal-page-size" style="overflow: auto">
                         <div style="padding-right: 15px; padding-left: 30px;">
                             <div class="radio form-inline">
                                 <label>
                                     <input type="radio" name="calcParamsRadio" id="calcParamsRadio1" value="option1" onchange="paramsRadioChanged('calc')" checked>
                                     Use an Calculation Project
                                 </label>
-                                <select class="form-control" id="calcProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                                <select class="form-control" id="calcProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
                                     {% for each in allCalcNames %}
                                         <option>{{ each }}</option>
                                     {% endfor %}
@@ -535,21 +532,21 @@
         </div>
     </div>
     <div class="modal fade" id="editSmpParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- /.modal sample参数设置 -->
         <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-smp-params">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Sample Specific Settings</h4>
                 </div>
-
-                <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                <div class="modal-body modal-page-size" style="overflow: auto">
                     <div style="padding-right: 15px; padding-left: 30px;">
                         <div class="radio form-inline">
                             <label>
                                 <input type="radio" name="smpParamsRadio" id="smpParamsRadio1" value="option1" onchange="paramsRadioChanged('smp')" checked>
-                                Use an Calculation Project
+                                Use a Sample Setting Project
                             </label>
                             <label for="smpProjectName"></label>
-                            <select class="form-control" id="smpProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                            <select class="form-control" id="smpProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
                                 {% for each in allSmpNames %}
                                     <option>{{ each }}</option>
                                 {% endfor %}
@@ -564,7 +561,6 @@
                         {% include "sample_setting_modal_body_div.html" %}
                 </div>
             </div>
-
                 <div class="modal-footer">
                     <br>
                     <div style="text-align: center">
@@ -581,14 +577,15 @@
         </div>
     </div>
     <div class="modal fade" id="inputExportChoiceModal" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- /.modal export -->
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Export</h4>
+                    <h4 class="modal-title">Export</h4>
                 </div>
                 <form method="post" enctype="multipart/form-data">
-                    <div class="modal-body modal-div">
+                    <div class="modal-body" style="height: 400px;">
                         <p><span style="font-weight: bold">Download .Arr </span>
                             (with a single click, or right click and
                             <span style="font-weight: bold">Save Link As...</span>)</p>
@@ -623,117 +620,125 @@
         </div><!-- /.modal -->
     </div>
     <div class="modal fade" id="recalculationModal" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+        <!-- /.modal recalculation -->
+        <div class="modal-dialog modal-dialog-width-30" style="min-width: 500px">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Recalculation Options</h4>
+                    <h4 class="modal-title">Recalculation Options</h4>
                 </div>
-                <div class="modal-body modal-page-size">
-                    <p>Selecting recalculation procedures based on the modification you made.</p>
-                    <p>Important Information: an inappropriate choice will make unintended errors.</p>
-
-                    <form id="recalculationForm" method="post" enctype="multipart/form-data">
-                        <p>------------------------------------------</p>
-                        <div class="checkbox">
-                            <label title="Used to check for missing attributes in the current Arr file, will not modify any data that aready defined">
-                                <input type="checkbox" class="calc-check-box">
-                                Reset Arr Attributes
-                            </label>
-                        </div>
-                        <p>------------------------------------------</p>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Correction Blank
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Correction Mass Discrimination
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Correction Decay
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Degas Ca
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Degas K
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Degas Cl
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Degas atm
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Degas r
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Ratio
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Recalculate Apparent Ages
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Using Monte Carlo simulation for calculating errors of 40Arr/39Ark
-                            </label>
-                        </div>
-                        <p>------------------------------------------</p>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Reset Plot Data
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Reset Figure Style
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Reset Table Data
-                            </label>
-                        </div>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" class="calc-check-box">
-                                Reset Table Style
-                            </label>
-                        </div>
-                    </form>
+                <div class="modal-body modal-page-size" style="overflow: auto">
+                    <div style="padding-right: 15px; padding-left: 30px;">
+                        <form id="recalculationForm" method="post" enctype="multipart/form-data">
+                            <p>------------------------------------------</p>
+                            <div class="checkbox">
+                                <label title="Used to check for missing attributes in the current Arr file, will not modify any data that aready defined">
+                                    <input type="checkbox" class="calc-check-box">
+                                    1. Reset Arr Attributes
+                                </label>
+                            </div>
+                            <p>------------------------------------------</p>
+                            <div class="checkbox">
+                                <label title="Blank correction">
+                                    <input type="checkbox" class="calc-check-box">
+                                    2. Recalculate Correction Blank
+                                </label>
+                                <a class="text-muted" style="display:inline-block">
+                                    <span title="Gain correction included. Gain correction first, and then apply correction for blank" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    3. Recalculate Correction Mass Discrimination
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    4. Recalculate Correction Decay
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    5. Recalculate Degas Ca
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    6. Recalculate Degas K
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    7. Recalculate Degas Cl
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    8. Recalculate Degas atm
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    9. Recalculate Degas r
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    10. Recalculate Ratio
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    11. Recalculate Apparent Ages
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    12. Using Monte Carlo simulation for calculating errors of 40Arr/39Ark
+                                </label>
+                            </div>
+                            <p>------------------------------------------</p>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    13. Reset Plot Data
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    14. Reset Figure Style
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    15. Reset Table Data
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="calc-check-box">
+                                    16. Reset Table Style
+                                </label>
+                            </div>
+                        </form>
+                        <br>
+                        <p>****************ATTENTION****************
+                            <br>Wrong selections will make unexpected or unintended consequences.
+                            <br>If you adjust parameters, it is best to check 2~11 items to recalculate results.
+                        </p>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal" value="Apply" onclick="clickRecalc()">Apply</button>
@@ -760,6 +765,7 @@
     let figureBtnDiv = $('#figure_btn_div');
     let exampleConsole = document.getElementById('example_console');
     let rightConsole = document.getElementById('right_console');
+    rightConsole.innerText = `Open: ${getTime()}`;
 
     let ctrlIsPressed = false
     let isochron_marks_changed = false

@@ -76,6 +76,7 @@ body .title[data-title]:after {
     bottom: -2.5em;
     border-radius: 4px;
     white-space: nowrap;
+    /*min-width: 100px;*/
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
     z-index: 99999;
     visibility: hidden;
@@ -178,13 +179,21 @@ input.input-filter-params {
     width: 80px;
 }
 .modal-dialog-width-85{
-    width: 85%;
+    width: 90vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.modal-dialog-width-30{
+    width: 30vw;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .modal-page-size{
-    height: 700px;
+    height: calc(100vh - 170px);
+    padding: 0 0 0 0;
 }
-.modal-div{
-    height: 400px;
+.modal-dialog-width-85 .form-control {
+    padding: 0 12px;
 }
 
 
@@ -291,6 +300,7 @@ input.input-filter-params {
     max-height: 700px;
     overflow-y: auto;
     position: fixed;
+    margin-top: 20px;
     padding-left: 15px;
     padding-top: 15px;
     background-color: #f8f8f8;

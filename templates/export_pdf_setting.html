@@ -5,7 +5,7 @@
 <div class="container-fluid" style="height: 800px; padding-right: 15px; padding-left: 30px;">
 
     <div style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: 100%; float: left">
-        <form method="post">
+        <form method="post" id="editExportForm">
             <!-- Export settings -->
             <div style="width: 800px; height: 800px; float: left; margin-right: 15px">
                 <div id="drop-zone" class="upload-drop-zone" style="height: 100px;">
@@ -15,32 +15,12 @@
 
                     <!-- Open files -->
                     <label style="width: 400px; text-align: left; font-weight: bold">Files</label>
-                    <input type="file" id="files_to_export" name="files" multiple="multiple" accept=".arr" onchange="filesToExportChanged()">
+                    <input type="file" id="files_to_export" name="files" multiple="multiple" accept=".arr,.age" onchange="filesToExportChanged()">
                     <label><input type="text" id="export-file-table-input" name="export-file-table" class="sr-only"></label>
                     <table class="table table-hover" id="export_arr_file_list"></table>
 
                     <!-- Arrange settings -->
-                    <label style="width: 400px; text-align: left; font-weight: bold">Arrange Settings</label>
-    {#                <div class="form-inline">#}
-    {#                    <label class="label-left">Rows#}
-    {#                        <input type="number" min="1" step="1" class="export-params">#}
-    {#                    </label>#}
-    {#                    <label class="label-right">Columns#}
-    {#                        <input type="number" min="1" step="1" class="export-params">#}
-    {#                    </label>#}
-    {#                </div>#}
-    {#                <table class="table-export-to-pdf">#}
-    {#                    <tbody>#}
-    {#                        <tr>#}
-    {#                            <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>#}
-    {#                            <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>#}
-    {#                        </tr>#}
-    {#                        <tr>#}
-    {#                            <td><select style="border: none"><option>A:Spectra</option><option>A:Inverse</option></select></td>#}
-    {#                            <td><select style="border: none"><option>B:Spectra</option><option>B:Inverse</option></select></td>#}
-    {#                        </tr>#}
-    {#                    </tbody>#}
-    {#                </table>#}
+                    <label style="width: 400px; text-align: left; font-weight: bold">Functions</label>
                     <div class="form-inline">
                         <a class="btn btn-default" onclick="getPlotDataToExport()">Get PlotData</a>
                         <a id="expand_all" class="btn btn-default" onclick="expandAll()">Expand All</a>
@@ -49,7 +29,7 @@
                     </div>
 
                     <!-- Plot Data Json Display -->
-                    <label style="width: 400px; text-align: left; font-weight: bold">Plot Data</label>
+                    <label style="width: 400px; text-align: left; font-weight: bold">Plot Data Json</label>
 
                     <div class="x-tree-div"></div>
 
@@ -63,7 +43,7 @@
         </form>
 
         <div class="modal fade" id="editExportParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
-                <!-- /.modal 扩散模型参数设置 -->
+                <!-- /.modal 导出功能的参数设置 -->
                 <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-export-params">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -76,7 +56,7 @@
                                         <input type="radio" name="exportParamsRadio" id="exportParamsRadio1" value="option1" onchange="paramsRadioChanged('export')" checked>
                                         Use a Export Setting Project
                                     </label>
-                                    <select class="form-control" id="exportProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                                    <select class="form-control" id="exportProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
                                         {% for each in allExportPDFNames %}
                                             <option>{{ each }}</option>
                                         {% endfor %}
@@ -111,6 +91,12 @@
 
 
 <script>
+
+const diagram_list = [
+    'Age Spectra', 'Inverse Isochron','Degas Pattern',
+    '39ArK Degas Spectra', '36Ara Degas Spectra', '40Arr Degas Spectra',
+    '39ArK Degas Curve', '36Ara Degas Curve', '40Arr Degas Curve'
+];
 
 function getPlotDataToExport() {
     let data = {};
@@ -168,7 +154,10 @@ function Tree2Json(treeNode, order=0, isArray=false) {
                     if (val.toLowerCase() === "" || val.includes(" ")) {
                         return val;
                     }
-                    if (val.toLowerCase() === 'nan' || ! Number.isNaN(Number(val))) {
+                    // if (val.toLowerCase() === 'nan' || ! Number.isNaN(Number(val))) {
+                    //     return Number(val)
+                    // }  // 用字符串保存内容
+                    if (val.toLowerCase() === 'nan') {
                         return Number(val)
                     }
                     return val
@@ -379,11 +368,6 @@ function _dropHandler(ev) {
                 let files = JSON.parse(res).files;
                 let table = $('#export_arr_file_list');
                 let data = table.bootstrapTable('getData');
-                let diagram_list = [
-                    'Age Spectra', 'Inverse Isochron','Degas Pattern',
-                    '39ArK Degas Spectra', '36Ara Degas Spectra', '40Arr Degas Spectra',
-                    '39ArK Degas Curve', '36Ara Degas Curve', '40Arr Degas Curve'
-                ];
                 let diagram = 'Age Spectra';
                 $.each(files, function (index, file) {
                     table.bootstrapTable('insertRow', {index: data.length + index,

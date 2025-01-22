@@ -16,13 +16,13 @@
     </script>
 
     <!-- 模态框( Modal ) 外推截距值界面  -->
-    <div class="modal" id="modal-extrapolate" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <div class="modal" id="modal-extrapolate" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y: auto">
         <div class="modal-dialog modal-dialog-width-85">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Zero-time Extrapolation</h4>
                 </div>
-                <div class="modal-body modal-page-size" style="padding: 0 0 0 0">
+                <div class="modal-body modal-page-size" style="height: calc(100vh - 270px)">
                     <div id="figure-big" class="pull-left echarts-dom" style="width: 80%;height:100%"></div>
                     <div id="figure-sm-group" class="pull-right" style="width: 20%;height: 100%">
                         <div id="figure-sm-01" class="echarts-dom" style="width: 100%;height: 20%"></div>
@@ -78,21 +78,21 @@
                     <div class="text-left" id="sequenceContainer"></div>
                     <br>
                     <div class="pull-right">
-                        <label class="title" data-title="Export Sequence.">
+                        <label title="Export Sequence.">
                             <button class="btn btn-default" onclick="export_sequence()">Export Sequence</button></label>
-                        <label class="title" data-title="Check if results of regression are all valid.">
+                        <label title="Check if results of regression are all valid.">
                             <button class="btn btn-default" onclick="check_regression()">Check Regression</button></label>
-                        <a data-title="Close" id="btn-Close-1" href="{% url 'calc_view' %}"  class="btn btn-default title">Close</a>
-                        <label class="title" data-title="Continue">
+                        <a title="Close" id="btn-Close-1" href="{% url 'calc_view' %}"  class="btn btn-default">Close</a>
+                        <label title="Continue">
                             <button type="submit" class="btn btn-primary" name="btn" value="Submit" onclick="submitExtrapolate()">Submit</button></label>
                     </div>
                     <div style="padding-left: 142px">
                         <div class="text-center">
                             <button type="button" class="btn btn-default" onclick="lastSequence()">
-                                <span data-title="Last Sequence" class="glyphicon glyphicon-chevron-left title" aria-hidden="true"></span></button>
+                                <span title="Last Sequence" class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></button>
                             <label id="page_num" style="width: 40px; font-weight: normal">1/3</label>
                             <button type="button" class="btn btn-default" onclick="nextSequence()">
-                                <span data-title="Next Sequence" class="glyphicon glyphicon-chevron-right title" aria-hidden="true"></span></button>
+                                <span title="Next Sequence" class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
     </div>
 
     <!-- 模态框( Modal ) 设置-->
-    <div class="modal" id="modal-settings" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow: auto">
+    <div class="modal" id="modal-settings" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="overflow-y: auto">
         <!-- /.modal 本底对应阶段 -->
         <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-blank">
             <div class="modal-content">
@@ -447,7 +447,7 @@
     </div>
 
     <!-- 模态框（Modal）本底数据显示界面 -->
-    <div class="modal fade" id="modal-blank-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-blank-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" style="width: 1000px">
             <div class="modal-content">
                 <div class="modal-header">
@@ -466,7 +466,7 @@
     </div>
 
     <!-- 模态框（Modal）选择要导出的阶段 -->
-    <div class="modal fade" id="modal-export-sequence" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-export-sequence" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" style="width: 1100px">
             <div class="modal-content">
                 <div class="modal-header">
@@ -631,12 +631,21 @@
             showSequence(1);
             // 键盘检测左右键
             document.onkeydown = function (e) {
+                let current_isotope = getCurrentIsotope();
                 switch (e.code){
                     case 'ArrowLeft':  // or kedCode === 37, left
                         lastSequence();
                         break;
                     case 'ArrowRight':  // or kedCode === 39, right
                         nextSequence();
+                        break;
+                    case 'ArrowUp':  // or kedCode === , up
+                        current_isotope = current_isotope > 0?current_isotope - 1:current_isotope;
+                        smchartOnClick(smCharts, chartBig, current_isotope);
+                        break;
+                    case 'ArrowDown':  // or kedCode === , down
+                        current_isotope = current_isotope < 4?current_isotope + 1:current_isotope;
+                        smchartOnClick(smCharts, chartBig, current_isotope);
                         break;
                 }
             }

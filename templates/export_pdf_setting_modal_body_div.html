@@ -9,6 +9,65 @@
                     Plot together
                 </label>
             </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="export-pdf-check-box" style="margin-top: 10px">
+                    Show plot area border
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Page Size" style="width: 100px; text-align: left">Page</label>
+                <label>
+                    <select class="export-pdf-params" style="margin-right: 15px; height: 30px; width: 300px">
+                        <option value="A3">A3 (297 × 420 mm)</option>
+                        <option value="A4">A4 (210 × 297 mm)</option>
+                        <option value="B5">B5 (176 × 250 mm)</option>
+                        <option value="A5">A5 (148 × 210 mm)</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Page Size" style="width: 100px; text-align: left">PPI</label>
+                <label>
+                    <select class="export-pdf-params" style="margin-right: 15px; height: 30px; width: 300px">
+                        <option value="72">72</option>
+                        <option value="150">150</option>
+                        <option value="300">300</option>
+                        <option value="500">500</option>
+                    </select>
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Size of chart area including axes and plot-area in millimeter" style="width: 100px; text-align: left">Chart-area Size</label>
+                <label>
+                    <input type="number" step="any" placeholder="Width" class="export-pdf-params" style="width: 140px;"> ✖
+                    <input type="number" step="any" placeholder="Height" class="export-pdf-params" style="width: 140px;"> mm
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Size of plot area in percentage of the plot area." style="width: 100px; text-align: left">Plot-area Size</label>
+                <label title="Percentage of the plot area">
+                    <input type="number" step="any" placeholder="Width" class="export-pdf-params" style="width: 140px;">
+                    <input type="number" step="any" placeholder="Height" class="export-pdf-params" style="width: 140px;"> %
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Position of plot area in percentage of the plot area." style="width: 100px; text-align: left">Plot-area Position</label>
+                <label title="Percentage of the plot area">
+                    <input type="number" step="any" placeholder="Left" class="export-pdf-params" style="width: 140px;">
+                    <input type="number" step="any" placeholder="Bottom" class="export-pdf-params" style="width: 140px;"> %
+                </label>
+            </div>
+            <div class="form-inline">
+                <label title="Distance of the axis-titles from the axis in pt" style="width: 100px; text-align: left">Axis-Title Offsets</label>
+                <label>
+                    <input type="number" step="any" placeholder="Top" class="export-pdf-params" style="width: 71px;">
+                    <input type="number" step="any" placeholder="Right" class="export-pdf-params" style="width: 71px;">
+                    <input type="number" step="any" placeholder="Bottom" class="export-pdf-params" style="width: 71px;">
+                    <input type="number" step="any" placeholder="Left" class="export-pdf-params" style="width: 71px;"> pt
+                </label>
+            </div>
+
 
         </div>
     </form>

@@ -14,9 +14,9 @@
                         <div class="radio form-inline">
                             <label>
                                 <input type="radio" name="paramsRadio" id="smpParamsRadio1" value="option1" onchange="changeSubmitType()" checked>
-                                Edit an Calculation Project
+                                Edit a Sample Setting Project
                             </label>
-                            <select class="form-control" id="smpProjectName" name="projectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                            <select class="form-control" id="smpProjectName" name="projectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
                                 {% for each in allSmpNames %}
                                     <option>{{ each }}</option>
                                 {% endfor %}

@@ -16,7 +16,7 @@
                             <input type="radio" name="paramsRadio" id="calcParamsRadio1" value="option1" onchange="changeSubmitType()" checked>
                             Edit an Calculation Project
                         </label>
-                        <label for="calcProjectName"></label><select class="form-control" id="calcProjectName" name="projectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px; padding: 6px 12px;">
+                        <label for="calcProjectName"></label><select class="form-control" id="calcProjectName" name="projectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
                             {% for each in allCalcNames %}
                                 <option>{{ each }}</option>
                             {% endfor %}

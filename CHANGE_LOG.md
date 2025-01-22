@@ -4,12 +4,13 @@ The version number of WebArAr is updated simultaneously with ArArPy.
 
 ## to do
 
+* local scripts
+
 * Error type selection
 * Add York-2004 method comparing to IsoplotR
 
-## v0.1.13 2024-10-28
-* Export PDF
-* Fix: Gain correction
+## v0.1.13 2024-10-08
+* Export PDF.
 
 ## v0.1.12 2024-10-05
 * Add gain calibration.

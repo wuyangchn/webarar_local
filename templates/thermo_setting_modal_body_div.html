@@ -149,7 +149,143 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
                     4. Heating log
                 </label>
             </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="" class="thermo-check-box" style="margin-top: 10px">
+                    5. Release pattern
+                </label>
+            </div>
 
         </div>
+
+        <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+            <label style="width: 500px; text-align: left; font-weight: bold">Domains</label>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom1</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom2</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom3</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom4</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom5</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom6</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom7</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Dom8</label>
+                <label>Energy:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+                <label>Fraction:
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 100px;">
+                </label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Walker function:</label>
+                <label>
+                    <select class="thermo-params" style="height: 30px; width: 150px">
+                        <option value="walker1">walker 1 </option>
+                        <option value="walker2">walker 2 (dt)</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">K</label>
+                <label>
+                    <input type="number" step="any" class="thermo-params" style="width: 150px;">
+                </label>
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="the factor used to accelarate walking. Reference: 1.2 for walker1, 100 for walker2"
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Grain size</label>
+                <label>
+                    <input type="number" step="any" class="thermo-params" style="width: 150px;">
+                </label> μm
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="Grain size in μm, like 275 for 250-300μm, 350 for 300-400μm"
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Atom Density</label>
+                <label>
+                    <input type="number" step="any" class="thermo-params" style="width: 150px;">
+                </label>
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="Atom Density, 1e14 Atoms per cm cube, 1e10 for reference"
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+            <div class="form-inline">
+                <label style="width: 100px; text-align: left">Frequency</label>
+                <label>
+                    <input type="number" step="any" class="thermo-params" style="width: 150px;">
+                </label> μm
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="Molecular vibrational frequency, ranges from 1e13 to 1e14 Hz typically. 1e13 for reference"
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+
+        </div>
+
     </form>
 </div>

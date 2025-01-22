@@ -26,7 +26,7 @@
                 var search_words = eval("/^.*?"+search+".*?$/");
                 {#console.log(search_words);#}
                 {#console.log(search_words.test(data[i]['journal']));#}
-                if (tiers.includes(data[i]['tier']) && disciplines.includes(data[i]['discipline']) && search_words.test(data[i]['journal'])) {
+                if (tiers.includes(data[i]['tier']) && disciplines.includes(data[i]['subject']) && search_words.test(data[i]['full_name'])) {
                     var tr = document.createElement('tr');
                     tbody.appendChild(tr);
                     num = num + 1;
@@ -150,9 +150,10 @@
                 <th style="width: 50px">级别</th>
                 <th>学科</th>
                 <th style="width: 100px">大类</th>
-                <th style="width: 120px">2021-2022 IF</th>
-                <th style="width: 120px">2022-2023 IF</th>
-                <th style="width: 120px">IF Diff 22-21</th>
+                <th style="width: 120px">2021 IF</th>
+                <th style="width: 120px">2022 IF</th>
+                <th style="width: 120px">2023 IF</th>
+{#                <th style="width: 120px">IF Diff 23-22</th>#}
             </tr>
         </thead>
         <tbody id="tbody">
