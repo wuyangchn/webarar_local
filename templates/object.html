@@ -155,6 +155,7 @@
         </div>
         <div id="table_container" class="col-xs-11 col-md-10" style="height: 100%;overflow: hidden;"></div>
         <div id="figure_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;"></div>
+{#        <div id="figure_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 300px; width: 400px; overflow: hidden;display: inline-block;"></div>#}
         <div id="figure_3D_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;" hidden></div>
         <div id="figure_right_container" class="col-xs-1 col-md-2" style="float: right; border: #ddd 1px solid;height: calc(100% - 80px); margin-top: 40px; margin-right: 20px">
             <div class="text-left" style="height: 100%">
@@ -732,6 +733,19 @@
                                     16. Reset Table Style
                                 </label>
                             </div>
+                            <p>------------------------------------------</p>
+
+                            <label>Error Display :</label>
+                            <div class="form-inline">
+                                <label class="radio-inline">
+                                    <input type="radio" name="errorDisplayRadioOptions" id="errorDisplayRadio1" value="option1" style="margin-top: 10px" checked> 1σ
+                                </label>
+                                <label class="radio-inline" style="vertical-align: -2px">
+                                    <input type="radio" name="errorDisplayRadioOptions" id="errorDisplayRadio2" value="option2" style="margin-top: 10px"> 2σ
+                                </label>
+                            </div>
+
+
                         </form>
                         <br>
                         <p>****************ATTENTION****************
@@ -789,7 +803,7 @@
             }
         },
         licenseKey: 'non-commercial-and-evaluation',
-        className: 'htLeft htMiddle',
+        className: 'htLeft htMiddle htNoWrap',
         renderAllRows: true,
         viewportColumnRenderingOffset: 120,  // 渲染视图之外的列，解决滑动时的卡顿
         afterChange: (changes) => {

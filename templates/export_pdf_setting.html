@@ -2,16 +2,16 @@
 
 {% block content %}
 
-<div class="container-fluid" style="height: 800px; padding-right: 15px; padding-left: 30px;">
+<div class="container-fluid" style="padding-right: 15px; padding-left: 30px;">
 
     <div style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: 100%; float: left">
         <form method="post" id="editExportForm">
             <!-- Export settings -->
-            <div style="width: 800px; height: 800px; float: left; margin-right: 15px">
+            <div style="width: 40vw; float: left; margin-right: 15px">
                 <div id="drop-zone" class="upload-drop-zone" style="height: 100px;">
                     <h4 style="padding-top: 30px">Drag a log file <i>here</i>.</h4>
                 </div>
-                <div style="width: 800px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+                <div style="width: 100%; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
 
                     <!-- Open files -->
                     <label style="width: 400px; text-align: left; font-weight: bold">Files</label>
@@ -24,7 +24,8 @@
                     <div class="form-inline">
                         <a class="btn btn-default" onclick="getPlotDataToExport()">Get PlotData</a>
                         <a id="expand_all" class="btn btn-default" onclick="expandAll()">Expand All</a>
-                        <a id="preview" class="btn btn-default" onclick="preview()">Preview</a>
+                        <a class="btn btn-default" onclick="preview(false)">Fresh</a>
+                        <a class="btn btn-default" onclick="preview(true)">Preview</a>
                         <a id="export_settings" class="btn btn-default" onclick="exportSettings()" >Settings</a>
                     </div>
 
@@ -36,7 +37,7 @@
                 </div>
             </div>
             <!--  PDF frame  -->
-            <div style="width: 700px; height: 800px; float: left; margin-right: 15px; border: 1px solid #ccc" >
+            <div style="width: 50vw; max-width: 800px; height: 1133px; float: left; margin-right: 15px; border: 1px solid #ccc; overflow: hidden" >
                 {% load static %}
                 <embed id="pdfEmbed" src="{% static 'download/22WHA0218_Age Spectra.pdf' %}" width="100%" height="100%" type="application/pdf">
             </div>
@@ -97,15 +98,26 @@ const diagram_list = [
     '39ArK Degas Spectra', '36Ara Degas Spectra', '40Arr Degas Spectra',
     '39ArK Degas Curve', '36Ara Degas Curve', '40Arr Degas Curve'
 ];
+const position_list = [
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+    '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+    '31', '32', '33', '34', '35', '36', '37', '38', '39', '40',
+    '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+];
+let setting_list = {{ allExportPDFNames | safe }};
 
-function getPlotDataToExport() {
-    let data = {};
+function getPlotDataToExport(data={}, fresh=false, preview=false) {
     let diagrams = (ele) => ele.options[ele.selectedIndex].innerText;
+    let settings = (ele) => ele.options[ele.selectedIndex].innerText;
     let json_string = JSON.stringify({
         'files': $('#export_arr_file_list').bootstrapTable('getData').map((item, index) => {
             return {
                 'checked': item['checked'], 'file_name': item['file_name'],
-                'file_path': item['file_path'], 'diagram': diagrams($('.input-filter-selection')[index]),
+                'file_path': item['file_path'],
+                'diagram': diagrams($('.input-filter-selection')[index]),
+                'setting': settings($('.input-filter-selection-setting')[index]),
+                'position': settings($('.input-filter-selection-position')[index]),
             }
         })
     });
@@ -113,24 +125,29 @@ function getPlotDataToExport() {
         url: url_export_plotdata,
         type: 'POST',
         data: JSON.stringify({
+            'data': data,
             'json_string': json_string,
             'settings': getParamsByObjectName('export-pdf'),
+            'fresh': fresh,
+            'preview': preview,
         }),
         contentType:'application/json',
         success: function(res){
-            data = myParse(res.data);
 
             // 获取目标容器并将生成的树状结构插入到页面中
-            const treeContainer = document.querySelector('.x-tree-div');
-            treeContainer.innerHTML = ''; // This removes all child elements
-            
-            let ul = document.createElement('ul');
-            ul.classList.add('x-tree-root-ct', 'x-tree-lines', 'x-tree-node-active');
+            if (!preview) {
+                data = myParse(res.data);
+                const treeContainer = document.querySelector('.x-tree-div');
+                treeContainer.innerHTML = ''; // This removes all child elements
 
-            const tree = Json2Tree('myPlotData', data);
-            ul.appendChild(tree);
+                let ul = document.createElement('ul');
+                ul.classList.add('x-tree-root-ct', 'x-tree-lines', 'x-tree-node-active');
 
-            treeContainer.appendChild(ul);
+                const tree = Json2Tree('myPlotData', data);
+                ul.appendChild(tree);
+
+                treeContainer.appendChild(ul);
+            }
 
             let embedElement = document.getElementById("pdfEmbed");
             embedElement.src = res.href;
@@ -286,12 +303,10 @@ function expandAll(){
         $('#expand_all').text('Expand All');
     }
 }
-function preview(){
+function preview(preview=false){
     let json = Tree2Json($('.x-tree-div')[0]);
     let data = json.myPlotData;
-    let href = exportChart(data, false);
-    let embedElement = document.getElementById("pdfEmbed");
-    embedElement.src = href;
+    return getPlotDataToExport(data, true, preview);
 }
 function exportSettings() {
     $('#editExportParams').modal('show');
@@ -306,7 +321,9 @@ $('#export_arr_file_list').bootstrapTable(
             {field: 'checked', checkbox: true, width: 20, formatter: function () {return true}},
             {field: 'file_name', title: 'File name', width: 20, },
             {field: 'file_path', title: 'File path', width: 200, },
-            {field: 'diagram', title: 'Diagram', width: 150, },
+            {field: 'diagram', title: 'Diagram', width: 100, },
+            {field: 'setting', title: 'Setting', width: 100, },
+            {field: 'position', title: 'Position', width: 50, },
         ]
     }
 );
@@ -369,16 +386,30 @@ function _dropHandler(ev) {
                 let table = $('#export_arr_file_list');
                 let data = table.bootstrapTable('getData');
                 let diagram = 'Age Spectra';
+                let setting = 'spectra';
+                let data_length = data.length;
                 $.each(files, function (index, file) {
                     table.bootstrapTable('insertRow', {index: data.length + index,
                         row: {
                             'file_name': file.name, 'file_path': file.path,
-                            'diagram': `<select class="input-sm input-filter-selection" style="width: 150px">${diagram_list.map((item, _) => {
+                            'diagram': `<select class="input-sm input-filter-selection" style="width: 100px; padding: 0">${diagram_list.map((item, _) => {
                                 if (item.toUpperCase() === diagram.toUpperCase()) {
                                     return "<option selected>" + item + "</option>"
                                 }
                                 return "<option>" + item + "</option>"
-                            }).join("")}$</select>`
+                            }).join("")}$</select>`,
+                            'setting': `<select class="input-sm input-filter-selection-setting" style="width: 100px; padding: 0">${setting_list.map((item, _) => {
+                                if (item.toUpperCase() === setting.toUpperCase()) {
+                                    return "<option selected>" + item + "</option>"
+                                }
+                                return "<option>" + item + "</option>"
+                            }).join("")}$</select>`,
+                            'position': `<select class="input-sm input-filter-selection-position" style="width: 50px; padding: 0">${position_list.map((item, _) => {
+                                if (item.toUpperCase() === (data_length + index + 1).toString().toUpperCase()) {
+                                    return "<option selected>" + item + "</option>"
+                                }
+                                return "<option>" + item + "</option>"
+                            }).join("")}$</select>`,
                         }
                     })
                 })
