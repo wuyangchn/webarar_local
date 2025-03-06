@@ -370,6 +370,10 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
         isochron_mark = self.content.pop('isochron_mark', False)
         # print(f"Recalculation Isochron Mark = {isochron_mark}")
         print(f"{others = }")
+        try:
+            sample.Info.settings.update({'sigma_level': others.get('sigma', sample.Info.settings.get('sigma_level', 1))})
+        except Exception as e:
+            pass
         if isochron_mark:
             sample.IsochronMark = isochron_mark.copy()
             sample.SelectedSequence1 = [index for index, item in enumerate(isochron_mark) if str(item) == '1']
@@ -758,6 +762,7 @@ class ParamsSettingView(http_funcs.ArArView):
     def change_param_objects(self, request, *args, **kwargs):
         type = str(self.body['type'])  # type = irra, calc, smp
         model_name = f"{''.join([i.capitalize() for i in type.split('-')])}Params"
+        print(f"{type = }")
         try:
             name = self.body['name']
             param_file = getattr(models, model_name).objects.get(name=name).file_path
@@ -774,7 +779,15 @@ class ParamsSettingView(http_funcs.ArArView):
                 if 'calc' in type.lower():
                     param = [*data[34:56], *data[71:97]]
                 if 'smp' in type.lower():
-                    _ = [i == {'l': 0, 'e': 1, 'p': 2}.get(str(data[100]).lower()[0], -1) for i in range(3)]
+                    try:
+                        _ = [i == {'l': 0, 'e': 1, 'p': 2}.get(str(data[100]).lower()[0], 0) for i in range(3)]
+                    except:
+                        _ = [True, False, False]
+                    for i in range(len(data)):
+                        if i in range(101, 114) and not isinstance(data[i], bool):
+                            data[i] = False
+                        elif data[i] is None:
+                            data[i] = np.nan
                     param = [*data[67:71], *data[58:67], *data[97:100], *data[115:120], *data[126:136],
                              *data[120:123], *_, *data[101:114]]
                 # if 'thermo' in type.lower():
@@ -782,7 +795,8 @@ class ParamsSettingView(http_funcs.ArArView):
                 #              *ap.calc.corr.get_irradiation_datetime_by_string(data[27]), data[28], '', '']
                 if 'export' in type.lower():
                     param = [True]
-            except IndexError:
+            except:
+                print(traceback.format_exc())
                 param = []
             return JsonResponse({'status': 'success', 'param': np.nan_to_num(param).tolist()})
         except Exception as e:
@@ -1069,6 +1083,10 @@ class ThermoView(http_funcs.ArArView):
         max_age = self.body['max_age']
         data = self.body['data']
         params = self.body['settings']
+
+        if params[10] == "40":
+            return self.run_40ar_walker(request, args, kwargs)
+
         loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
         if not os.path.exists(loc) or random_index == "":
             return JsonResponse({"random_index": random_index}, status=403)
@@ -1163,6 +1181,165 @@ class ThermoView(http_funcs.ArArView):
         return JsonResponse({})
 
 
+    def run_40ar_walker(self, request, *args, **kwargs):
+        sample_name = self.body['sample_name']
+        arr_file_name = self.body['arr_file_name']
+        random_index = self.body['random_index']
+        max_age = self.body['max_age']
+        data = self.body['data']
+        params = self.body['settings']
+        loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
+        if not os.path.exists(loc) or random_index == "":
+            return JsonResponse({"random_index": random_index}, status=403)
+        arr_file_path = os.path.join(loc, f"{arr_file_name}" + (".arr" if ".arr" not in arr_file_name else ""))
+
+        # setting_params = params[:11]
+        domain_params = params[11:33]
+        # plot_params = params[33:]
+
+        # 活化能和体积比例从外到内
+        energies = (np.array(domain_params[0:16:2]) * 1000).tolist()
+        fractions = domain_params[1:16:2]
+        ndoms = list(energies).index(0)
+        use_walker1 = domain_params[16] == "walker1"
+        k = domain_params[17]
+        gs = domain_params[18]
+        ad = domain_params[19]  # atom density
+        ad = 0  # atom density
+        parent = domain_params[19]  # parent 40K
+        f = domain_params[20]  # frequency
+        pumping = domain_params[21]
+        # ad = 1e10  # atom density
+        # f = 1e13
+        dimension = 3
+
+        print(f"Run 40Ar {use_walker1 = }, {k = }, {gs = }, {ad = }, {f = }")
+
+        smp = ap.from_arr(arr_file_path)
+
+        age = 20  # 20 Ma
+        scale = 100000  # 0.1 Ma
+        dt = 3600 * 24 * 365.2425 * scale  # 0.1 Ma
+        ti = np.ones(int(age * 1000000 / scale)) * dt
+        temps = np.ones(int(age * 1000000 / scale)) * 10
+        temps[:5] = 400
+        temps[5:10] = 400
+        temps[10:20] = 350
+        temps[20:30] = 300
+        temps[30:40] = 250
+        temps[40:50] = 200
+        temps[50:70] = 150
+        temps[70:100] = 25
+        temps[100:] = 10
+
+        times = np.cumsum(ti)  # cumulative time
+        statuses = [True for i in range(len(ti))]
+        targets = [0 for i in range(len(ti))]
+        print(list(zip(temps, times)))
+
+        e_combinations = [energies[: ndoms]]
+        f_combinations = [fractions[: ndoms]]
+
+        for index, (_e, _f) in enumerate(list(itertools.product(*[e_combinations, f_combinations]))):
+            print(f"{index = }, {_e = }, {_f = }")
+
+            ## 先模拟热史
+
+            file_name = f"{'walker1' if use_walker1 else 'walker2'} {k=:.1f}a " \
+                        f"es={'-'.join([str(int(i / 1000)) for i in _e])} " \
+                        f"fs={'-'.join([str(i) for i in _f])} " \
+                        f"{dt=:.0f} " \
+                        f"{parent=:.0f} " \
+                        f"{gs=:.0f} " \
+                        f"{ad=:.0e} " \
+                        f"{f=:.0e} " \
+                        f"{ndoms=:.0f} " \
+                        f"temp={set(temps)} " \
+                        f"pumping={params[39]} " \
+                        f"multi"
+
+            try:
+                _start = time.time()
+                k = 3600 * 24 * 365.2425 * k
+                # demo, status = ap.ads.main.run(
+                #     times, temps, statuses,
+                #     _e, _f, ndoms, file_name=file_name, k=k, grain_szie=gs, dimension=dimension,
+                #     atom_density=ad, frequency=f, simulation=False, targets=targets, epsilon=0.05,
+                #     use_walker1=use_walker1, decay=5.53e-10, parent=parent
+                # )
+            except ap.ads.main.OverEpsilonError as e:
+                print(traceback.format_exc())
+                return JsonResponse({})
+            else:
+                print(traceback.format_exc())
+                # ap.ads.main.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
+
+                filename = f"walker2 k=10000.0a es=135-126-152 fs=1-0.97-0.74 dt=3155695200000 parent=800000000 gs=275 ad=0e+00 f=1e+13 ndoms=3 pumping=True multi 1.35h.ads"
+                filename = "walker2 k=3000.0a es=135-126-152 fs=1-0.97-0.74 dt=3155695200000 parent=800000000 gs=275 ad=0e+00 f=1e+13 ndoms=3 temp={200.0, 10.0, 300.0, 400.0, 150.0, 25.0, 250.0, 350.0} pumping=True multi 4.99h.ads"
+                filename = "walker2 k=1000.0a es=135-126-152 fs=1-0.97-0.74 dt=3155695200000 parent=800000000 gs=275 ad=0e+00 f=1e+13 ndoms=3 pumping=False multi 12.27h.ads"
+                filename = os.path.join(r"D:\DjangoProjects\webarar\private\mdd\20240920_24FY88a\thermo-history", filename)
+                demo = ap.ads.main.read_ads(filename)
+
+
+                ## 再模拟实验过程
+
+                use_walker1 = False
+                k = 10
+
+                file_name = f"{'walker1' if use_walker1 else 'walker2'} {k=:.1f}a " \
+                            f"es={'-'.join([str(int(i / 1000)) for i in _e])} " \
+                            f"fs={'-'.join([str(i) for i in _f])} " \
+                            f"{dt=:.0f} " \
+                            f"{gs=:.0f} " \
+                            f"{ad=:.0e} " \
+                            f"{f=:.0e} " \
+                            f"{ndoms=:.0f} " \
+                            f"pumping={params[39]} " \
+                            f"multi"
+
+                ti = np.array(smp.TotalParam[123], dtype=np.float64).round(2)  # time in second
+                temps = np.array(smp.TotalParam[124], dtype=np.float64)  # temperature in Celsius
+                ar = np.array(smp.DegasValues[24], dtype=np.float64)  # Ar40r
+                targets = ar.cumsum() / sum(ar)
+                statuses = [True for i in range(len(ti))]
+
+                if params[39]:  # including pumping phases
+                    for i in range(0, len(ti) * 2, 2):
+                        if params[40]:  # pumping out after, like Y56
+                            ti = np.insert(ti, i + 1, pumping)
+                            if params[41]:  # heating durations include pumping-out phases
+                                ti[i] -= pumping
+                        else:
+                            ti = np.insert(ti, i, pumping)
+                            # times = np.insert(times, i, times[i] - pumping)
+                            if params[41]:  # heating durations include pumping-out phases
+                                ti[i + 1] -= pumping
+                        temps = np.insert(temps, i + 1, temps[i])
+                        targets = np.insert(targets, i + 1, targets[i])
+                        statuses.insert(i + 1, False)
+
+                times = np.cumsum(ti)  # cumulative time
+
+                print(list(zip(temps, times)))
+
+                try:
+                    _start = time.time()
+                    k = 3600 * 24 * 365.2425 * k
+                    demo, status = ap.ads.main.run(
+                        times, temps, statuses, _e, _f, ndoms, file_name=file_name, k=k, grain_szie=gs, dimension=dimension,
+                        atom_density=ad, frequency=f, simulation=False, targets=targets, epsilon=0.05,
+                        use_walker1=use_walker1, decay=0, parent=0, positions=demo.positions
+                    )
+                except ap.ads.main.OverEpsilonError as e:
+                    print(traceback.format_exc())
+                    return JsonResponse({})
+                else:
+                    print(traceback.format_exc())
+                    ap.ads.main.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
+
+        return JsonResponse({})
+
+
     def plot(self, request, *args, **kwargs):
         # names = list(models.IrraParams.objects.values_list('name', flat=True))
         # log_funcs.set_info_log(self.ip, '005', 'info', f'Show irradiation param project names: {names}')
@@ -1250,6 +1427,16 @@ class ThermoView(http_funcs.ArArView):
         released = []
         release_name = []
         if plot_params[4]:  # release pattern
+            # if params[10] == '36':
+            #     ar = data[1]
+            # if params[10] == '37':
+            #     ar = data[3]
+            # if params[10] == '38':
+            #     ar = data[5]
+            # if params[10] == '39':
+            #     ar = data[7]
+            # if params[10] == '40':
+            #     ar = data[9]
             ar = data[7]
             ads_released = []
             index = 1
