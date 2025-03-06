@@ -236,7 +236,7 @@
                     <label>Opacity <input type="number" name="opacity" min="0" max="1" step="0.1"></label>
                     <label class="checkbox">Show Error Bar:
                         <input type="checkbox" style="width: 70px;" name="showErrBar" checked></label>
-                    <label class="checkbox">Show Error Ellipse:
+                    <label class="checkbox">Show Error Ellipse (1σ):
                         <input type="checkbox" style="width: 70px;" name="showEllipse" checked></label>
                 </div>
                 <div id="lines-setting-in-dialog" class="setting-dialog"  style="height: 500px" hidden>
@@ -735,23 +735,23 @@
                             </div>
                             <p>------------------------------------------</p>
 
-                            <label>Error Display :</label>
                             <div class="form-inline">
+                                <label style="width: 160px">Errors are stated at </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="errorDisplayRadioOptions" id="errorDisplayRadio1" value="option1" style="margin-top: 10px" checked> 1σ
+                                    <input type="radio" name="errorDisplayRadioOptions" id="errorDisplayRadio1" value="option1" style="margin-top: 5px" checked> 1σ
                                 </label>
-                                <label class="radio-inline" style="vertical-align: -2px">
-                                    <input type="radio" name="errorDisplayRadioOptions" id="errorDisplayRadio2" value="option2" style="margin-top: 10px"> 2σ
-                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="errorDisplayRadioOptions" id="errorDisplayRadio2" value="option2" style="margin-top: 5px"> 2σ
+                                </label> level
                             </div>
 
 
                         </form>
                         <br>
-                        <p>****************ATTENTION****************
-                            <br>Wrong selections will make unexpected or unintended consequences.
-                            <br>If you adjust parameters, it is best to check 2~11 items to recalculate results.
-                        </p>
+{#                        <p>****************ATTENTION****************#}
+{#                            <br>Wrong selections will make unexpected or unintended consequences.#}
+{#                            <br>If you adjust parameters, it is best to check 2~11 items to recalculate results.#}
+{#                        </p>#}
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -780,6 +780,10 @@
     let exampleConsole = document.getElementById('example_console');
     let rightConsole = document.getElementById('right_console');
     rightConsole.innerText = `Open: ${getTime()}`;
+
+    // sigma settings
+    $("#errorDisplayRadio1").prop("checked", sampleComponents['0'].settings?.sigma_level === 1);
+    $("#errorDisplayRadio2").prop("checked", sampleComponents['0'].settings?.sigma_level === 2);
 
     let ctrlIsPressed = false
     let isochron_marks_changed = false
