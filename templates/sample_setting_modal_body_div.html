@@ -1,3 +1,4 @@
+<p style="font-weight: bold; color: red">All uncertainties are stated at the 1 σ level.</p>
 <div class="div-params" style="border: 1px none #d5d5d5; border-radius: 4px; width: 100%; height: auto; float: left">
     <form id="smpParamsInputForm" method="post">
         <!-- J & MDF & standard  -->
@@ -33,21 +34,21 @@
                     <input type="number" step="any" class="smp-params" style="width: 140px;"> s&nbsp;[Ma]
                 </label>
             </div>
-            <div class="form-inline">
+            <div class="form-inline" hidden>
                 <label title="concentrate" style="width: 100px; text-align: left"><sup>40</sup>Ar Conc.</label>
                 <label>
                     <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
                     <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
                 </label>
             </div>
-            <div class="form-inline">
+            <div class="form-inline" hidden>
                 <label title="concentrate" style="width: 100px; text-align: left">K Conc.</label>
                 <label>
                     <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
                     <input type="number" step="any" class="smp-params" style="width: 140px;"> %s
                 </label>
             </div>
-            <div class="form-inline">
+            <div class="form-inline" hidden>
                 <label style="width: 100px; text-align: left"><sup>40</sup>Ar*/K</label>
                 <label>
                     <input type="number" step="any" class="smp-params" style="width: 140px;"> ±
@@ -66,10 +67,10 @@
 {#                        <option>OLST</option>#}
 {#                        <option>other</option>#}
                     </select>
-                    <label style="width: 60px; text-align: right">tolerance</label>
-                    <input type="number" step="any" class="smp-params" style="width: 80px;"> %
-                    <label style="width: 70px; text-align: right">iterations</label>
-                    <input type="number" min="1" step="1" class="smp-params" style="width: 80px;">
+                    <label style="width: 80px; text-align: right">tolerance</label>
+                    <input type="number" step="any" class="smp-params" style="width: 60px;"> %
+                    <label style="width: 80px; text-align: right">iterations</label>
+                    <input type="number" min="1" step="1" class="smp-params" style="width: 60px;">
                 </label>
             </div>
             <label style="width: 400px; text-align: left; margin-bottom: 0; margin-top: 5px">Mass Discrimination Law :</label>
@@ -77,7 +78,7 @@
                 <label class="radio-inline">
                     <input type="radio" name="mdfRadioOptions" id="mdfRadio1" value="option1" class="smp-check-box" style="margin-top: 10px" checked> Linear
                 </label>
-                <label class="radio-inline" style="vertical-align: -2px">
+                <label class="radio-inline">
                     <input type="radio" name="mdfRadioOptions" id="mdfRadio2" value="option2" class="smp-check-box" style="margin-top: 10px"> Exponential
                 </label>
                 <label class="radio-inline">
@@ -249,14 +250,14 @@ This is often necessary, especially when blank and sample measurements are inter
                 <label style="width: 100px; text-align: left">Isotopic tables</label>
                 <label>
                     <select name="err_in_tables" class="form-control smp-params">
-                        <option value="1">1se (abs)</option>
+                        <option value="1" selected>1se (abs)</option>
                         <option value="2">2se (abs)</option>
                     </select>
                 </label>
                 <label style="width: 100px; text-align: left">Parameters</label>
                 <label>
                     <select name="err_in_plots"  class="form-control smp-params">
-                        <option value="1">1se (%)</option>
+                        <option value="1" selected>1se (%)</option>
                         <option value="2">2se (%)</option>
                     </select>
                 </label>
@@ -265,7 +266,7 @@ This is often necessary, especially when blank and sample measurements are inter
                 <label style="width: 100px; text-align: left">Plots</label>
                 <label>
                     <select name="err_in_plots"  class="form-control smp-params">
-                        <option value="1">1se (abs)</option>
+                        <option value="1" selected>1se (abs)</option>
                         <option value="2">2se (abs)</option>
                     </select>
                 </label>
