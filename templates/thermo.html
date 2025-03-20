@@ -8,7 +8,7 @@
 
 <div class="container-fluid" style="height: 800px; padding-right: 15px; padding-left: 30px;">
 
-    <div style="width: 1200px; float: left">
+    <div style="width: calc(100vw - 450px); float: left">
 
 
         <div style="height: 120px; width: 100%;">
@@ -22,42 +22,42 @@
         </div>
 
         <div style="height: 1000px; width: 100%; margin-top: 20px; padding: 0 0 0 0;">
-            <div style="width: 600px; height: 700px; float: left" class="oven_step_chart_container"></div>
-            <div style="width: 600px; height: 700px; float: left" class="oven_step_chart_container"></div>
-            <div style="width: 600px; height: 700px; float: left" class="oven_step_chart_container"></div>
-            <div style="width: 600px; height: 700px; float: left" class="oven_step_chart_container"></div>
-            <div style="width: 600px; height: 700px; float: left" class="oven_step_chart_container"></div>
-            <div style="width: 600px; height: 700px; float: left" class="oven_step_chart_container"></div>
-            <div style="width: 1200px; height: 800px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+            <div style="width: 800px; height: 800px; float: left" class="oven_step_chart_container"></div>
         </div>
 
 
     </div>
 
-    <div style="width: 400px; float: left; padding-left: 50px; margin-left: 1200px; position: fixed">
+    <div style="width: 20vw; min-width:400px; float: left; padding-left: 0; margin-left: calc(100vw - 420px); position: fixed">
         <div style="height: 100%; width: 400px;">
             <div>
-                <label><input id="random_index" type="text" class="button" style="width: 200px">Random Index</label>
-                <label><input id="sample_name" type="text" class="button" style="width: 200px">Sample Name</label>
-                <label><input id="arr_file_name" type="text" class="button" style="width: 200px">Arr File</label>
+                <label><input id="random_index" type="text" class="button" style="width: 200px"> Random Index</label>
+                <label><input id="sample_name" type="text" class="button" style="width: 200px"> Sample Name</label>
+                <label><input id="arr_file_name" type="text" class="button" style="width: 200px"> Arr File</label>
                 <label title="Heating log: including time, setpoints, heater temperatures, sample temperatures, experimental steps">
-                    <input id="heating_log_file_name" type="text" class="button" style="width: 200px">Heating Log File</label>
-                <label><input id="max_age" type="number" class="button" style="width: 200px">Max Age</label>
+                    <input id="heating_log_file_name" type="text" class="button" style="width: 200px"> Heating Log File</label>
+                <label><input id="max_age" type="number" class="button" style="width: 200px"> Max Age</label>
             </div>
-        </div>
-        <div>
-            <label><button class="btn-info" onclick="CheckSample()" >Check</button></label>
-            <label><button class="btn-info" onclick="RunArrmulti()" >RunArrmulti</button></label>
-            <label><button class="btn-info" onclick="RunAgemon()" >RunAgemon</button></label>
-            <label><button class="btn-info" onclick="ReadLog()" >ReadLog</button></label>
-            <label><button class="btn-info" onclick="ChangeSettings()" >Settings</button></label>
-        </div>
-        <div>
-            <label><button class="btn-info" onclick="RunWalker()" >Start random walking</button></label>
-        </div>
-        <div>
-            <label><button id="plot_diff" class="btn-danger" onclick="PlotDiff()" >Plot</button></label>
-            <label><button id="export_chart" class="btn-danger" onclick="ThermoExportChart()" >Export</button></label>
+            <label><button class="btn-info" onclick="ChangeSettings()">Settings</button></label>
+            <label><button class="btn-info" onclick="CheckSample()">Check</button></label>
+            <div>
+            <label><button class="btn-info" onclick="RunArrmulti()">RunArrmulti</button></label>
+            <label><button class="btn-info" onclick="RunAgemon()">RunAgemon</button></label>
+            </div>
+            <div>
+            <label><button class="btn-info" onclick="ReadLog()">ReadLog</button></label>
+            <label><button class="btn-info" onclick="RunWalker()">Start random walking</button></label>
+            </div>
+            <div>
+            <label><button id="plot_diff" class="btn-danger" onclick="PlotDiff()">Plot</button></label>
+            <label><button id="export_chart" class="btn-danger" onclick="ThermoExportChart()">Export</button></label>
+            </div>
         </div>
     </div>
 
@@ -167,39 +167,6 @@
                     //},
                 }
             },
-            xAxis: [
-                {
-                    id: '1', name: 'Temperature [10000 / K]', type: 'value', nameLocation: 'middle', nameGap: 25,
-                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
-                    axisLabel: {showMaxLabel: true, color: '#222'},
-                    axisTick: {inside: false},
-                    nameTextStyle: {
-                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
-                    },
-                },
-                // {
-                //     id: '2', name: 'Temperature [C]', type: 'value', nameLocation: 'start', nameGap: 0,
-                //     axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
-                //     axisLabel: {
-                //         showMaxLabel: true, color: '#222'
-                //     },
-                //     axisTick: {inside: false},
-                //     nameTextStyle: {
-                //         fontSize: 16, fontFamily: 'Microsoft Sans Serif',
-                //     },
-                // },
-            ],
-            yAxis: [
-                {
-                    id: '1', name: 'Ln Dr2', type: 'value', nameLocation: 'middle', nameGap: 50,
-                    axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
-                    axisLabel: {showMaxLabel: true, color: '#222',},
-                    axisTick: {inside: false},
-                    nameTextStyle: {
-                        fontSize: 16, fontFamily: 'Microsoft Sans Serif',
-                    },
-                },
-            ],
             series: [
                 //{
                 //    id: 'LnDr2', name: 'LnDr2', color: '#a4d38f',
@@ -215,7 +182,7 @@
         extendChartFuncs(chart);
     });
 
-    charts[0].registerMouseMove('Text', (params) => {});
+    {#charts[0].registerMouseMove('Text', (params) => {});#}
     charts[0].registerMouseClick((params) => {
         const row = params.data[2];
         table_data[1][row] = table_data[1][row] === 2 ? 1 : 2;
@@ -224,11 +191,52 @@
         });
         PlotDiff();
     });
+    charts[1].registerMouseClick((params) => {});
+    charts[6].registerMouseMove('Text', (params) => {});
+    charts[6].registerMouseClick((params) => {});
 
+    charts[0].setOption({
+        title: {text: 'Arrhenius Diagram', subtext: 'Errors are 95% confidence'},
+        xAxis: [
+            {
+                id: '1', name: 'Temperature [10000 / K]', type: 'value', nameLocation: 'middle', nameGap: 25,
+                min:6, max: 18,
+                axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                axisLabel: {showMaxLabel: true, color: '#222'},
+                axisTick: {inside: false},
+                nameTextStyle: {
+                    fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                },
+            },
+            // {
+            //     id: '2', name: 'Temperature [C]', type: 'value', nameLocation: 'start', nameGap: 0,
+            //     axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+            //     axisLabel: {
+            //         showMaxLabel: true, color: '#222'
+            //     },
+            //     axisTick: {inside: false},
+            //     nameTextStyle: {
+            //         fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+            //     },
+            // },
+        ],
+        yAxis: [
+            {
+                id: '1', name: 'Ln Dr2', type: 'value', nameLocation: 'middle', nameGap: 50,
+                axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                axisLabel: {showMaxLabel: true, color: '#222',},
+                axisTick: {inside: false},
+                nameTextStyle: {
+                    fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                },
+            },
+        ],
+    });
     charts[1].setOption({
         title: {text: 'Age Spectra'},
         xAxis: [{
-            id: '1', name: 'Cumulative {sup|39}Ar Released (%)',
+            id: '1', name: 'Cumulative {sup|39}Ar Released (%)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            min:0, max: 100,
             nameTextStyle: {
                 fontSize: 16, fontFamily: 'Microsoft Sans Serif',
                 rich: {
@@ -238,13 +246,14 @@
             },
         }],
         yAxis: [{
-            id: '1', name: 'Apparent Age (Ma)',
+            id: '1', name: 'Apparent Age (Ma)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
         }],
     });
     charts[2].setOption({
         title: {text: 'Cooling History'},
         xAxis: [{
-            id: '1', name: 'Age (Ma)',
+            id: '1', name: 'Age (Ma)', type: 'value', nameLocation: 'middle', nameGap: 25,
             nameTextStyle: {
                 fontSize: 16, fontFamily: 'Microsoft Sans Serif',
                 rich: {
@@ -254,31 +263,34 @@
             },
         }],
         yAxis: [{
-            id: '1', name: 'Temperature (℃)',
+            id: '1', name: 'Temperature (°C)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
         }],
     });
     charts[3].setOption({
         legend: {show: false},
         title: {text: 'Heating Log'},
         xAxis: [{
-            id: '1', name: 'Timestamp', min: (value) => value.min - 10000, max: (value) => value.max + 10000,
+            id: '1', name: 'Timestamp', type: 'value', nameLocation: 'middle', nameGap: 25,
+            min: (value) => value.min - 10000, max: (value) => value.max + 10000,
             nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
         }],
         yAxis: [{
-            id: '1', name: 'Temperature (℃)',
+            id: '1', name: 'Temperature (°C)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
         }],
     });
-    charts[6].registerMouseMove('Text', (params) => {});
-    charts[6].registerMouseClick((params) => {});
     charts[6].setOption({
         legend: {show: true},
         title: {text: 'Release Pattern'},
         xAxis: [{
-            id: '1', name: 'Steps [n]', min: 0, max: (value) => value.max + 1,
+            id: '1', name: 'Steps [n]', type: 'value', nameLocation: 'middle', nameGap: 25,
+            min: 0, max: (value) => value.max + 1,
             nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
         }],
         yAxis: [{
-            id: '1', name: 'Released [/1]',
+            id: '1', name: 'Released [/1]', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
         }],
     });
 
@@ -310,6 +322,8 @@
                 step_table.updateSettings({
                     data: transpose(table_data)
                 });
+                $('#sample_name').val(res.name);
+                $('#arr_file_name').val(res.arr_file_name);
                 if (res.has_files) {
                     document.getElementById('plot_diff').className = "btn-success";
                     document.getElementById('export_chart').className = "btn-success";
@@ -317,7 +331,10 @@
                     document.getElementById('plot_diff').className = "btn-danger";
                     document.getElementById('export_chart').className = "btn-danger";
                 }
-            }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMessage(XMLHttpRequest, textStatus, errorThrown)
+            },
         });
     }
     function PlotDiff() {
@@ -331,6 +348,13 @@
                 groups[key].push([10000 / (row[3] + 273.15), row[11], index, row[0], row[3]]);
             }
         });
+        let text_data_chart0 = [getPercentagePos(charts[0], 0.4, 0.5), getPercentagePos(charts[0], 0.4, 0.5)];
+        try {
+            text_data_chart0 = charts[0].getSeriesByMytype("text").map((se, index) =>
+                se.data === undefined ? getPercentagePos(charts[0], 0.4, 0.5) : se.data);
+        } catch (e) {
+            //
+        }
         charts[0].clearSeries();
         Object.entries(groups).map(([key, value]) => {
             // console.log(value);
@@ -369,8 +393,9 @@
             success: function(res){
                 //
                 let data = myParse(res.data);
-                let k = myParse(res.line_data);
-                let line_data = getLineData(charts[0], k[0], k[1]);
+                let lines = myParse(res.line_data);
+                let wtd_mean_ages = myParse(res.wtd_mean_ages);
+                console.log(wtd_mean_ages);
                 let release_name = res.release_name;
                 let k0 = transpose(data[0]);
                 let k1 = data[1];
@@ -387,7 +412,22 @@
                 }, {});
                 let k6 = data[6];
 
-                plotSubPlot(charts[0], "Regression", line_data, "line", "line", "none", "black", {x: 0, y: 1}, true);
+                lines.map((each_line, _) => {
+                    let index = _ + 1;
+                    let line_data = getLineData(charts[0], each_line[0], each_line[2]);
+                    plotSubPlot(charts[0], `Regression-${index}`, line_data, "line", "line", "none", color_map[index], {x: 0, y: 1}, true);
+                    plotSubPlot(charts[0], `Text-${index}`, text_data_chart0[_], "scatter", "text", "circle", "none", {x: 0, y: 1},
+                        true, true, `Intercept: ${each_line[0].toFixed(2)} ± ${each_line[1].toFixed(2)}\nSlop: ${each_line[2].toFixed(2)} ± ${each_line[3].toFixed(2)}\nE: ${each_line[13].toFixed(2)} ± ${each_line[14].toFixed(2)} kJ/mol \nTc: ${each_line[15].toFixed(2)} ± ${each_line[16].toFixed(2)}°C`,
+                        true, 14, color_map[index]);
+                    charts[0].registerMouseMove(`Text-${index}`, (params) => {});
+
+                    plotSubPlot(charts[1], `WMA-${index}`, [[wtd_mean_ages[_][0], wtd_mean_ages[_][2]], [wtd_mean_ages[_][1], wtd_mean_ages[_][2]]], "line", "line", "none", color_map[index], {x:0, y:1}, true, false, "", false, 16, color_map[index], 2);
+                    let ya = charts[1]._model._componentsMap.get('yAxis')[0].axis.scale._extent;
+                    plotSubPlot(charts[1], `Text-${index}`, [[(wtd_mean_ages[_][0] + wtd_mean_ages[_][1]) / 2, wtd_mean_ages[_][2] + (ya[1] - ya[0]) * 0.05]], "scatter", "text", "circle", "none", {x: 0, y: 1},
+                        true, true, `WMA = ${wtd_mean_ages[_][2].toFixed(2)} ± ${wtd_mean_ages[_][3].toFixed(2)} Ma`,
+                        true, 14, color_map[index]);
+                    charts[1].registerMouseMove(`Text-${index}`, (params) => {});
+                })
                 plotSubPlot(charts[1], "line1", k0, "line", "line", "none", "black", {x:0, y:1});
                 plotSubPlot(charts[1], "line2", k0, "line", "line", "none", "black", {x:0, y:2});
                 plotSubPlot(charts[3], "SP", k4, "line", "line", "none", "green", {x:0, y:2});
@@ -401,7 +441,7 @@
                     }
                 });
                 charts[6].clearSeries();
-                for (let i=1;i<k6[0].length;i++){
+                for (let i=1;i<k6[0]?.length;i++){
                     let color = i===1?"red":"blue";
                     let label = i===1?$('#sample_name').val():`Released${i}`
                     plotSubPlot(charts[6], label, k6, "line", "line", "none", color, {x:0, y:i});
@@ -409,17 +449,7 @@
                 plotSubPlot(charts[6], "Text", getPercentagePos(charts[6], 0.4, 0.5), "scatter", "text",
                     "circle", "none", {x: 0, y: 1}, true, true, release_name, true, 12);
 
-                let text_data = getPercentagePos(charts[0], 0.4, 0.5);
-                try {
-                    text_data = charts[0].getSeries("Text").data;
-                } catch (e) {
-                    //
-                }
-                let e = 8.31446261815324;
-                plotSubPlot(charts[0], "Text", text_data, "scatter", "text", "circle", "none", {x: 0, y: 1},
-                    true, true, `Intercept: ${k[0]} \n Slop: ${k[1]} \n E: ${k[1] * (-e) * 10} kJ/mol`, true);
-
-                const draw_agemon = true;
+                const draw_agemon = false;
                 if (draw_agemon) {
                     charts[1].showLegend(false);
                     k1.forEach((data, index) => {
@@ -435,23 +465,27 @@
                     });
                 }
                 // forEach(charts, (chart, index) => { chart.resize(); });
-            }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                showErrorMessage(XMLHttpRequest, textStatus, errorThrown)
+            },
         });
 
     }
     function plotSubPlot(chart, name, data, type, myType, symbol, color, encode,
-                         showLegend=true, showLabel=false, labelText="", draggable=false, fontSize=16) {
+                         showLegend=true, showLabel=false, labelText="", draggable=false, fontSize=16,
+                         labelColor='black', lineWidth=1) {
 
         let newSeries = {
             id: name, name: name, data: data,
             type: type, symbol: symbol, symbolSize: 6, z: 2,  silent: false, xAxisIndex: 0, yAxisIndex: 0,
             encode: encode, color: color, myType: myType, myText: labelText,
-            lineStyle: {borderColor: color, width: 1, type: 'solid'},
+            lineStyle: {borderColor: color, width: lineWidth, type: 'solid'},
             itemStyle: {borderWidth: 2, opacity: 0.8, color: color},
             label: {
-                show: showLabel, position: 'inside', color: 'black', fontSize: fontSize,
+                show: showLabel, position: 'inside', color: labelColor, fontSize: fontSize,
                 // fontFamily: figure.text1.font_family, fontWeight: figure.text1.font_weight, rich: rich_format,
-                formatter: labelText,
+                formatter: labelText, align: "left",
             },
             draggable: draggable,
         }
@@ -545,7 +579,7 @@
             },
             error: function (res) {
                 showPopupMessage("Information", "Walking failed...", true);
-            }
+            },
         });
     }
     function ThermoExportChart() {

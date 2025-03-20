@@ -4,7 +4,6 @@
         <!-- J & MDF & standard  -->
         <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
             <label style="width: 400px; text-align: left; font-weight: bold">Specific settings</label>
-            <label style="width: 200px; text-align: left;">J value and MDF factor</label>
             <div class="form-inline">
                 <label style="width: 100px; text-align: left">J value</label>
                 <label>
@@ -20,7 +19,7 @@
                 </label>
             </div>
 
-            <label style="width: 200px; text-align: left">Standard</label>
+            <label style="width: 200px; text-align: left">Standard: </label>
             <div class="form-inline">
                 <label title="standard name" style="width: 100px; text-align: left">Name</label>
                 <label>
@@ -172,10 +171,11 @@ This is often necessary, especially when blank and sample measurements are inter
                 </label>
             </div>
         </div>
+
         <!--  Initial ratio corrected plateaus  -->
         <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
             <label style="width: 400px; text-align: left; font-weight: bold">Initial ratio correction</label>
-            <p>The black lines in the age spectrum are corrected using modern atmospheric composition (or other given parameters).Age plateaus in blue/red colors are corrected using initial ratios determined here.</p>
+            <p>The black lines in the age spectrum are corrected using the trapped argon ratio defined in the irradiation parameter panel.Age plateaus in blue/red colors are corrected using initial ratios determined here.</p>
 
             <div class="form-inline">
                 <label> Using initial ratio from
@@ -198,7 +198,7 @@ This is often necessary, especially when blank and sample measurements are inter
                 </label>
             </div>
         </div>
-        <!--  Gain calibration  -->
+        <!--  Gain correction  -->
         <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
             <label style="width: 200px; text-align: left; font-weight: bold">Gain correction factors</label>
             <a class="text-muted" target="_blank" style="display:inline-block">
@@ -242,32 +242,39 @@ This is often necessary, especially when blank and sample measurements are inter
 
         </div>
 
-        <!--  output  -->
-        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc" hidden>
-            <label style="width: 400px; text-align: left; font-weight: bold">Output and display settings</label>
-            <label style="width: 400px; text-align: left">Errors in:</label>
+        <!--  Preference  -->
+        <div style="width: 500px; float: left; padding-left: 15px; margin-right: 15px; border: 1px solid #ccc">
+            <label style="width: 400px; text-align: left; font-weight: bold">Preference</label>
+
             <div class="form-inline">
-                <label style="width: 100px; text-align: left">Isotopic tables</label>
+                <label style="width: 140px; text-align: left">Decimal places</label>
                 <label>
-                    <select name="err_in_tables" class="form-control smp-params">
-                        <option value="1" selected>1se (abs)</option>
-                        <option value="2">2se (abs)</option>
+                    <input type="number" step="any" class="smp-params" style="width: 100px;"> to
+{#                </label>#}
+{#                <label style="width: 100px; text-align: left">to </label>#}
+{#                <label>#}
+                    <select class="form-control smp-params">
+                        <option value="precision">Precision</option>
+                        <option value="fixed">Fixed</option>
                     </select>
                 </label>
-                <label style="width: 100px; text-align: left">Parameters</label>
+            </div>
+            <div class="form-inline" hidden>
+                <label style="width: 140px; text-align: left">Confidence level</label>
                 <label>
-                    <select name="err_in_plots"  class="form-control smp-params">
-                        <option value="1" selected>1se (%)</option>
-                        <option value="2">2se (%)</option>
+                    <select class="form-control smp-params" style="width: 100px">
+                        <option value="1" selected>1σ</option>
+                        <option value="2">2σ</option>
                     </select>
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 100px; text-align: left">Plots</label>
+                <label style="width: 140px; text-align: left">Age unit</label>
                 <label>
-                    <select name="err_in_plots"  class="form-control smp-params">
-                        <option value="1" selected>1se (abs)</option>
-                        <option value="2">2se (abs)</option>
+                    <select class="form-control smp-params" style="width: 100px">
+                        <option value="Ga">Ga</option>
+                        <option value="Ma" selected>Ma</option>
+                        <option value="Ka">Ka</option>
                     </select>
                 </label>
             </div>

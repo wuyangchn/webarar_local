@@ -77,6 +77,9 @@
                 <button id="figure_9" name="table_name" value="Degas Pattern" class="list-group-item" onclick=showPage(id)>
                     <span class="glyphicon glyphicon-picture"></span>  Ages Distribution
                 </button>
+{#                <button id="figure_10" name="table_name" value="Degas Pattern" class="list-group-item" onclick=showPage(id)>#}
+{#                    <span class="glyphicon glyphicon-picture"></span>  Thermochronology#}
+{#                </button>#}
             </div>
         </div>
         <div id="sample_info_container" class="col-xs-11 col-md-10 thumbnail" style="float:left;overflow: hidden">
@@ -155,7 +158,6 @@
         </div>
         <div id="table_container" class="col-xs-11 col-md-10" style="height: 100%;overflow: hidden;"></div>
         <div id="figure_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;"></div>
-{#        <div id="figure_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 300px; width: 400px; overflow: hidden;display: inline-block;"></div>#}
         <div id="figure_3D_container" class="col-xs-8 col-md-7" style="position: relative;float: left; left: 5%; height: 100%;overflow: hidden;display: inline-block;" hidden></div>
         <div id="figure_right_container" class="col-xs-1 col-md-2" style="float: right; border: #ddd 1px solid;height: calc(100% - 80px); margin-top: 40px; margin-right: 20px">
             <div class="text-left" style="height: 100%">
@@ -417,6 +419,50 @@
                 </div>
             </dialog>
         </div>
+        <div id="thermo_page_container" class="col-xs-8 col-md-7" style="position: relative;float: left; height: 100%;overflow: hidden;display: inline-block;" hidden>
+
+            <div style="width: calc(80vw - 450px); float: left">
+                <div style="height: 500px; width: 100%; margin-top: 20px; padding: 0 0 0 0;">
+                    <div id="step_table_container" style="height: 500px; width: 100%; overflow: hidden; padding: 0 0 0 0;"></div>
+                </div>
+                <div style="height: 1000px; width: 100%; margin-top: 20px; padding: 0 0 0 0;">
+                    <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+                    <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+                    <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+                    <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+                    <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+                    <div style="width: 800px; height: 700px; float: left" class="oven_step_chart_container"></div>
+                    <div style="width: 800px; height: 800px; float: left" class="oven_step_chart_container"></div>
+                </div>
+            </div>
+            <div style="width: 20vw; min-width:400px; float: left; padding-left: 0; margin-left: calc(80vw - 420px); position: fixed">
+                    <div style="height: 100%; width: 400px;">
+                        <div>
+                            <label><input id="random_index" type="text" class="button" style="width: 200px"> Random Index</label>
+                            <label><input id="sample_name" type="text" class="button" style="width: 200px"> Sample Name</label>
+                            <label><input id="arr_file_name" type="text" class="button" style="width: 200px"> Arr File</label>
+                            <label title="Heating log: including time, setpoints, heater temperatures, sample temperatures, experimental steps">
+                                <input id="heating_log_file_name" type="text" class="button" style="width: 200px"> Heating Log File</label>
+                            <label><input id="max_age" type="number" class="button" style="width: 200px"> Max Age</label>
+                        </div>
+                        <label><button class="btn-info" onclick="ChangeSettings()">Settings</button></label>
+                        <label><button class="btn-info" onclick="CheckSample()">Check</button></label>
+                        <div>
+                        <label><button class="btn-info" onclick="RunArrmulti()">RunArrmulti</button></label>
+                        <label><button class="btn-info" onclick="RunAgemon()">RunAgemon</button></label>
+                        </div>
+                        <div>
+                        <label><button class="btn-info" onclick="ReadLog()">ReadLog</button></label>
+                        <label><button class="btn-info" onclick="RunWalker()">Start random walking</button></label>
+                        </div>
+                        <div>
+                        <label><button id="plot_diff" class="btn-danger" onclick="PlotDiff()" >Plot</button></label>
+                        <label><button id="export_chart" class="btn-danger" onclick="ThermoExportChart()" >Export</button></label>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
     </div>
 
     <br>
@@ -424,22 +470,22 @@
         <pre id="example_console" class="pre" style="float: left; width: 30%">console log</pre>
         <div id="table_btn_div" style="float: left; position: relative; left: 8%;">
             <button title="Save changes you made on the table, will not recalculate automatically" type="button" class="btn btn-primary" onclick="clickSaveTable()">Save changes</button>
-            <button title="Change irradiation params" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
-            <button title="Change calculation params" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
-            <button title="Change other calculation settings" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
-            <button title="Open recalculation modal" type="button" class="btn btn-default" data-toggle="modal" data-target="#recalculationModal">Recalculate</button>
-            <button title="Open exporting modal dialog" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
+            <button title="Open irradiation parameters modal box" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
+            <button title="Open calculation parameters modal box" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
+            <button title="Open preference settings modal box" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
+            <button title="Open recalculation modal box" type="button" class="btn btn-default" data-toggle="modal" data-target="#recalculationModal">Recalculate</button>
+            <button title="Open export modal box" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
         </div>
         <div id="figure_btn_div" style="float: left; position: relative; left: 5%;" hidden>
-            <button title="Change irradiation params" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
-            <button title="Change calculation params" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
-            <button title="Change other calculation settings" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
-            <button title="Open recalculation modal" type="button" class="btn btn-default" data-toggle="modal" data-target="#recalculationModal">Recalculate</button>
-            <button title="Change styles of plots" type="button" class="btn btn-default" onclick="clickEditFigureStyle()">Styles</button>
-            <button title="Copy current figure to clipboard" type="button" class="btn btn-default" onclick="saveChart(false)">Copy</button>
+            <button title="Open irradiation parameters modal box" type="button" class="btn btn-default" onclick="clickSetIrraParams()">Irra Params</button>
+            <button title="Open calculation parameters modal box" type="button" class="btn btn-default" onclick="clickSetCalcParams()">Calc Params</button>
+            <button title="Open preference settings modal box" type="button" class="btn btn-default" onclick="clickSetSmpParams()">Smp Params</button>
+            <button title="Open recalculation modal box" type="button" class="btn btn-default" data-toggle="modal" data-target="#recalculationModal">Recalculate</button>
+            <button title="Change styles of components in the current figure" type="button" class="btn btn-default" onclick="clickEditFigureStyle()">Styles</button>
+            <button title="Copy the current figure to clipboard" type="button" class="btn btn-default" onclick="saveChart(false)">Copy</button>
 {#            <button title="Export current figure as a Vector Graphics file" type="button" class="btn btn-default" onclick="saveChart(true)">SVG</button>#}
 {#            <button title="Export current figure as a PDF file" type="button" class="btn btn-default" onclick="exportSmp(url_export_pdf)">PDF</button>#}
-            <button title="Open exporting modal dialog" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
+            <button title="Open export modal box" type="button" class="btn btn-primary" data-toggle="modal" data-target="#inputExportChoiceModal">Export</button>
         </div>
         <pre id="right_console" class="pre" style="float: right; width: 15%">Sample Name</pre>
     </div>
@@ -760,6 +806,49 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+    <div class="modal fade" id="editThermoParams" data-keyboard="true" tabindex="-1" role="dialog" aria-hidden="true">
+                <!-- /.modal 扩散模型参数设置 -->
+                <div class="modal-dialog modal-dialog-width-85" id="modal-dialog-thermo-params">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Thermo Parameters</h4>
+                        </div>
+                        <div class="modal-body modal-page-size" style="padding: 0 0 0 0; overflow: auto">
+                            <div style="padding-right: 15px; padding-left: 30px;">
+                                <div class="radio form-inline">
+                                    <label>
+                                        <input type="radio" name="thermoParamsRadio" id="thermoParamsRadio1" value="option1" onchange="paramsRadioChanged('thermo')" checked>
+                                        Use a Thermo Setting Project
+                                    </label>
+                                    <select class="form-control" id="thermoProjectName" onchange="showParamProject(this)" style="width: 200px; margin-left: 50px; height: 30px;">
+                                        {% for each in allThermoNames %}
+                                            <option>{{ each }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="thermoParamsRadio" id="thermoParamsRadio2" value="option2" onchange="paramsRadioChanged('thermo')">
+                                        Use Input Params
+                                    </label>
+                                </div>
+                                {% include "thermo_setting_modal_body_div.html" %}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <br>
+                            <div style="text-align: center">
+                                <label>
+                                    <input type="checkbox" value="" checked hidden>
+            {#                            Attention: Recalculation will not be applied automatically, please click recalculate after parameter changes#}
+                                </label>
+                                <button type="button" class="btn btn-primary" value="Apply" data-dismiss="modal" onclick="">Apply</button>
+                            </div>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div>
+            </div>
 
 </div>
 <script>
@@ -775,6 +864,7 @@
     let figure3DContainer = $('#figure_3D_container');
     let figureRightContainer = $('#figure_right_container');
     let sampleInfoContainer = $('#sample_info_container');
+    let thermoPageContainer = $('#thermo_page_container');
     let tableBtnDiv = $('#table_btn_div');
     let figureBtnDiv = $('#figure_btn_div');
     let exampleConsole = document.getElementById('example_console');
@@ -782,8 +872,8 @@
     rightConsole.innerText = `Open: ${getTime()}`;
 
     // sigma settings
-    $("#errorDisplayRadio1").prop("checked", sampleComponents['0'].settings?.sigma_level === 1);
-    $("#errorDisplayRadio2").prop("checked", sampleComponents['0'].settings?.sigma_level === 2);
+    $("#errorDisplayRadio1").prop("checked", sampleComponents['0'].preference?.confidenceLevel === 1);
+    $("#errorDisplayRadio2").prop("checked", sampleComponents['0'].preference?.confidenceLevel === 2);
 
     let ctrlIsPressed = false
     let isochron_marks_changed = false
@@ -813,7 +903,7 @@
         afterChange: (changes) => {
             changes?.forEach(([row, prop, oldValue, newValue]) => {
                 if (getCurrentTableId() !== '7' || oldValue === newValue || prop !== 2) {return}
-                isochron_marks_changed = true;  // Mark isochron table changs
+                isochron_marks_changed = true;  // Mark isochron table changes
             });
         }
     });
@@ -827,10 +917,189 @@
     // 2023.7.24: svg渲染不支持3D图形
     extendChartFuncs(chart);
     let chart_3D = echarts.init(document.getElementById('figure_3D_container'));
+
+    // initialize thermo page
+    let thermoTableData = [];
+    const colorMap = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+    const thermoCharts = [];
+    const thermoChartsContainers = document.querySelectorAll("[class*=oven_step_chart_container]");
+    const thermoTable = new Handsontable(document.getElementById('step_table_container'), {
+        colHeaders: ['Usable', 'Mark', 'Setpoint', 'Temp [c]', 'Time [min]', 'Age',
+            'Sig Age', 'Argon', 'Sig Ar', 'Cumulative f', 'd/r2', 'ln(d/r2)', 'wt'],
+        rowHeaders: [],  // 行标题
+        data: thermoTableData,
+        columns: [
+            {type: 'checkbox',},
+            {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',},
+            {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',},
+            {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',}, {type: 'numeric',},
+        ],
+        contextMenu: true,  // 右键菜单
+        licenseKey: 'non-commercial-and-evaluation',
+        className: 'htLeft htMiddle',
+        renderAllRows: true,
+        afterChange: (changes) => {
+            changes?.forEach(([row, col, oldValue, newValue]) => {
+                thermoTableData[col][row] = newValue;
+            });
+        }
+    });
+    thermoChartsContainers.forEach(val => {
+        thermoCharts.push(echarts.init(val, null, {renderer: 'svg'}));
+    })
+    forEach(thermoCharts, (chart, index) => {
+        chart.setOption({
+            title: {
+                show: true, text: 'Arrhenius Plot', left: 'center', top: '6%',
+                textStyle: {
+                    color: '#333', fontWeight: 'bolder', fontFamily: 'Microsoft Sans Serif',
+                    fontSize: 18
+                },
+                triggerEvent: true, z: 0,
+            },
+            grid: {show: true, borderWidth: 1, borderColor: '#222', z: 100,
+                top: '5%', left: '12%', bottom: '15%', right: '4%'},
+            legend: {top: 0},
+            toolbox: {
+                id: 'toolbox', show: true,
+                feature: {
+                    dataZoom: {},
+                    //myTool1: {
+                    //    show: true,
+                    //    title: 'for what',
+                    //    icon: 'path://M432.45,595.444c0,2.177-4.661,6.82-11.305,6.82c-6.475,0-11.306-4.567-11.306-6.82s4.852-6.812,11.306-6.812C427.841,588.632,432.452,593.191,432.45,595.444L432.45,595.444z M421.155,589.876c-3.009,0-5.448,2.495-5.448,5.572s2.439,5.572,5.448,5.572c3.01,0,5.449-2.495,5.449-5.572C426.604,592.371,424.165,589.876,421.155,589.876L421.155,589.876z M421.146,591.891c-1.916,0-3.47,1.589-3.47,3.549c0,1.959,1.554,3.548,3.47,3.548s3.469-1.589,3.469-3.548C424.614,593.479,423.062,591.891,421.146,591.891L421.146,591.891zM421.146,591.891',
+                    //},
+                }
+            },
+            series: [
+                //{
+                //    id: 'LnDr2', name: 'LnDr2', color: '#a4d38f',
+                //    type: 'scatter', symbolSize: 6, z: 2,  silent: true,
+                //    lineStyle: {width: 1, type: 'solid'},
+                //    itemStyle: {borderColor: '#a4d38f', borderWidth: 2, opacity: 0.8},
+                //},
+            ],
+            animation: true,
+            animationDuration: 500,
+        });
+        chart.resize();
+        extendChartFuncs(chart);
+    });
+    thermoCharts[0].registerMouseClick((params) => {
+        const row = params.data[2];
+        thermoTableData[1][row] = thermoTableData[1][row] === 2 ? 1 : 2;
+        thermoTable.updateSettings({
+            data: transpose(thermoTableData)
+        });
+        PlotDiff();
+    });
+    thermoCharts[0].setOption({
+        title: {text: 'Arrhenius Diagram', subtext: 'Errors are 95% confidence'},
+        xAxis: [
+            {
+                id: '1', name: 'Temperature [10000 / K]', type: 'value', nameLocation: 'middle', nameGap: 25,
+                min:6, max: 18,
+                axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                axisLabel: {showMaxLabel: true, color: '#222'},
+                axisTick: {inside: false},
+                nameTextStyle: {
+                    fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                },
+            },
+            // {
+            //     id: '2', name: 'Temperature [C]', type: 'value', nameLocation: 'start', nameGap: 0,
+            //     axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+            //     axisLabel: {
+            //         showMaxLabel: true, color: '#222'
+            //     },
+            //     axisTick: {inside: false},
+            //     nameTextStyle: {
+            //         fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+            //     },
+            // },
+        ],
+        yAxis: [
+            {
+                id: '1', name: 'Ln Dr2', type: 'value', nameLocation: 'middle', nameGap: 50,
+                axisLine: {show: true, onZero: false, lineStyle: {color: '#222', width: 1}},
+                axisLabel: {showMaxLabel: true, color: '#222',},
+                axisTick: {inside: false},
+                nameTextStyle: {
+                    fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                },
+            },
+        ],
+    });
+    thermoCharts[1].setOption({
+        title: {text: 'Age Spectra'},
+        xAxis: [{
+            id: '1', name: 'Cumulative {sup|39}Ar Released (%)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            min:0, max: 100,
+            nameTextStyle: {
+                fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                rich: {
+                    sub: {verticalAlign: "bottom",fontSize: 10, fontFamily: 'Microsoft Sans Serif'},
+                    sup: {verticalAlign: "top", fontSize: 10, fontFamily: 'Microsoft Sans Serif'}
+                },
+            },
+        }],
+        yAxis: [{
+            id: '1', name: `Apparent Age (${sampleComponents[0].reference?.ageUnit})`, type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
+        }],
+    });
+    thermoCharts[2].setOption({
+        title: {text: 'Cooling History'},
+        xAxis: [{
+            id: '1', name: 'Age (Ma)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: {
+                fontSize: 16, fontFamily: 'Microsoft Sans Serif',
+                rich: {
+                    sub: {verticalAlign: "bottom",fontSize: 10, fontFamily: 'Microsoft Sans Serif'},
+                    sup: {verticalAlign: "top", fontSize: 10, fontFamily: 'Microsoft Sans Serif'}
+                },
+            },
+        }],
+        yAxis: [{
+            id: '1', name: 'Temperature (°C)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
+        }],
+    });
+    thermoCharts[3].setOption({
+        legend: {show: false},
+        title: {text: 'Heating Log'},
+        xAxis: [{
+            id: '1', name: 'Timestamp', type: 'value', nameLocation: 'middle', nameGap: 25,
+            min: (value) => value.min - 10000, max: (value) => value.max + 10000,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
+        }],
+        yAxis: [{
+            id: '1', name: 'Temperature (°C)', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
+        }],
+    });
+    thermoCharts[6].registerMouseMove('Text', (params) => {});
+    thermoCharts[6].registerMouseClick((params) => {});
+    thermoCharts[6].setOption({
+        legend: {show: true},
+        title: {text: 'Release Pattern'},
+        xAxis: [{
+            id: '1', name: 'Steps [n]', type: 'value', nameLocation: 'middle', nameGap: 25,
+            min: 0, max: (value) => value.max + 1,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
+        }],
+        yAxis: [{
+            id: '1', name: 'Released [/1]', type: 'value', nameLocation: 'middle', nameGap: 25,
+            nameTextStyle: { fontSize: 16, fontFamily: 'Microsoft Sans Serif', },
+        }],
+    });
+
+
     // 响应浏览器尺寸变化
     window.onresize = function() {
         chart.resize();
         chart_3D.resize();
+        forEach(thermoCharts, chart => chart.resize());
     };
     // 鼠标响应事件
     let chart_on_clicked = function (params) {

@@ -80,17 +80,21 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
                           class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
             </div>
             <div class="form-inline">
-                <label style="width: 250px; text-align: left">How to calculate xlogd (logr/r0):</label>
+                <label style="width: 250px; text-align: left">logdr2 method:</label>
                 <label>
                     <select class="thermo-params" style="height: 30px; width: 150px">
-                        <option value="lovera">Lovera</option>
+                        <option value="thern">Thern 2020</option>
+                        <option value="plane">Plane (Lovera)</option>
                         <option value="yang">Yang</option>
-                        <option value="popov">Popov</option>
+                        <option value="sphere">Sphere (Popov 2020)</option>
                     </select>
                 </label>
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                <span title="The geometric model used to calculate xlogd (logr/r0)"
+                      class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
             </div>
             <div class="form-inline">
-                <label style="width: 250px; text-align: left">How to generate random numbers:</label>
+                <label style="width: 250px; text-align: left">Random numbers:</label>
                 <label>
                     <select class="thermo-params" style="height: 30px; width: 150px">
                         <option value="lovera">Lovera</option>
@@ -108,7 +112,7 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
                 </label>
             </div>
             <div class="form-inline">
-                <label style="width: 250px; text-align: left">Which of five isotopes will be used:</label>
+                <label style="width: 250px; text-align: left">Argon:</label>
                 <label>
                     <select class="thermo-params" style="height: 30px; width: 150px">
                         <option value="40">40Arr</option>
@@ -157,7 +161,6 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
             </div>
 
         </div>
-
         <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
             <label style="width: 500px; text-align: left; font-weight: bold">Domains</label>
 
@@ -320,6 +323,43 @@ Yang: ratio of released argon during current sequence to all remaining argon, f[
                     Searching for nearby places
                 </label>
             </div>
+
+
+        </div>
+        <div style="width: 500px; float: left; border: 1px solid #ccc; padding-left: 15px; margin-right: 15px">
+            <label style="width: 500px; text-align: left; font-weight: bold">Closure Temperature</label>
+
+            <div class="form-inline">
+                <label style="width: 250px; text-align: left">A</label>
+                <label>
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 150px;">
+                </label>
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="The geometric constant. A is 55, 27, or 8.7 for volume diffusion from a sphere, cylinder or plane sheet respectively"
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+            <div class="form-inline">
+                <label style="width: 250px; text-align: left">Cooling rate</label>
+                <label>
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 150px;">
+                </label> °C/my
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="Cooling rate, without the minus sign."
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+            <div class="form-inline">
+                <label style="width: 250px; text-align: left">r</label>
+                <label>
+                    <input type="number" min="1" step="1" class="thermo-params" style="width: 150px;">
+                </label> μm
+                <a class="text-muted" target="_blank" style="display:inline-block">
+                    <span title="Characteristic dimension of the system (the effective diffusion radius, half-width for plane and cube geometric models,
+                    radius for sphere and infinite cylinder models). "
+                          class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+            </div>
+
+
+
 
 
         </div>

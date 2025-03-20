@@ -15,6 +15,7 @@ from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
+
 from . import models
 from programs import http_funcs, log_funcs, ap
 from django.core.cache import cache
@@ -205,21 +206,7 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
             ap.smp.plots.recalc_agedistribution(self.sample)
             res = ap.smp.basic.get_diff_smp(backup=components_backup, smp=ap.smp.basic.get_components(self.sample))
 
-        # 2024/04/10
-        self.sample.SelectedSequence1 = [
-            i for i in range(len(self.sample.IsochronMark)) if str(self.sample.IsochronMark[i]) == "1"]
-        self.sample.SelectedSequence2 = [
-            i for i in range(len(self.sample.IsochronMark)) if str(self.sample.IsochronMark[i]) == "2"]
-        self.sample.UnselectedSequence = [
-            i for i in range(len(self.sample.IsochronMark)) if
-            i not in self.sample.SelectedSequence1 + self.sample.SelectedSequence2]
-        # self.sample.SelectedSequence1 = self.sample.InvIsochronPlot.set1.data.copy()
-        # self.sample.SelectedSequence2 = self.sample.InvIsochronPlot.set2.data.copy()
-        # self.sample.UnselectedSequence = self.sample.InvIsochronPlot.set3.data.copy()
-
-        self.sample.Info.results.selection[0]['data'] = self.sample.SelectedSequence1
-        self.sample.Info.results.selection[1]['data'] = self.sample.SelectedSequence2
-        self.sample.Info.results.selection[2]['data'] = self.sample.UnselectedSequence
+        self.sample.sequence()
 
         http_funcs.create_cache(self.sample, self.cache_key)  # Update cache
         return JsonResponse(res)
@@ -264,30 +251,37 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
         )
         # backup for later comparision
         components_backup = copy.deepcopy(ap.smp.basic.get_components(sample))
-        if btn_id == '0':  # 实验信息
-            # sample.Info.__dict__.update(data)
-            ap.smp.basic.update_plot_from_dict(sample.Info, data)
-        else:
+        try:
+            print(sample.SequenceValue)
+            if btn_id == '0':  # 实验信息
+                # sample.Info.__dict__.update(data)
+                ap.smp.basic.update_plot_from_dict(sample.Info, data)
+            else:
 
-            def remove_empty(a: list):
-                index = 0
-                for i in range(len(a)):
-                    if not ap.calc.arr.is_empty(a[-(i + 1)]):
-                        index = len(a) - i
-                        break
-                return ap.calc.arr.transpose(a[:index])
+                def remove_empty(a: list):
+                    index = 0
+                    for i in range(len(a)):
+                        if not ap.calc.arr.is_empty(a[-(i + 1)]):
+                            index = len(a) - i
+                            break
+                    return ap.calc.arr.transpose(a[:index])
 
-            data = remove_empty(data)
-            if len(data) == 0:
-                return JsonResponse({})
+                data = remove_empty(data)
+                if len(data) == 0:
+                    return JsonResponse({})
 
-            sample.update_table(data, btn_id)
+                sample.update_table(data, btn_id)
 
-            if btn_id == '7':
-                # Re-calculate isochron and plateau data, and replot.
-                # Re-calculation will not be applied automatically when other tables were changed
-                sample.recalculate(re_plot=True, isInit=False, isIsochron=True, isPlateau=True)
-                # ap.recalculate(sample, re_plot=True, isInit=False, isIsochron=True, isPlateau=True)
+                if btn_id == '7':
+                    # Re-calculate isochron and plateau data, and replot.
+                    # Re-calculation will not be applied automatically when other tables were changed
+                    sample.recalculate(re_plot=True, isInit=False, isIsochron=True, isPlateau=True)
+                    # ap.recalculate(sample, re_plot=True, isInit=False, isIsochron=True, isPlateau=True)
+
+            print(sample.SequenceValue)
+        except Exception as e:
+            print(traceback.format_exc())
+            return JsonResponse({'msg': f'Error: {e}'}, status=403)
 
         http_funcs.create_cache(sample, self.cache_key)  # Update cache
         res = ap.smp.basic.get_diff_smp(components_backup, ap.smp.basic.get_components(sample))
@@ -331,37 +325,6 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
                 return JsonResponse({'r2': res[3], 'line_data': line_data, 'sey': res[8]})
         return JsonResponse({'r2': 'None', 'line_data': [], 'sey': 'None'})
 
-    def set_params(self, request, *args, **kwargs):
-        def remove_none(old_params, new_params, rows, length):
-            res = [[]] * length
-            for index, item in enumerate(new_params):
-                if item is None:
-                    res[index] = old_params[index]
-                else:
-                    res[index] = [item] * rows
-            return res
-
-        params = list(self.body['params'])
-        type = str(self.body['type'])  # type = 'irra', or 'calc', or 'smp'
-        sample = self.sample
-        log_funcs.set_info_log(
-            self.ip, '003', 'info', f'Set params, sample name: {self.sample.Info.sample.name}')
-        # backup for later comparision
-        components_backup = copy.deepcopy(ap.smp.basic.get_components(sample))
-
-        try:
-            sample.set_params(params, type)
-        except KeyError:
-            return JsonResponse({'status': 'fail', 'msg': f'Unknown type of params : {type}'})
-
-        ap.smp.table.update_table_data(sample)  # Update data of tables after changes of calculation parameters
-        # update cache
-        http_funcs.create_cache(sample, self.cache_key)
-        res = ap.smp.basic.get_diff_smp(backup=components_backup, smp=ap.smp.basic.get_components(sample))
-        # print(f"Diff after reset_calc_params: {res}")
-        return JsonResponse(
-            {'status': 'success', 'msg': 'Successfully!', 'changed_components': ap.smp.json.dumps(res)})
-
     def recalculation(self, request, *args, **kwargs):
         log_funcs.set_info_log(self.ip, '003', 'info', f'Recalculation, sample name: {self.sample.Info.sample.name}')
         sample = self.sample
@@ -371,17 +334,12 @@ class ButtonsResponseObjectView(http_funcs.ArArView):
         # print(f"Recalculation Isochron Mark = {isochron_mark}")
         print(f"{others = }")
         try:
-            sample.Info.settings.update({'sigma_level': others.get('sigma', sample.Info.settings.get('sigma_level', 1))})
+            sample.Info.preference.update({'confidenceLevel': others.get('sigma', sample.Info.preference.get('confidenceLevel', 1))})
         except Exception as e:
             pass
         if isochron_mark:
             sample.IsochronMark = isochron_mark.copy()
-            sample.SelectedSequence1 = [index for index, item in enumerate(isochron_mark) if str(item) == '1']
-            sample.SelectedSequence2 = [index for index, item in enumerate(isochron_mark) if str(item) == '2']
-            sample.UnselectedSequence = [index for index, item in enumerate(isochron_mark) if str(item) != '2' and str(item) != '1']
-            sample.Info.results.selection[0]['data'] = sample.SelectedSequence1
-            sample.Info.results.selection[1]['data'] = sample.SelectedSequence2
-            sample.Info.results.selection[2]['data'] = sample.UnselectedSequence
+            sample.sequence()
         # backup for later comparision
         components_backup = copy.deepcopy(ap.smp.basic.get_components(sample))
         try:
@@ -788,14 +746,17 @@ class ParamsSettingView(http_funcs.ArArView):
                             data[i] = False
                         elif data[i] is None:
                             data[i] = np.nan
+                    pref = [sample.Info.preference.get(key, "") for key in ap.smp.initial.preference_keys]
                     param = [*data[67:71], *data[58:67], *data[97:100], *data[115:120], *data[126:136],
-                             *data[120:123], *_, *data[101:114]]
+                             *pref, *_, *data[101:114]]
                 # if 'thermo' in type.lower():
                 #     param = [*data[0:20], *data[56:58], *data[20:27],
                 #              *ap.calc.corr.get_irradiation_datetime_by_string(data[27]), data[28], '', '']
                 if 'export' in type.lower():
                     param = [True]
-            except:
+            except IndexError:
+                param = []
+            except (BaseException, Exception) as e:
                 print(traceback.format_exc())
                 param = []
             return JsonResponse({'status': 'success', 'param': np.nan_to_num(param).tolist()})
@@ -865,6 +826,41 @@ class ParamsSettingView(http_funcs.ArArView):
                 return JsonResponse({'msg': 'wrong pin'}, status=403)
 
 
+    def set_params(self, request, *args, **kwargs):
+        def remove_none(old_params, new_params, rows, length):
+            res = [[]] * length
+            for index, item in enumerate(new_params):
+                if item is None:
+                    res[index] = old_params[index]
+                else:
+                    res[index] = [item] * rows
+            return res
+
+        params = list(self.body['params'])
+        param_type = str(self.body['type'])  # type = 'irra', or 'calc', or 'smp'
+        sample = self.sample
+        log_funcs.set_info_log(
+            self.ip, '003', 'info', f'Set params, sample name: {self.sample.Info.sample.name}')
+        # backup for later comparision
+        components_backup = copy.deepcopy(ap.smp.basic.get_components(sample))
+
+        try:
+            sample.set_params(params, param_type)
+        except KeyError:
+            print(traceback.format_exc())
+            return JsonResponse({'msg': f'Unknown type of params : {param_type}'}, status=403)
+        except (BaseException, Exception) as e:
+            print(traceback.format_exc())
+            return JsonResponse({'msg': f'{type(e).__name__}: {str(e)}'}, status=403)
+
+        ap.smp.table.update_table_data(sample)  # Update data of tables after changes of calculation parameters
+        # update cache
+        http_funcs.create_cache(sample, self.cache_key)
+        res = ap.smp.basic.get_diff_smp(backup=components_backup, smp=ap.smp.basic.get_components(sample))
+        # print(f"Diff after reset_calc_params: {res}")
+        return JsonResponse({'msg': 'Successfully!', 'changed_components': ap.smp.json.dumps(res)}, status=200)
+
+
 class ThermoView(http_funcs.ArArView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -913,9 +909,20 @@ class ThermoView(http_funcs.ArArView):
         random_index = self.body['random_index']
         params = self.body['settings']
 
+        use_ln = True if str(params[6]).lower() == 'ln' else False
+        logdr2_method = params[7]  # xlogd (logr/r0) method
+        argon = params[10]
+
         loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
         if not os.path.exists(loc) or random_index == "":
             return JsonResponse({}, status=403)
+
+        if arr_file_name == "":
+            for root, dirs, files in os.walk(loc):
+                for file in files:
+                    if file.endswith('.arr'):
+                        arr_file_name = file
+                        name = arr_file_name.strip('.arr')
 
         mch_out = os.path.join(loc, f'{arr_file_name}_mch-out.dat')
         mages_out = os.path.join(loc, f'{arr_file_name}_mages-out.dat')
@@ -928,11 +935,11 @@ class ThermoView(http_funcs.ArArView):
         te = np.array(sample.TotalParam[124], dtype=np.float64)
         ti = (np.array(sample.TotalParam[123], dtype=np.float64) / 60).round(2)  # time in minute
         nindex = {"40": 24, "39": 20, "38": 10, "37": 8, "36": 0}
-        if params[10] in list(nindex.keys()):
-            ar = np.array(sample.DegasValues[nindex[params[10]]], dtype=np.float64)  # 20-21 Ar39
-            sar = np.array(sample.DegasValues[nindex[params[10]] + 1], dtype=np.float64)
-        elif params[10] == 'total':
-            all_ar = np.array(sample.CorrectedValues, dtype=np.float64)  # 20-21 Ar39
+        if argon in list(nindex.keys()):
+            ar = np.array(sample.DegasValues[nindex[argon]], dtype=np.float64)  # 20-21 Argon
+            sar = np.array(sample.DegasValues[nindex[argon] + 1], dtype=np.float64)
+        elif argon == 'total':
+            all_ar = np.array(sample.CorrectedValues, dtype=np.float64)  # 20-21 Argon
             ar, sar = ap.calc.arr.add(*all_ar.reshape(5, 2, len(all_ar[0])))
             ar = np.array(ar); sar = np.array(sar)
         else:
@@ -942,15 +949,19 @@ class ThermoView(http_funcs.ArArView):
         f = np.cumsum(ar) / ar.sum()
 
         # dr2, ln_dr2 = ap.smp.diffusion_funcs.dr2_popov(f, ti)
-        ln = True if str(params[6]).lower() == 'ln' else False
-        if str(params[7]).lower() == 'lovera':
-            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_lovera(f, ti, ar=ar, sar=sar, ln=ln)
-        elif str(params[7]).lower() == 'yang':
-            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_yang(f, ti, ar=ar, sar=sar, ln=ln)
-        elif str(params[7]).lower() == 'popov':
-            dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_popov(f, ti, ar=ar, sar=sar, ln=ln)
-        else:
-            return JsonResponse({}, status=403)
+        try:
+            if str(logdr2_method).lower().startswith('plane'.lower()):
+                dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_plane(f, ti, ar=ar, sar=sar, ln=use_ln)
+            elif str(logdr2_method).lower() == 'yang':
+                dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_yang(f, ti, ar=ar, sar=sar, ln=use_ln)
+            elif str(logdr2_method).lower().startswith('sphere'.lower()):
+                dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_sphere(f, ti, ar=ar, sar=sar, ln=use_ln)
+            elif str(logdr2_method).lower().startswith('Thern'.lower()):
+                dr2, ln_dr2, wt = ap.smp.diffusion_funcs.dr2_thern(f, ti, ar=ar, sar=sar, ln=use_ln)
+            else:
+                raise KeyError(f"Geometric model not found: {str(logdr2_method).lower()}")
+        except (Exception, BaseException) as e:
+            return JsonResponse({'msg': f"The D/r2 calculation failed. {type(e).__name__}: {str(e)}"}, status=403)
 
         data = np.array([
             sequence.value, te, ti, age, sage, ar, sar, f, dr2, ln_dr2, wt
@@ -962,7 +973,8 @@ class ThermoView(http_funcs.ArArView):
         if os.path.isfile(mch_out) and os.path.isfile(mages_out) and os.path.isfile(ages_sd):
             res = True
 
-        return JsonResponse({'status': 'success', 'has_files': res, 'data': ap.smp.json.dumps(data)})
+        return JsonResponse({'status': 'success', 'has_files': res, 'data': ap.smp.json.dumps(data),
+                             'name': name, 'arr_file_name': arr_file_name})
 
 
     def run_arrmulti(self, request, *args, **kwargs):
@@ -974,6 +986,7 @@ class ThermoView(http_funcs.ArArView):
         params = self.body['settings']
 
         print(data)
+        print(params)
 
         loc = os.path.join(settings.MDD_ROOT, f'{random_index}')
         if not os.path.exists(loc) or random_index == "":
@@ -984,8 +997,6 @@ class ThermoView(http_funcs.ArArView):
 
         arr = ap.smp.diffusion_funcs.DiffArrmultiFunc(smp=sample, loc=loc)
 
-        print(f"{params = }")
-        # params = [8, 10, 8, 2, 0.5, 0.01, 'wt', 'xlogd', 'random', 'fit', False]
         filtered_data = list(filter(lambda x: x[0], data))
         filtered_index = [i for i, row in enumerate(data) if row[0]]
         arr.ni = len(filtered_data)
@@ -1094,7 +1105,8 @@ class ThermoView(http_funcs.ArArView):
 
         # setting_params = params[:11]
         domain_params = params[11:33]
-        # plot_params = params[33:]
+        # tc_params = params[33:36]
+        checkable_params = params[-10:]
 
         # 活化能和体积比例从外到内
         energies = (np.array(domain_params[0:16:2]) * 1000).tolist()
@@ -1120,16 +1132,16 @@ class ThermoView(http_funcs.ArArView):
 
         statuses = [True for i in range(len(ti))]
 
-        if params[39]:  # including pumping phases
+        if checkable_params[6]:  # including pumping phases
             for i in range(0, len(ti) * 2, 2):
-                if params[40]:  # pumping out after, like Y56
+                if checkable_params[7]:  # pumping out after, like Y56
                     ti = np.insert(ti, i+1, pumping)
-                    if params[41]:  # heating durations include pumping-out phases
+                    if checkable_params[8]:  # heating durations include pumping-out phases
                         ti[i] -= pumping
                 else:
                     ti = np.insert(ti, i, pumping)
                     # times = np.insert(times, i, times[i] - pumping)
-                    if params[41]:  # heating durations include pumping-out phases
+                    if checkable_params[8]:  # heating durations include pumping-out phases
                         ti[i+1] -= pumping
                 temps = np.insert(temps, i+1, temps[i])
                 targets = np.insert(targets, i+1, targets[i])
@@ -1139,7 +1151,7 @@ class ThermoView(http_funcs.ArArView):
 
         print(list(zip(temps, times)))
 
-        if params[42]:  # searching for nearby places
+        if checkable_params[9]:  # searching for nearby places
             energies_list = []; fractions_list = []
             for each in energies[: ndoms]:
                 energies_list.append([each + i * 1000 for i in range(-1, 2, 1)])
@@ -1161,22 +1173,22 @@ class ThermoView(http_funcs.ArArView):
                         f"{ad=:.0e} " \
                         f"{f=:.0e} " \
                         f"{ndoms=:.0f} " \
-                        f"pumping={params[39]} " \
+                        f"pumping={checkable_params[6]} " \
                         f"multi"
 
             try:
                 _start = time.time()
-                demo, status = ap.ads.main.run(
+                demo, status = ap.thermo.arw.run(
                     times, temps, statuses,
                     _e, _f, ndoms, file_name=file_name, k=k, grain_szie=gs, dimension=dimension,
                     atom_density=ad, frequency=f, simulation=False, targets=targets, epsilon=0.05, use_walker1=use_walker1
                 )
-            except ap.ads.main.OverEpsilonError as e:
+            except ap.thermo.arw.OverEpsilonError as e:
                 print(traceback.format_exc())
                 return JsonResponse({})
             else:
                 print(traceback.format_exc())
-                ap.ads.main.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
+                ap.thermo.arw.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
 
         return JsonResponse({})
 
@@ -1195,7 +1207,8 @@ class ThermoView(http_funcs.ArArView):
 
         # setting_params = params[:11]
         domain_params = params[11:33]
-        # plot_params = params[33:]
+        # tc_params = params[33:36]
+        checkable_params = params[-10:]
 
         # 活化能和体积比例从外到内
         energies = (np.array(domain_params[0:16:2]) * 1000).tolist()
@@ -1255,30 +1268,30 @@ class ThermoView(http_funcs.ArArView):
                         f"{f=:.0e} " \
                         f"{ndoms=:.0f} " \
                         f"temp={set(temps)} " \
-                        f"pumping={params[39]} " \
+                        f"pumping={checkable_params[6]} " \
                         f"multi"
 
             try:
                 _start = time.time()
                 k = 3600 * 24 * 365.2425 * k
-                # demo, status = ap.ads.main.run(
+                # demo, status = ap.thermo.main.run(
                 #     times, temps, statuses,
                 #     _e, _f, ndoms, file_name=file_name, k=k, grain_szie=gs, dimension=dimension,
                 #     atom_density=ad, frequency=f, simulation=False, targets=targets, epsilon=0.05,
                 #     use_walker1=use_walker1, decay=5.53e-10, parent=parent
                 # )
-            except ap.ads.main.OverEpsilonError as e:
+            except ap.thermo.arw.OverEpsilonError as e:
                 print(traceback.format_exc())
                 return JsonResponse({})
             else:
                 print(traceback.format_exc())
-                # ap.ads.main.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
+                # ap.thermo.main.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
 
                 filename = f"walker2 k=10000.0a es=135-126-152 fs=1-0.97-0.74 dt=3155695200000 parent=800000000 gs=275 ad=0e+00 f=1e+13 ndoms=3 pumping=True multi 1.35h.ads"
                 filename = "walker2 k=3000.0a es=135-126-152 fs=1-0.97-0.74 dt=3155695200000 parent=800000000 gs=275 ad=0e+00 f=1e+13 ndoms=3 temp={200.0, 10.0, 300.0, 400.0, 150.0, 25.0, 250.0, 350.0} pumping=True multi 4.99h.ads"
                 filename = "walker2 k=1000.0a es=135-126-152 fs=1-0.97-0.74 dt=3155695200000 parent=800000000 gs=275 ad=0e+00 f=1e+13 ndoms=3 pumping=False multi 12.27h.ads"
                 filename = os.path.join(r"D:\DjangoProjects\webarar\private\mdd\20240920_24FY88a\thermo-history", filename)
-                demo = ap.ads.main.read_ads(filename)
+                demo = ap.thermo.arw.read_ads(filename)
 
 
                 ## 再模拟实验过程
@@ -1294,7 +1307,7 @@ class ThermoView(http_funcs.ArArView):
                             f"{ad=:.0e} " \
                             f"{f=:.0e} " \
                             f"{ndoms=:.0f} " \
-                            f"pumping={params[39]} " \
+                            f"pumping={checkable_params[6]} " \
                             f"multi"
 
                 ti = np.array(smp.TotalParam[123], dtype=np.float64).round(2)  # time in second
@@ -1303,16 +1316,16 @@ class ThermoView(http_funcs.ArArView):
                 targets = ar.cumsum() / sum(ar)
                 statuses = [True for i in range(len(ti))]
 
-                if params[39]:  # including pumping phases
+                if checkable_params[6]:  # including pumping phases
                     for i in range(0, len(ti) * 2, 2):
-                        if params[40]:  # pumping out after, like Y56
+                        if checkable_params[7]:  # pumping out after, like Y56
                             ti = np.insert(ti, i + 1, pumping)
-                            if params[41]:  # heating durations include pumping-out phases
+                            if checkable_params[8]:  # heating durations include pumping-out phases
                                 ti[i] -= pumping
                         else:
                             ti = np.insert(ti, i, pumping)
                             # times = np.insert(times, i, times[i] - pumping)
-                            if params[41]:  # heating durations include pumping-out phases
+                            if checkable_params[8]:  # heating durations include pumping-out phases
                                 ti[i + 1] -= pumping
                         temps = np.insert(temps, i + 1, temps[i])
                         targets = np.insert(targets, i + 1, targets[i])
@@ -1325,17 +1338,17 @@ class ThermoView(http_funcs.ArArView):
                 try:
                     _start = time.time()
                     k = 3600 * 24 * 365.2425 * k
-                    demo, status = ap.ads.main.run(
+                    demo, status = ap.thermo.arw.run(
                         times, temps, statuses, _e, _f, ndoms, file_name=file_name, k=k, grain_szie=gs, dimension=dimension,
                         atom_density=ad, frequency=f, simulation=False, targets=targets, epsilon=0.05,
                         use_walker1=use_walker1, decay=0, parent=0, positions=demo.positions
                     )
-                except ap.ads.main.OverEpsilonError as e:
+                except ap.thermo.arw.OverEpsilonError as e:
                     print(traceback.format_exc())
                     return JsonResponse({})
                 else:
                     print(traceback.format_exc())
-                    ap.ads.main.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
+                    ap.thermo.arw.save_ads(demo, f"{loc}", name=demo.name + f" {(time.time() - _start) / 3600:.2f}h")
 
         return JsonResponse({})
 
@@ -1360,25 +1373,77 @@ class ThermoView(http_funcs.ArArView):
         # read_from_ins = True
         read_from_ins = False
 
-        plot_params = params[34:39]
+        use_ln = True if str(params[6]).lower() == 'ln' else False
+        logdr2_method = params[7]  # xlogd (logr/r0) method
+        tc_params = [A, cooling_rate, radius] = params[33:36]
+        temp_err = 5
+        plot_params = params[37:42]
+        base = np.e if use_ln else 10
 
-        line_data = [a, b, siga, sigb, chi2, q] = [0, 0, 0, 0, 0, 0]
+        groups = set(data[1])
+        lines = []
         if plot_params[0]:  # arrhenius plot
-            ti = [i + 273.15 for i in data[3]]
-            x, y, wtx, wty = [], [], [], []
-            for i in range(len(ti)):
-                if str(data[1][i]) == "2":
-                    x.append(10000 / ti[i])
-                    wtx.append(10000 * 5 / ti[i] ** 2)
-                    y.append(data[11][i])
-                    wty.append(data[12][i])
-            if len(x) > 0:
-                try:
-                    line_data = [a, b, siga, sigb, chi2, q] = ap.smp.diffusion_funcs.fit(x, y, wtx, wty)
-                except:
-                    pass
+            for each_group in groups:
+                each_line = [np.nan for i in range(17)]  # [b, sb, a, sa, ..., energy, se, tc, stc]
+                ti = [i + 273.15 for i in data[3]]
+                x, y, wtx, wty = [], [], [], []
+                for i in range(len(ti)):
+                    if str(data[1][i]) == str(each_group) and data[0][i]:
+                        x.append(10000 / ti[i])
+                        wtx.append(10000 * temp_err / ti[i] ** 2)
+                        y.append(data[11][i])
+                        wty.append(data[12][i])
+                if len(x) > 0:
 
-        if all(plot_params[1:3]):  # Age spectra and cooling history
+                    @np.vectorize
+                    def get_da2_e_Tc(b, m):
+                        k1 = base ** b * ap.thermo.basic.SEC2YEAR  # k1: da2
+                        if str(logdr2_method).lower().startswith('Thern'.lower()):
+                            k1 = k1 / (radius * 0.0001) ** 2  # μm to m
+                        # Closure temperature
+                        k2 = -10 * m * ap.thermo.basic.GAS_CONSTANT * np.log(base)  # activation energy, kJ
+                        k3, _ = ap.thermo.basic.get_tc(da2=k1, sda2=0, E=k2 * 1000, sE=0, pho=0, cooling_rate=cooling_rate, A=A)
+                        return k1, k2, k3  # da2, E, Tc
+
+                    try:
+                        # Arrhenius line regression
+                        # each_line[0:6] = ap.thermo.basic.fit(x, y, wtx, wty)  # intercept, slop, sa, sb, chi2, q
+                        # b (intercept), sb, a (slope), sa, mswd, dF, Di, k, r2, chi_square, p_value, avg_err_s, cov
+                        each_line[0:13] = ap.calc.regression.york2(x, wtx, y, wty, ri=np.zeros(len(x)))
+                        each_line[1] = each_line[1] * 2  # 2 sigma
+                        each_line[3] = each_line[3] * 2  # 2 sigma
+
+                        # monte carlo simulation with 4000 trials
+                        cov_matrix = np.array([[each_line[1] ** 2, each_line[12]], [each_line[12], each_line[3] ** 2]])
+                        mean_vector = np.array([each_line[0], each_line[2]])
+                        random_numbers = np.random.multivariate_normal(mean_vector, cov_matrix, 4000)
+                        res, cov = ap.calc.basic.monte_carlo(get_da2_e_Tc, random_numbers, confidence_level=0.95)
+                        da2, E, Tc = res[0:3, 0]
+                        # sda2, sE, sTc = np.diff(res[0:3, [1, 2]], axis=1).flatten() / 2
+                        sda2, sE, sTc = 2 * cov[0, 0] ** .5, 2 * cov[1, 1] ** .5, 2 * cov[2, 2] ** .5  # 95%
+
+                        each_line[13:15] = [E, sE]
+                        each_line[15:17] = [Tc, sTc]
+
+                    except:
+                        print(traceback.format_exc())
+                        pass
+                lines.append(each_line)
+
+        spectra_data = [[], [], [], []]
+        wtd_mean_ages = []
+        if plot_params[1]:  # Age spectra
+            spectra_data[0] = ap.calc.spectra.get_data(data[5], data[6], [i * 100 for i in data[9]], cumulative=True)
+            for each_group in groups:
+                age, sage, indexes = [], [], []
+                for i in range(len(data[1])):
+                    if str(data[1][i]) == str(each_group) and data[0][i]:
+                        age.append(data[5][i])
+                        sage.append(data[6][i])
+                        indexes.append(i)
+                wtd_mean_ages.append([data[9][min(indexes) - 1] * 100 if min(indexes) != 0 else 0, data[9][max(indexes)] * 100, *ap.calc.arr.wtd_mean(age, sage)])
+
+        if plot_params[2]:  # cooling history
             if read_from_ins:
                 mdd_loc = r"C:\Users\Young\OneDrive\00-Projects\【2】个人项目\2024-06 MDD\MDDprograms\Sources Codes"
                 arr = ap.smp.diffusion_funcs.DiffDraw(name="Y51a", loc=mdd_loc, read_from_ins=read_from_ins)
@@ -1395,9 +1460,9 @@ class ThermoView(http_funcs.ArArView):
                 arr.a39 = data[7]
                 arr.sig39 = data[8]
                 arr.f = data[9]
-            plot_data = list(arr.get_plot_data())
+            spectra_data[1:] = list(arr.get_plot_data())[1:]
         else:
-            plot_data = [[], [], [], []]
+            spectra_data[1:] = [[], [], []]
 
         furnace_log = []
         heating_out = []
@@ -1421,22 +1486,12 @@ class ThermoView(http_funcs.ArArView):
                 # furnace_log = np.transpose(furnace_log)
                 # heating_out = np.reshape([index for index, _ in enumerate(furnace_log[0]) if _ in heating_timestamp], (len(heating_timestamp) // 2, 2))
                 pass
-        plot_data.append(furnace_log)
-        plot_data.append(heating_out)
+        spectra_data.append(furnace_log)
+        spectra_data.append(heating_out)
 
         released = []
         release_name = []
         if plot_params[4]:  # release pattern
-            # if params[10] == '36':
-            #     ar = data[1]
-            # if params[10] == '37':
-            #     ar = data[3]
-            # if params[10] == '38':
-            #     ar = data[5]
-            # if params[10] == '39':
-            #     ar = data[7]
-            # if params[10] == '40':
-            #     ar = data[9]
             ar = data[7]
             ads_released = []
             index = 1
@@ -1447,7 +1502,7 @@ class ThermoView(http_funcs.ArArView):
                             continue
                         index += 1
                         release_name.append(f"Released{index}: {f}")
-                        diff = ap.ads.main.read_ads(os.path.join(loc, f))
+                        diff = ap.thermo.arw.read_ads(os.path.join(loc, f))
                         print(f"{f = }, {len(diff.released_per_step) = }, {diff.atom_density = :.0e}")
                         ads_released.append(np.array(diff.released_per_step) / diff.natoms)
 
@@ -1457,11 +1512,13 @@ class ThermoView(http_funcs.ArArView):
                 released.append([i+1, sum(ar[0:i+1]) / sum(ar), *ads_released[i]])
         else:
             released.append([])
-        plot_data.append(released)
+        spectra_data.append(released)
         release_name = '\n'.join(release_name)
 
-        return JsonResponse({'status': 'success', 'data': ap.smp.json.dumps(plot_data),
-                             'line_data': ap.smp.json.dumps(line_data), 'release_name': release_name})
+        return JsonResponse({'status': 'success', 'data': ap.smp.json.dumps(spectra_data),
+                             'line_data': ap.smp.json.dumps(lines),
+                             'wtd_mean_ages': ap.smp.json.dumps(wtd_mean_ages),
+                             'release_name': release_name})
 
 
     def read_log(self, request, *args, **kwargs):
